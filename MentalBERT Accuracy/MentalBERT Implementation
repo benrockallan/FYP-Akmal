@@ -1,0 +1,106 @@
+import pandas as pd
+from transformers import AutoTokenizer, AutoModel
+import torch
+from sklearn.metrics.pairwise import cosine_similarity
+from tqdm import tqdm
+from sklearn.preprocessing import normalize
+import os
+
+# Your Hugging Face token
+hf_token = "hf_..."  # Replace with your actual token
+
+# Load MentalBERT model and tokenizer using the token
+try:
+    tokenizer = AutoTokenizer.from_pretrained("mental/mental-bert-base-uncased", token=hf_token)
+    model = AutoModel.from_pretrained("mental/mental-bert-base-uncased", token=hf_token)
+except TypeError:
+    print("Token argument not accepted or login required. Ensure you are logged in via CLI or notebook_login().")
+    tokenizer = AutoTokenizer.from_pretrained("mental/mental-bert-base-uncased")
+    model = AutoModel.from_pretrained("mental/mental-bert-base-uncased")
+
+# Function to generate embedding using MentalBERT
+def get_embedding(text):
+    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
+    with torch.no_grad():
+        outputs = model(**inputs)
+    return outputs.last_hidden_state.mean(dim=1).squeeze()
+
+# Function to generate embeddings for a batch of texts
+def get_batch_embeddings(texts):
+    texts = [str(text) for text in texts]
+    inputs = tokenizer(texts, return_tensors="pt", truncation=True, padding=True)
+    with torch.no_grad():
+        outputs = model(**inputs)
+    return outputs.last_hidden_state.mean(dim=1)
+
+# Function to rank keywords against a user input with batch processing
+def rank_keywords_batch(df, keyword_column, user_input, batch_size=10):
+    user_embedding = get_embedding(user_input)
+    rankings = []
+
+    for i in tqdm(range(0, len(df[keyword_column]), batch_size), desc="Processing keywords"):
+        keywords_batch = df[keyword_column].dropna().unique()[i:i+batch_size]
+
+        if not keywords_batch.size:
+            continue
+
+        keywords_batch = [str(keyword) for keyword in keywords_batch]
+
+        try:
+            keyword_embeddings = get_batch_embeddings(keywords_batch)
+
+            keyword_embeddings = keyword_embeddings.cpu().numpy()
+            normalized_user_embedding = normalize(user_embedding.cpu().numpy().reshape(1, -1))
+            normalized_keyword_embeddings = normalize(keyword_embeddings)
+            similarities = cosine_similarity(normalized_user_embedding, normalized_keyword_embeddings)
+
+            for keyword, score in zip(keywords_batch, similarities[0]):
+                rankings.append((keyword, score))
+
+        except Exception as e:
+            print(f"Error processing batch of keywords: {str(e)}")
+            continue
+
+    return sorted(rankings, key=lambda x: x[1], reverse=True)
+
+# Load your CSV files (make sure paths are correct)
+videos_df = pd.read_csv(r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Outpus\comments_with_keywords.csv")
+comments_df = pd.read_csv(r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Outpus\videos_with_keywords.csv")
+
+# Clean up the data (remove any rows with missing 'keywords')
+videos_df = videos_df.dropna(subset=["keywords"])
+comments_df = comments_df.dropna(subset=["keywords"])
+
+# Input from user
+user_input = "I am having episodes of anxiety and depression"
+
+# Rank keywords separately for videos and comments using batch processing
+video_ranks = rank_keywords_batch(videos_df, "keywords", user_input)
+comment_ranks = rank_keywords_batch(comments_df, "keywords", user_input)
+
+# Convert results to DataFrame
+video_results = pd.DataFrame(video_ranks, columns=["Keyword", "Similarity Score"])
+comment_results = pd.DataFrame(comment_ranks, columns=["Keyword", "Similarity Score"])
+
+print("\nTop Video Keywords Relevant to Input:")
+print(video_results.head(10))
+
+print("\nTop Comment Keywords Relevant to Input:")
+print(comment_results.head(10))
+
+# Ask for download path
+download_path = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Ranked Data"
+
+# Ensure the directory exists
+if not os.path.exists(download_path):
+    try:
+        os.makedirs(download_path)
+    except OSError as e:
+        print(f"Error creating directory: {e}")
+        download_path = "."  # Default to current directory if creation fails
+
+# Save the ranked data to CSV files
+video_results.to_csv(os.path.join(download_path, "ranked_video_keywords.csv"), index=False)
+comment_results.to_csv(os.path.join(download_path, "ranked_comment_keywords.csv"), index=False)
+
+print(f"\nRanked keyword data saved to: {download_path}")
