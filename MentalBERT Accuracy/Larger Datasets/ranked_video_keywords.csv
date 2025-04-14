@@ -1,0 +1,56 @@
+Keyword,Similarity Score
+"[('anxiety feel', 0.6967), ('lightheadedness dizziness', 0.5035), ('contracting palpitation', 0.2616), ('shortness', 0.0824), ('gon', 0.0475)]",0.68400407
+"[('depressed depression', 0.5894), ('hurt know', 0.2095), ('changed unrecognizable', 0.0895), ('energy checking', 0.0708), ('email voicemail', 0.0367)]",0.65625346
+"[('depression depression', 0.659), ('understand youre', 0.1791), ('battle invisible', 0.1735), ('inconvenience weighing', 0.1309), ('complicated snap', 0.0462)]",0.65545976
+"[('symptom depression', 0.6793), ('energia people', 0.2609), ('jaleel', 0.1983), ('energy level', 0.1852), ('focus education', 0.0659)]",0.6490245
+"[('symptom stress', 0.524), ('decreased', 0.251), ('social isolation', 0.1747), ('gain weight', 0.1653), ('matter good', 0.1418)]",0.6489142
+"[('symptom overthinking', 0.5548), ('core brain', 0.2698), ('leaving angry', 0.2165), ('isolates cutting', 0.1774), ('ready', 0.0303)]",0.64838445
+"[('depressive symptom', 0.6781), ('linger unconscious', 0.2191), ('helpful protect', 0.0848), ('process unresolved', 0.0585), ('automatically resurfaces', 0.0216)]",0.6455365
+"[('social anxiety', 0.7341), ('judged micromanage', 0.3044), ('opinion dont', 0.1748), ('gradual', 0.1281), ('overcompensate develop', 0.1202)]",0.64455163
+"[('depression', 0.5353), ('change sleep', 0.3481), ('energy difficulty', 0.2042), ('thats arm', 0.1997), ('theyre lead', 0.1515)]",0.64414185
+"[('health anxiety', 0.5981), ('sensation number', 0.3504), ('hospital check', 0.2445), ('activity trapped', 0.2033), ('think youre', 0.1315)]",0.6428298
+"[('anxiety shortness', 0.5111), ('stop sweating', 0.337), ('stomach th', 0.2969), ('hand shaking', 0.2407), ('night rd', 0.0604)]",0.64270484
+"[('dealing depression', 0.6028), ('need people', 0.2669), ('lose connection', 0.1384), ('tend lean', 0.0221), ('isolative important', -0.0274)]",0.6418655
+"[('delusionally depressed', 0.6504), ('people talking', 0.1657), ('tone persecutory', 0.1579), ('matter exist', 0.1422), ('tend common', 0.0412)]",0.64163494
+"[('sign depression', 0.6531), ('distinguish adhd', 0.504), ('memory problem', 0.2542), ('middle night', 0.1465), ('thats obvious', 0.1)]",0.6415235
+"[('tip therapist', 0.4504), ('health anxiety', 0.4095), ('break pattern', 0.2176), ('inner state', 0.115), ('wont need', 0.0779)]",0.6411742
+"[('symptom situation', 0.4961), ('breathing exercise', 0.3395), ('settled calm', 0.327), ('water coffee', 0.2628), ('follow gladigos', 0.2311)]",0.6410318
+"[('depression', 0.5091), ('energy activity', 0.2691), ('number slippery', 0.2442), ('medium personal', 0.17), ('isolation isolating', 0.0881)]",0.6406151
+"[('feeling exhausted', 0.4799), ('coping mechanism', 0.4216), ('term number', 0.1219), ('scrolling phone', 0.1126), ('book zoning', -0.0294)]",0.63675666
+"[('think depression', 0.5693), ('amon clinic', 0.1593), ('activates', 0.1182), ('ant write', 0.113), ('optimize physical', 0.039)]",0.6350857
+"[('anxiety brain', 0.5642), ('run family', 0.1751), ('aging inflammation', 0.1376), ('like function', 0.1357), ('roof today', 0.0834)]",0.63420117
+"[('depression number', 0.6058), ('attention invalidates', 0.2934), ('âœeveryone feel', 0.2519), ('myth people', 0.0541), ('swing making', 0.0116)]",0.63406515
+"[('mood anxiety', 0.5239), ('doctor mike', 0.3119), ('bloodstream effect', 0.2867), ('digesting food', 0.0754), ('ready', 0.026)]",0.6338514
+"[('functioning anxiety', 0.6132), ('sign struggling', 0.3744), ('holistic tip', 0.1915), ('care single', 0.1745), ('plan cancel', 0.0866)]",0.633795
+"[('panic attack', 0.6451), ('common cause', 0.3214), ('oxygen need', 0.2504), ('vitamin mean', 0.2495), ('overload time', 0.1185)]",0.63361645
+"[('struggle depression', 0.4921), ('head medication', 0.2943), ('vitamin level', 0.1803), ('important check', 0.0983), ('randomized controlled', 0.0895)]",0.6334995
+"[('health worsening', 0.4671), ('withdrawal isolation', 0.2709), ('notice sign', 0.1425), ('term memory', 0.1316), ('reactive snappy', 0.1034)]",0.63328487
+"[('difference anxious', 0.5937), ('adhd need', 0.4062), ('separate', 0.1596), ('book healing', 0.1317), ('predicting worst', 0.0425)]",0.6315641
+"[('possible depression', 0.7114), ('hi dr', 0.1896), ('month know', 0.1851), ('care social', 0.1307), ('daphne young', 0.1305)]",0.63155687
+"[('dealt depression', 0.6746), ('fifth feeling', 0.365), ('world black', 0.1735), ('like dragging', 0.1154), ('try', 0.0369)]",0.63061523
+"[('malfunctioning brain', 0.5634), ('psychologist want', 0.5284), ('met job', 0.4151), ('share feel', 0.2529), ('need arent', 0.1656)]",0.6292251
+"[('lead depression', 0.5258), ('talk thinking', 0.415), ('mole hill', 0.2773), ('theyre bad', 0.2203), ('thing absolute', 0.1323)]",0.62897563
+"[('depression brain', 0.6287), ('day work', 0.2353), ('family wont', 0.1861), ('ability handle', 0.1763), ('coffee shirt', 0.1485)]",0.628375
+"[('anxiety root', 0.618), ('cause trauma', 0.4133), ('solve problem', 0.1922), ('health physical', 0.1133), ('exist theyre', 0.0612)]",0.6283158
+"[('reduce anxiety', 0.5604), ('doctor evaluation', 0.1603), ('social medium', 0.1534), ('unsafe existence', 0.1007), ('thats minute', 0.0048)]",0.627566
+"[('functioning depression', 0.6476), ('term high', 0.3512), ('start day', 0.1928), ('life expectation', 0.1768), ('head water', 0.175)]",0.6257006
+"[('struggling anxiety', 0.6083), ('threat monitoring', 0.1962), ('feel default', 0.1662), ('magnified heart', 0.1566), ('youre sure', 0.1144)]",0.6228348
+"[('anxiety treat', 0.6455), ('significant social', 0.2844), ('starting ssrm', 0.1962), ('general outline', 0.1458), ('mike guy', 0.0689)]",0.6226561
+"[('think depression', 0.5509), ('assessment', 0.1501), ('prescribe', 0.1363), ('jump invest', 0.0375), ('optimize physical', 0.0255)]",0.62252986
+"[('mental health', 0.5169), ('phone sleep', 0.32), ('prioritize lead', 0.1763), ('number isolation', 0.1642), ('size content', 0.1027)]",0.62237126
+"[('feeling lost', 0.4302), ('number asks', 0.3432), ('risk conversation', 0.2967), ('scrolling phone', 0.2154), ('cycle clear', 0.1541)]",0.6222042
+"[('ask anxiety', 0.6703), ('symptom problem', 0.4803), ('look mind', 0.3149), ('future', 0.2533), ('sort action', 0.0134)]",0.62134326
+"[('anxiety control', 0.7236), ('negative thought', 0.2361), ('true learning', 0.174), ('kill ant', 0.1524), ('minute thats', 0.0391)]",0.6212027
+"[('anxiety crowded', 0.6121), ('sign brain', 0.393), ('like video', 0.2525), ('inflamed handle', 0.243), ('information calculate', 0.1746)]",0.61985135
+"[('depression activity', 0.61), ('sign hidden', 0.1419), ('actually physical', 0.0998), ('overflow bad', 0.0628), ('based uk', -0.0433)]",0.61874664
+"[('anxiety medication', 0.5844), ('probiotic probiotic', 0.2545), ('study omega', 0.1743), ('significantly reduce', 0.148), ('sector regulates', -0.0108)]",0.6185984
+"[('medication psychiatrist', 0.5632), ('lobe arent', 0.201), ('wash trash', 0.1382), ('learn direct', 0.1341), ('physical function', 0.0643)]",0.6175744
+"[('bracing anxiety', 0.5185), ('bloodflow prioritized', 0.1635), ('literal lump', 0.0813), ('make sure', 0.0635), ('response component', 0.048)]",0.61613333
+"[('example thinking', 0.5392), ('day gon', 0.2743), ('video information', 0.2085), ('fortunately control', 0.1942), ('breeze genetics', 0.0446)]",0.6159814
+"[('heal anxiety', 0.7449), ('tai chi', 0.2767), ('magnesium oshwaganda', 0.2413), ('key unlocks', 0.0738), ('couple feel', 0.0398)]",0.61539656
+"[('emotionally drained', 0.4988), ('avoid conflict', 0.2224), ('build boom', 0.1997), ('shoulder constant', 0.1993), ('wont', 0.1192)]",0.6096446
+"[('anxiety creativity', 0.7456), ('activity flatlines', 0.1878), ('decided pushing', 0.1394), ('mirror toggled', 0.0737), ('people dinner', 0.0006)]",0.60903114
+"[('anxiety coming', 0.6807), ('physiology mean', 0.1985), ('called methylation', 0.1906), ('point specific', 0.13), ('podcast like', 0.0927)]",0.60618603
+"[('anxious brain', 0.645), ('stronger time', 0.174), ('return food', 0.1711), ('label researching', 0.1288), ('know hopefully', 0.1022)]",0.6031799
+"[('supply serotonin', 0.567), ('gut process', 0.1654), ('genetic test', 0.1532), ('way define', 0.0847), ('united state', 0.061)]",0.5973499
+"[('anxiety inside', 0.6134), ('generally example', 0.2312), ('reflection situation', 0.1982), ('multi dimensional', 0.1361), ('state make', 0.0855)]",0.5942921
