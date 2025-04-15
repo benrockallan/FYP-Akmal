@@ -1,3 +1,5 @@
+#Implementing MentalBERT Similarity Testing
+
 import pandas as pd
 from transformers import AutoTokenizer, AutoModel
 import torch
@@ -7,7 +9,7 @@ from sklearn.preprocessing import normalize
 import os
 
 # Your Hugging Face token
-hf_token = "hf_..."  # Replace with your actual token
+hf_token = "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"  # Replace with your actual token
 
 # Load MentalBERT model and tokenizer using the token
 try:
@@ -64,15 +66,15 @@ def rank_keywords_batch(df, keyword_column, user_input, batch_size=10):
     return sorted(rankings, key=lambda x: x[1], reverse=True)
 
 # Load your CSV files (make sure paths are correct)
-videos_df = pd.read_csv(r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Outpus\comments_with_keywords.csv")
-comments_df = pd.read_csv(r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Outpus\videos_with_keywords.csv")
+videos_df = pd.read_csv(r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Outpus\Other Data\videos_with_keywords.csv")
+comments_df = pd.read_csv(r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Outpus\Other Data\comments_with_keywords.csv")
 
 # Clean up the data (remove any rows with missing 'keywords')
 videos_df = videos_df.dropna(subset=["keywords"])
 comments_df = comments_df.dropna(subset=["keywords"])
 
 # Input from user
-user_input = "I am having episodes of anxiety and depression"
+user_input = "I am having episodes of anxiety and depression, I do not have motivation or energy to get up everyday"
 
 # Rank keywords separately for videos and comments using batch processing
 video_ranks = rank_keywords_batch(videos_df, "keywords", user_input)
@@ -89,7 +91,7 @@ print("\nTop Comment Keywords Relevant to Input:")
 print(comment_results.head(10))
 
 # Ask for download path
-download_path = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Ranked Data"
+download_path = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Outpus\Other Data\Ranked Data"
 
 # Ensure the directory exists
 if not os.path.exists(download_path):
