@@ -65,7 +65,7 @@ def process_csv_file(file_path, output_dir):
     df = df[EXPECTED_COLUMNS]
 
     # Save final standardized file
-    output_path = os.path.join(output_dir, "Standardized Comment.csv")
+    output_path = os.path.join("Standardized Comment.csv")
     try:
         df.to_csv(output_path, index=False, encoding=detected_encoding)
     except:
@@ -74,11 +74,11 @@ def process_csv_file(file_path, output_dir):
     print(f"✅ Processed file saved as Standardized Comment.csv in {output_dir}")
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python script.py <input_csv_file> <output_directory>")
-        sys.exit(1)
+    #if len(sys.argv) != 3:
+    #    print("Usage: python script.py <input_csv_file> <output_directory>")
+    #    sys.exit(1)
 
-    input_csv = "G:/Other computers/My Laptop (1)/Pelajaran UiTM/Classes and Lectures (Semester 6)/CSP650/Developments/Scraps/Testing Files/Outpus/Testing Comment.csv"
-    output_directory = "G:/Other computers/My Laptop (1)/Pelajaran UiTM/Classes and Lectures (Semester 6)/CSP650/Developments/Scraps/Testing Files/Outpus"
+    input_csv = "Testing Comment.csv"
+    output_csv = "Standardized Comment.csv"
 
-    process_csv_file(input_csv, output_directory)
+    process_csv_file(input_csv, output_csv)

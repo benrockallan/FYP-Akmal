@@ -90,7 +90,7 @@ def scale_down_comments(df, min_comments=5, min_replies=5, max_rows_per_vid=5):
     return df_scaled
 
 # Load the CSV file into a DataFrame, using 'utf-8-sig' encoding
-df = pd.read_csv('G:/Other computers/My Laptop (1)/Pelajaran UiTM/Classes and Lectures (Semester 6)/CSP650/Developments/Scraps/Testing Files/Outpus/Standardized Comment.csv', encoding="utf-8-sig")
+df = pd.read_csv('Standardized Comment.csv', encoding="utf-8-sig")
 
 # Scale down the comments and replies
 df_scaled = scale_down_comments(df)
@@ -100,6 +100,6 @@ if not df_scaled.empty:
     print("Scaled Down Data:")
     print(df_scaled.head())
     # Save the scaled DataFrame to a new CSV file, using utf-8-sig
-    df_scaled.to_csv('G:/Other computers/My Laptop (1)/Pelajaran UiTM/Classes and Lectures (Semester 6)/CSP650/Developments/Scraps/Testing Files/Outpus/Standardized Comments Scaled Down.csv', index=False, encoding="utf-8-sig")
+    df_scaled.to_csv('Standardized Comments Scaled Down.csv', index=False, encoding="utf-8-sig")
 else:
     print("No data to display or save.")

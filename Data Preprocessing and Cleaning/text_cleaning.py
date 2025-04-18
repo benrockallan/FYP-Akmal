@@ -6,18 +6,19 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 nltk.download('punkt')
+nltk.download('punkt_tab')
 nltk.download('stopwords')
 nltk.download('wordnet')
 
 #Step 1: Environment Setup
-!pip install pandas numpy openpyxl keybert transformers torch scikit-learn
+#!pip install pandas numpy openpyxl keybert transformers torch scikit-learn
 
 
 # Loading the Merged Comment data
-comments_df = pd.read_csv("G:/Other computers/My Laptop (1)/Pelajaran UiTM/Classes and Lectures (Semester 6)/CSP650/Developments/Scraps/Testing Files/Outpus/Standardized Comments Scaled Down.csv", encoding="utf-8-sig",)
+comments_df = pd.read_csv("../Data Extraction/Standardized Comments Scaled Down.csv", encoding="utf-8-sig",)
 
 # Loading the Video with Transcription data
-videos_df = pd.read_csv("G:/Other computers/My Laptop (1)/Pelajaran UiTM/Classes and Lectures (Semester 6)/CSP650/Developments/Scraps/Testing Files/Outpus/Video With Transcription.csv", encoding="utf-8-sig",)
+videos_df = pd.read_csv("../Data Extraction/Video With Transcription.csv", encoding="utf-8-sig",)
 
 #Inspecting Data
 comments_df.head()
@@ -87,5 +88,5 @@ comments_df['final_text'] = comments_df['lemmatized'].apply(lambda x: ' '.join(x
 videos_df['final_text'] = videos_df['lemmatized'].apply(lambda x: ' '.join(x))
 
 #Step 9: Save Preprocessed Data
-comments_df.to_csv('G:/Other computers/My Laptop (1)/Pelajaran UiTM/Classes and Lectures (Semester 6)/CSP650/Developments/Scraps/Testing Files/Outpus/Clean Standardized Comment.csv', index=False, encoding="utf-8-sig",)
-videos_df.to_csv('G:/Other computers/My Laptop (1)/Pelajaran UiTM/Classes and Lectures (Semester 6)/CSP650/Developments/Scraps/Testing Files/Outpus/Clean Video with Transcription.csv', index=False, encoding="utf-8-sig",)
+comments_df.to_csv('Clean Standardized Comment.csv', index=False, encoding="utf-8-sig",)
+videos_df.to_csv('Clean Video with Transcription.csv', index=False, encoding="utf-8-sig",)

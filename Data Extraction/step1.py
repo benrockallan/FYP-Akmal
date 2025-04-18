@@ -4,8 +4,8 @@ import requests
 from tqdm import tqdm
 
 # Define the paths to your CSV files
-input_csv = "G:/Other computers/My Laptop (1)/Pelajaran UiTM/Classes and Lectures (Semester 6)/CSP650/Developments/Scraps/Testing Files/Outpus/Testing Video.csv"
-output_csv = "G:/Other computers/My Laptop (1)/Pelajaran UiTM/Classes and Lectures (Semester 6)/CSP650/Developments/Scraps/Testing Files/Outpus/Video with Transcription.csv"
+input_csv = "Testing Video.csv"
+output_csv = "Video with Transcription.csv"
 
 # Read the CSV file into a DataFrame
 df = pd.read_csv(input_csv)

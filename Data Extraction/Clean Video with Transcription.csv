@@ -1,0 +1,766 @@
+﻿Vid,Name,NickName,ProfileUrl,TikTok_Link,TikTok_Transcription,clean_transcriptions,tokens,tokens_no_stopwords,lemmatized,final_text
+1,healinghumanity777,Logan Cohen,https://www.tiktok.com/@healinghumanity777,https://www.tiktok.com/@healinghumanity777/video/7239806193215032619,"WEBVTT
+
+
+00:00:00.000 --> 00:00:03.753
+anxiety can make it FEEL like there's something physically wrong with you
+
+00:00:03.754 --> 00:00:04.905
+even when there's notâ¦
+
+00:00:04.914 --> 00:00:08.993
+here are 4 WEIRD physical symptoms that can actually be caused by anxiety
+
+00:00:08.994 --> 00:00:11.153
+from a licensed therapist and certified trauma professional
+
+00:00:11.154 --> 00:00:12.233
+make sure you listen to the last
+
+00:00:12.234 --> 00:00:14.145
+it tends to catch the most people off guard
+
+00:00:14.280 --> 00:00:17.349
+1) anxiety can make your throat feel sore or tight
+
+00:00:17.350 --> 00:00:20.070
+even like there is a literal âlump in your throatâ
+
+00:00:20.230 --> 00:00:23.509
+this is referred to as a âglobus sensationâ in medical terms
+
+00:00:23.510 --> 00:00:26.310
+and is a direct result of muscle bracing from anxiety
+
+00:00:26.600 --> 00:00:27.854
+2) disrupted breathing
+
+00:00:27.855 --> 00:00:29.423
+either difficulty getting a full breathâ¦
+
+00:00:29.424 --> 00:00:31.823
+tightness in chest or heart palpitations
+
+00:00:31.824 --> 00:00:35.623
+the fight/flight response as a component of anxiety prioritizes oxygen
+
+00:00:35.624 --> 00:00:39.823
+and therefore bloodflow to the muscles & away from your internal organs
+
+00:00:39.824 --> 00:00:42.275
+this can make breathing feel weird & labored
+
+00:00:42.640 --> 00:00:44.830
+3) numbness, dizziness or tingling
+
+00:00:44.831 --> 00:00:47.590
+remember since bloodflow is prioritized to the muscles
+
+00:00:47.591 --> 00:00:48.127
+a lot of times
+
+00:00:48.128 --> 00:00:51.230
+this means that tingling will come to the muscles in the appendages â
+
+00:00:51.231 --> 00:00:52.548
+your arms and legs
+
+00:00:52.551 --> 00:00:55.208
+while dizziness or lightheadedness is common due to 
+
+00:00:55.209 --> 00:00:56.588
+LACK of oxygen in the brain
+
+00:00:56.631 --> 00:00:59.388
+4) depersonalization & derealization
+
+00:00:59.480 --> 00:01:03.106
+these out of body body experiences can feel REALLY weird & scary
+
+00:01:03.153 --> 00:01:06.466
+but they're directly connected to the elevated levels of adrenaline
+
+00:01:06.473 --> 00:01:09.506
+in your bloodstream from the fight or flight response from anxiety
+
+00:01:09.713 --> 00:01:11.632
+this can look like your limbs feeling strange
+
+00:01:11.633 --> 00:01:13.152
+your face looking weird in the mirror
+
+00:01:13.153 --> 00:01:14.312
+life feeling unreal
+
+00:01:14.313 --> 00:01:15.986
+feeling detached from reality
+
+00:01:16.113 --> 00:01:17.312
+feeling disconnected from your body
+
+00:01:17.313 --> 00:01:19.266
+or like everything is moving in slow motion
+
+00:01:19.480 --> 00:01:21.920
+if your symptoms are negatively impacting your life
+
+00:01:21.921 --> 00:01:24.480
+consider learning more about managing your mental health
+
+00:01:24.481 --> 00:01:26.400
+regulating your central nervous system
+
+00:01:26.401 --> 00:01:28.040
+and even reaching out to a professional
+
+00:01:28.041 --> 00:01:30.738
+for help with managing or reducing those symptoms
+
+00:01:31.081 --> 00:01:32.658
+life doesn't have to be like that
+
+00:01:32.921 --> 00:01:34.378
+and you don't have to suffer alone
+",webvtt anxiety can make it feel like theres something physically wrong with you even when theres notâ here are weird physical symptoms that can actually be caused by anxiety from a licensed therapist and certified trauma professional make sure you listen to the last it tends to catch the most people off guard anxiety can make your throat feel sore or tight even like there is a literal âlump in your throatâ this is referred to as a âglobus sensationâ in medical terms and is a direct result of muscle bracing from anxiety disrupted breathing either difficulty getting a full breathâ tightness in chest or heart palpitations the fightflight response as a component of anxiety prioritizes oxygen and therefore bloodflow to the muscles away from your internal organs this can make breathing feel weird labored numbness dizziness or tingling remember since bloodflow is prioritized to the muscles a lot of times this means that tingling will come to the muscles in the appendages â your arms and legs while dizziness or lightheadedness is common due to lack of oxygen in the brain depersonalization derealization these out of body body experiences can feel really weird scary but theyre directly connected to the elevated levels of adrenaline in your bloodstream from the fight or flight response from anxiety this can look like your limbs feeling strange your face looking weird in the mirror life feeling unreal feeling detached from reality feeling disconnected from your body or like everything is moving in slow motion if your symptoms are negatively impacting your life consider learning more about managing your mental health regulating your central nervous system and even reaching out to a professional for help with managing or reducing those symptoms life doesnt have to be like that and you dont have to suffer alone,"['webvtt', 'anxiety', 'can', 'make', 'it', 'feel', 'like', 'theres', 'something', 'physically', 'wrong', 'with', 'you', 'even', 'when', 'theres', 'notâ', 'here', 'are', 'weird', 'physical', 'symptoms', 'that', 'can', 'actually', 'be', 'caused', 'by', 'anxiety', 'from', 'a', 'licensed', 'therapist', 'and', 'certified', 'trauma', 'professional', 'make', 'sure', 'you', 'listen', 'to', 'the', 'last', 'it', 'tends', 'to', 'catch', 'the', 'most', 'people', 'off', 'guard', 'anxiety', 'can', 'make', 'your', 'throat', 'feel', 'sore', 'or', 'tight', 'even', 'like', 'there', 'is', 'a', 'literal', 'âlump', 'in', 'your', 'throatâ', 'this', 'is', 'referred', 'to', 'as', 'a', 'âglobus', 'sensationâ', 'in', 'medical', 'terms', 'and', 'is', 'a', 'direct', 'result', 'of', 'muscle', 'bracing', 'from', 'anxiety', 'disrupted', 'breathing', 'either', 'difficulty', 'getting', 'a', 'full', 'breathâ', 'tightness', 'in', 'chest', 'or', 'heart', 'palpitations', 'the', 'fightflight', 'response', 'as', 'a', 'component', 'of', 'anxiety', 'prioritizes', 'oxygen', 'and', 'therefore', 'bloodflow', 'to', 'the', 'muscles', 'away', 'from', 'your', 'internal', 'organs', 'this', 'can', 'make', 'breathing', 'feel', 'weird', 'labored', 'numbness', 'dizziness', 'or', 'tingling', 'remember', 'since', 'bloodflow', 'is', 'prioritized', 'to', 'the', 'muscles', 'a', 'lot', 'of', 'times', 'this', 'means', 'that', 'tingling', 'will', 'come', 'to', 'the', 'muscles', 'in', 'the', 'appendages', 'â', 'your', 'arms', 'and', 'legs', 'while', 'dizziness', 'or', 'lightheadedness', 'is', 'common', 'due', 'to', 'lack', 'of', 'oxygen', 'in', 'the', 'brain', 'depersonalization', 'derealization', 'these', 'out', 'of', 'body', 'body', 'experiences', 'can', 'feel', 'really', 'weird', 'scary', 'but', 'theyre', 'directly', 'connected', 'to', 'the', 'elevated', 'levels', 'of', 'adrenaline', 'in', 'your', 'bloodstream', 'from', 'the', 'fight', 'or', 'flight', 'response', 'from', 'anxiety', 'this', 'can', 'look', 'like', 'your', 'limbs', 'feeling', 'strange', 'your', 'face', 'looking', 'weird', 'in', 'the', 'mirror', 'life', 'feeling', 'unreal', 'feeling', 'detached', 'from', 'reality', 'feeling', 'disconnected', 'from', 'your', 'body', 'or', 'like', 'everything', 'is', 'moving', 'in', 'slow', 'motion', 'if', 'your', 'symptoms', 'are', 'negatively', 'impacting', 'your', 'life', 'consider', 'learning', 'more', 'about', 'managing', 'your', 'mental', 'health', 'regulating', 'your', 'central', 'nervous', 'system', 'and', 'even', 'reaching', 'out', 'to', 'a', 'professional', 'for', 'help', 'with', 'managing', 'or', 'reducing', 'those', 'symptoms', 'life', 'doesnt', 'have', 'to', 'be', 'like', 'that', 'and', 'you', 'dont', 'have', 'to', 'suffer', 'alone']","['webvtt', 'anxiety', 'make', 'feel', 'like', 'theres', 'something', 'physically', 'wrong', 'even', 'theres', 'notâ', 'weird', 'physical', 'symptoms', 'actually', 'caused', 'anxiety', 'licensed', 'therapist', 'certified', 'trauma', 'professional', 'make', 'sure', 'listen', 'last', 'tends', 'catch', 'people', 'guard', 'anxiety', 'make', 'throat', 'feel', 'sore', 'tight', 'even', 'like', 'literal', 'âlump', 'throatâ', 'referred', 'âglobus', 'sensationâ', 'medical', 'terms', 'direct', 'result', 'muscle', 'bracing', 'anxiety', 'disrupted', 'breathing', 'either', 'difficulty', 'getting', 'full', 'breathâ', 'tightness', 'chest', 'heart', 'palpitations', 'fightflight', 'response', 'component', 'anxiety', 'prioritizes', 'oxygen', 'therefore', 'bloodflow', 'muscles', 'away', 'internal', 'organs', 'make', 'breathing', 'feel', 'weird', 'labored', 'numbness', 'dizziness', 'tingling', 'remember', 'since', 'bloodflow', 'prioritized', 'muscles', 'lot', 'times', 'means', 'tingling', 'come', 'muscles', 'appendages', 'â', 'arms', 'legs', 'dizziness', 'lightheadedness', 'common', 'due', 'lack', 'oxygen', 'brain', 'depersonalization', 'derealization', 'body', 'body', 'experiences', 'feel', 'really', 'weird', 'scary', 'theyre', 'directly', 'connected', 'elevated', 'levels', 'adrenaline', 'bloodstream', 'fight', 'flight', 'response', 'anxiety', 'look', 'like', 'limbs', 'feeling', 'strange', 'face', 'looking', 'weird', 'mirror', 'life', 'feeling', 'unreal', 'feeling', 'detached', 'reality', 'feeling', 'disconnected', 'body', 'like', 'everything', 'moving', 'slow', 'motion', 'symptoms', 'negatively', 'impacting', 'life', 'consider', 'learning', 'managing', 'mental', 'health', 'regulating', 'central', 'nervous', 'system', 'even', 'reaching', 'professional', 'help', 'managing', 'reducing', 'symptoms', 'life', 'doesnt', 'like', 'dont', 'suffer', 'alone']","['webvtt', 'anxiety', 'make', 'feel', 'like', 'there', 'something', 'physically', 'wrong', 'even', 'there', 'notâ', 'weird', 'physical', 'symptom', 'actually', 'caused', 'anxiety', 'licensed', 'therapist', 'certified', 'trauma', 'professional', 'make', 'sure', 'listen', 'last', 'tends', 'catch', 'people', 'guard', 'anxiety', 'make', 'throat', 'feel', 'sore', 'tight', 'even', 'like', 'literal', 'âlump', 'throatâ', 'referred', 'âglobus', 'sensationâ', 'medical', 'term', 'direct', 'result', 'muscle', 'bracing', 'anxiety', 'disrupted', 'breathing', 'either', 'difficulty', 'getting', 'full', 'breathâ', 'tightness', 'chest', 'heart', 'palpitation', 'fightflight', 'response', 'component', 'anxiety', 'prioritizes', 'oxygen', 'therefore', 'bloodflow', 'muscle', 'away', 'internal', 'organ', 'make', 'breathing', 'feel', 'weird', 'labored', 'numbness', 'dizziness', 'tingling', 'remember', 'since', 'bloodflow', 'prioritized', 'muscle', 'lot', 'time', 'mean', 'tingling', 'come', 'muscle', 'appendage', 'â', 'arm', 'leg', 'dizziness', 'lightheadedness', 'common', 'due', 'lack', 'oxygen', 'brain', 'depersonalization', 'derealization', 'body', 'body', 'experience', 'feel', 'really', 'weird', 'scary', 'theyre', 'directly', 'connected', 'elevated', 'level', 'adrenaline', 'bloodstream', 'fight', 'flight', 'response', 'anxiety', 'look', 'like', 'limb', 'feeling', 'strange', 'face', 'looking', 'weird', 'mirror', 'life', 'feeling', 'unreal', 'feeling', 'detached', 'reality', 'feeling', 'disconnected', 'body', 'like', 'everything', 'moving', 'slow', 'motion', 'symptom', 'negatively', 'impacting', 'life', 'consider', 'learning', 'managing', 'mental', 'health', 'regulating', 'central', 'nervous', 'system', 'even', 'reaching', 'professional', 'help', 'managing', 'reducing', 'symptom', 'life', 'doesnt', 'like', 'dont', 'suffer', 'alone']",webvtt anxiety make feel like there something physically wrong even there notâ weird physical symptom actually caused anxiety licensed therapist certified trauma professional make sure listen last tends catch people guard anxiety make throat feel sore tight even like literal âlump throatâ referred âglobus sensationâ medical term direct result muscle bracing anxiety disrupted breathing either difficulty getting full breathâ tightness chest heart palpitation fightflight response component anxiety prioritizes oxygen therefore bloodflow muscle away internal organ make breathing feel weird labored numbness dizziness tingling remember since bloodflow prioritized muscle lot time mean tingling come muscle appendage â arm leg dizziness lightheadedness common due lack oxygen brain depersonalization derealization body body experience feel really weird scary theyre directly connected elevated level adrenaline bloodstream fight flight response anxiety look like limb feeling strange face looking weird mirror life feeling unreal feeling detached reality feeling disconnected body like everything moving slow motion symptom negatively impacting life consider learning managing mental health regulating central nervous system even reaching professional help managing reducing symptom life doesnt like dont suffer alone
+2,noori_ahlifarmasi,Noori | Ahli Farmasi,https://www.tiktok.com/@noori_ahlifarmasi,https://www.tiktok.com/@noori_ahlifarmasi/video/7228950886893096197,"WEBVTT
+
+
+00:00:00.000 --> 00:00:04.135
+The first 9 signs of anxiety are shortness of breath.
+
+00:00:04.206 --> 00:00:06.095
+The second has trouble sleeping at night.
+
+00:00:06.206 --> 00:00:08.410
+The 3rd one feels tired all the time.
+
+00:00:08.411 --> 00:00:10.275
+The 4th one has a bad stomach.
+
+00:00:10.520 --> 00:00:12.812
+The 5th muscle spasms and pain.
+
+00:00:12.870 --> 00:00:14.997
+The 6th one doesn't stop sweating.
+
+00:00:14.998 --> 00:00:17.612
+The 7th finger or hand is shaking.
+
+00:00:17.694 --> 00:00:20.892
+the 8th overeats or has no appetite
+
+00:00:21.010 --> 00:00:21.760
+The 9th one, 
+
+00:00:21.760 --> 00:00:22.972
+look at the comments.
+",webvtt the first signs of anxiety are shortness of breath the second has trouble sleeping at night the rd one feels tired all the time the th one has a bad stomach the th muscle spasms and pain the th one doesnt stop sweating the th finger or hand is shaking the th overeats or has no appetite the th one look at the comments,"['webvtt', 'the', 'first', 'signs', 'of', 'anxiety', 'are', 'shortness', 'of', 'breath', 'the', 'second', 'has', 'trouble', 'sleeping', 'at', 'night', 'the', 'rd', 'one', 'feels', 'tired', 'all', 'the', 'time', 'the', 'th', 'one', 'has', 'a', 'bad', 'stomach', 'the', 'th', 'muscle', 'spasms', 'and', 'pain', 'the', 'th', 'one', 'doesnt', 'stop', 'sweating', 'the', 'th', 'finger', 'or', 'hand', 'is', 'shaking', 'the', 'th', 'overeats', 'or', 'has', 'no', 'appetite', 'the', 'th', 'one', 'look', 'at', 'the', 'comments']","['webvtt', 'first', 'signs', 'anxiety', 'shortness', 'breath', 'second', 'trouble', 'sleeping', 'night', 'rd', 'one', 'feels', 'tired', 'time', 'th', 'one', 'bad', 'stomach', 'th', 'muscle', 'spasms', 'pain', 'th', 'one', 'doesnt', 'stop', 'sweating', 'th', 'finger', 'hand', 'shaking', 'th', 'overeats', 'appetite', 'th', 'one', 'look', 'comments']","['webvtt', 'first', 'sign', 'anxiety', 'shortness', 'breath', 'second', 'trouble', 'sleeping', 'night', 'rd', 'one', 'feel', 'tired', 'time', 'th', 'one', 'bad', 'stomach', 'th', 'muscle', 'spasm', 'pain', 'th', 'one', 'doesnt', 'stop', 'sweating', 'th', 'finger', 'hand', 'shaking', 'th', 'overeats', 'appetite', 'th', 'one', 'look', 'comment']",webvtt first sign anxiety shortness breath second trouble sleeping night rd one feel tired time th one bad stomach th muscle spasm pain th one doesnt stop sweating th finger hand shaking th overeats appetite th one look comment
+3,alexhowardtherapy,Alex Howard - Therapist,https://www.tiktok.com/@alexhowardtherapy,https://www.tiktok.com/@alexhowardtherapy/video/7225319946706832667,"WEBVTT
+
+
+00:00:00.000 --> 00:00:02.510
+Here are my 3 top tips as a therapist
+
+00:00:02.511 --> 00:00:05.228
+to overcome health anxiety.
+
+00:00:06.151 --> 00:00:10.628
+Number one, you have to recognize what's happening.
+
+00:00:10.791 --> 00:00:13.108
+If we don't name it as health anxiety,
+
+00:00:13.551 --> 00:00:14.870
+we tend to continue
+
+00:00:14.871 --> 00:00:17.068
+going round and round with the patterns
+
+00:00:17.231 --> 00:00:19.748
+because we're trying to think our way
+
+00:00:19.880 --> 00:00:21.330
+to a feeling of safety.
+
+00:00:21.489 --> 00:00:23.770
+If you can name it as health anxiety,
+
+00:00:24.129 --> 00:00:26.410
+you can address the health anxiety
+
+00:00:26.929 --> 00:00:29.650
+as opposed to trying to address the symptoms,
+
+00:00:29.729 --> 00:00:31.610
+which may not be the real issue.
+
+00:00:32.463 --> 00:00:36.156
+Secondly, we have to then break the pattern.
+
+00:00:36.303 --> 00:00:38.636
+If you can recognize what's happening,
+
+00:00:38.863 --> 00:00:39.942
+you then have to stop
+
+00:00:39.943 --> 00:00:42.956
+the habits and the behaviors that perpetuate the cycle.
+
+00:00:43.183 --> 00:00:44.982
+So the constant checking of symptoms,
+
+00:00:44.983 --> 00:00:46.422
+researching of symptoms,
+
+00:00:46.423 --> 00:00:48.596
+looking for reassurance about symptoms.
+
+00:00:48.783 --> 00:00:50.796
+We have to break those patterns and cycles.
+
+00:00:51.320 --> 00:00:52.228
+And then thirdly,
+
+00:00:52.231 --> 00:00:53.468
+the recognition
+
+00:00:53.751 --> 00:00:56.828
+that what health anxiety often really is
+
+00:00:57.071 --> 00:00:59.548
+is an inner sense of not feeling safe.
+
+00:00:59.631 --> 00:01:02.988
+So if we can work on calming your nervous system
+
+00:01:03.151 --> 00:01:06.508
+and cultivating that inner state of safety,
+
+00:01:07.137 --> 00:01:09.576
+you won't need to have those health anxieties
+
+00:01:09.577 --> 00:01:10.762
+in the first place.
+
+00:01:11.337 --> 00:01:12.416
+To learn how to do that,
+
+00:01:12.417 --> 00:01:15.282
+do follow for more videos in this series.
+",webvtt here are my top tips as a therapist to overcome health anxiety number one you have to recognize whats happening if we dont name it as health anxiety we tend to continue going round and round with the patterns because were trying to think our way to a feeling of safety if you can name it as health anxiety you can address the health anxiety as opposed to trying to address the symptoms which may not be the real issue secondly we have to then break the pattern if you can recognize whats happening you then have to stop the habits and the behaviors that perpetuate the cycle so the constant checking of symptoms researching of symptoms looking for reassurance about symptoms we have to break those patterns and cycles and then thirdly the recognition that what health anxiety often really is is an inner sense of not feeling safe so if we can work on calming your nervous system and cultivating that inner state of safety you wont need to have those health anxieties in the first place to learn how to do that do follow for more videos in this series,"['webvtt', 'here', 'are', 'my', 'top', 'tips', 'as', 'a', 'therapist', 'to', 'overcome', 'health', 'anxiety', 'number', 'one', 'you', 'have', 'to', 'recognize', 'whats', 'happening', 'if', 'we', 'dont', 'name', 'it', 'as', 'health', 'anxiety', 'we', 'tend', 'to', 'continue', 'going', 'round', 'and', 'round', 'with', 'the', 'patterns', 'because', 'were', 'trying', 'to', 'think', 'our', 'way', 'to', 'a', 'feeling', 'of', 'safety', 'if', 'you', 'can', 'name', 'it', 'as', 'health', 'anxiety', 'you', 'can', 'address', 'the', 'health', 'anxiety', 'as', 'opposed', 'to', 'trying', 'to', 'address', 'the', 'symptoms', 'which', 'may', 'not', 'be', 'the', 'real', 'issue', 'secondly', 'we', 'have', 'to', 'then', 'break', 'the', 'pattern', 'if', 'you', 'can', 'recognize', 'whats', 'happening', 'you', 'then', 'have', 'to', 'stop', 'the', 'habits', 'and', 'the', 'behaviors', 'that', 'perpetuate', 'the', 'cycle', 'so', 'the', 'constant', 'checking', 'of', 'symptoms', 'researching', 'of', 'symptoms', 'looking', 'for', 'reassurance', 'about', 'symptoms', 'we', 'have', 'to', 'break', 'those', 'patterns', 'and', 'cycles', 'and', 'then', 'thirdly', 'the', 'recognition', 'that', 'what', 'health', 'anxiety', 'often', 'really', 'is', 'is', 'an', 'inner', 'sense', 'of', 'not', 'feeling', 'safe', 'so', 'if', 'we', 'can', 'work', 'on', 'calming', 'your', 'nervous', 'system', 'and', 'cultivating', 'that', 'inner', 'state', 'of', 'safety', 'you', 'wont', 'need', 'to', 'have', 'those', 'health', 'anxieties', 'in', 'the', 'first', 'place', 'to', 'learn', 'how', 'to', 'do', 'that', 'do', 'follow', 'for', 'more', 'videos', 'in', 'this', 'series']","['webvtt', 'top', 'tips', 'therapist', 'overcome', 'health', 'anxiety', 'number', 'one', 'recognize', 'whats', 'happening', 'dont', 'name', 'health', 'anxiety', 'tend', 'continue', 'going', 'round', 'round', 'patterns', 'trying', 'think', 'way', 'feeling', 'safety', 'name', 'health', 'anxiety', 'address', 'health', 'anxiety', 'opposed', 'trying', 'address', 'symptoms', 'may', 'real', 'issue', 'secondly', 'break', 'pattern', 'recognize', 'whats', 'happening', 'stop', 'habits', 'behaviors', 'perpetuate', 'cycle', 'constant', 'checking', 'symptoms', 'researching', 'symptoms', 'looking', 'reassurance', 'symptoms', 'break', 'patterns', 'cycles', 'thirdly', 'recognition', 'health', 'anxiety', 'often', 'really', 'inner', 'sense', 'feeling', 'safe', 'work', 'calming', 'nervous', 'system', 'cultivating', 'inner', 'state', 'safety', 'wont', 'need', 'health', 'anxieties', 'first', 'place', 'learn', 'follow', 'videos', 'series']","['webvtt', 'top', 'tip', 'therapist', 'overcome', 'health', 'anxiety', 'number', 'one', 'recognize', 'whats', 'happening', 'dont', 'name', 'health', 'anxiety', 'tend', 'continue', 'going', 'round', 'round', 'pattern', 'trying', 'think', 'way', 'feeling', 'safety', 'name', 'health', 'anxiety', 'address', 'health', 'anxiety', 'opposed', 'trying', 'address', 'symptom', 'may', 'real', 'issue', 'secondly', 'break', 'pattern', 'recognize', 'whats', 'happening', 'stop', 'habit', 'behavior', 'perpetuate', 'cycle', 'constant', 'checking', 'symptom', 'researching', 'symptom', 'looking', 'reassurance', 'symptom', 'break', 'pattern', 'cycle', 'thirdly', 'recognition', 'health', 'anxiety', 'often', 'really', 'inner', 'sense', 'feeling', 'safe', 'work', 'calming', 'nervous', 'system', 'cultivating', 'inner', 'state', 'safety', 'wont', 'need', 'health', 'anxiety', 'first', 'place', 'learn', 'follow', 'video', 'series']",webvtt top tip therapist overcome health anxiety number one recognize whats happening dont name health anxiety tend continue going round round pattern trying think way feeling safety name health anxiety address health anxiety opposed trying address symptom may real issue secondly break pattern recognize whats happening stop habit behavior perpetuate cycle constant checking symptom researching symptom looking reassurance symptom break pattern cycle thirdly recognition health anxiety often really inner sense feeling safe work calming nervous system cultivating inner state safety wont need health anxiety first place learn follow video series
+4,jpwhit,James Whittaker | Win the Day®,https://www.tiktok.com/@jpwhit,https://www.tiktok.com/@jpwhit/video/7227174462037183790,"WEBVTT
+
+
+00:00:00.000 --> 00:00:01.711
+For anxiety specifically,
+
+00:00:02.108 --> 00:00:03.351
+what can people do
+
+00:00:03.428 --> 00:00:05.827
+to make sure that they're not so much of a victim
+
+00:00:05.828 --> 00:00:07.947
+to that feeling of overwhelming anxiety
+
+00:00:07.948 --> 00:00:09.587
+that can just creep up on them every single day?
+
+00:00:09.588 --> 00:00:10.791
+So 4 simple things.
+
+00:00:10.828 --> 00:00:13.111
+Never leave a situation because you're anxious,
+
+00:00:13.268 --> 00:00:15.467
+because then the anxiety will control you.
+
+00:00:15.468 --> 00:00:19.197
+Breathe 2 minutes 3x1 day.
+
+00:00:19.198 --> 00:00:20.280
+This will save you
+
+00:00:20.281 --> 00:00:23.520
+like thousands of dollars of therapy if you do this.
+
+00:00:23.521 --> 00:00:26.560
+It's the 15 second breath for 2 minutes.
+
+00:00:26.561 --> 00:00:27.938
+So that's 8 breaths
+
+00:00:28.160 --> 00:00:29.360
+4 seconds in,
+
+00:00:29.380 --> 00:00:30.939
+hold it for a second and 1/2
+
+00:00:30.940 --> 00:00:32.560
+8 seconds out.
+
+00:00:32.700 --> 00:00:36.080
+So double the exhale as the inhale,
+
+00:00:36.200 --> 00:00:37.707
+hold it out for a second and 1/2.
+
+00:00:37.708 --> 00:00:38.947
+That's 15 seconds.
+
+00:00:38.948 --> 00:00:40.067
+Repeat times 8.
+
+00:00:40.068 --> 00:00:42.631
+It just feels like you took a Valium
+
+00:00:42.668 --> 00:00:44.071
+without any side effects.
+
+00:00:44.360 --> 00:00:46.099
+Do that 3x1 day.
+
+00:00:46.100 --> 00:00:47.899
+Your level of anxiety is going to go way down.
+
+00:00:47.900 --> 00:00:49.839
+And then whenever you feel sad,
+
+00:00:49.900 --> 00:00:50.979
+mad, nervous,
+
+00:00:50.980 --> 00:00:51.979
+or out of control,
+
+00:00:51.980 --> 00:00:53.179
+write down what you're thinking
+
+00:00:53.180 --> 00:00:54.939
+and then just ask yourself if it's true.
+
+00:00:54.940 --> 00:00:57.059
+And learning to kill the ants.
+
+00:00:57.060 --> 00:00:58.699
+The automatic negative thoughts.
+
+00:00:58.700 --> 00:00:59.839
+It's miraculous.
+",webvtt for anxiety specifically what can people do to make sure that theyre not so much of a victim to that feeling of overwhelming anxiety that can just creep up on them every single day so simple things never leave a situation because youre anxious because then the anxiety will control you breathe minutes x day this will save you like thousands of dollars of therapy if you do this its the second breath for minutes so thats breaths seconds in hold it for a second and seconds out so double the exhale as the inhale hold it out for a second and thats seconds repeat times it just feels like you took a valium without any side effects do that x day your level of anxiety is going to go way down and then whenever you feel sad mad nervous or out of control write down what youre thinking and then just ask yourself if its true and learning to kill the ants the automatic negative thoughts its miraculous,"['webvtt', 'for', 'anxiety', 'specifically', 'what', 'can', 'people', 'do', 'to', 'make', 'sure', 'that', 'theyre', 'not', 'so', 'much', 'of', 'a', 'victim', 'to', 'that', 'feeling', 'of', 'overwhelming', 'anxiety', 'that', 'can', 'just', 'creep', 'up', 'on', 'them', 'every', 'single', 'day', 'so', 'simple', 'things', 'never', 'leave', 'a', 'situation', 'because', 'youre', 'anxious', 'because', 'then', 'the', 'anxiety', 'will', 'control', 'you', 'breathe', 'minutes', 'x', 'day', 'this', 'will', 'save', 'you', 'like', 'thousands', 'of', 'dollars', 'of', 'therapy', 'if', 'you', 'do', 'this', 'its', 'the', 'second', 'breath', 'for', 'minutes', 'so', 'thats', 'breaths', 'seconds', 'in', 'hold', 'it', 'for', 'a', 'second', 'and', 'seconds', 'out', 'so', 'double', 'the', 'exhale', 'as', 'the', 'inhale', 'hold', 'it', 'out', 'for', 'a', 'second', 'and', 'thats', 'seconds', 'repeat', 'times', 'it', 'just', 'feels', 'like', 'you', 'took', 'a', 'valium', 'without', 'any', 'side', 'effects', 'do', 'that', 'x', 'day', 'your', 'level', 'of', 'anxiety', 'is', 'going', 'to', 'go', 'way', 'down', 'and', 'then', 'whenever', 'you', 'feel', 'sad', 'mad', 'nervous', 'or', 'out', 'of', 'control', 'write', 'down', 'what', 'youre', 'thinking', 'and', 'then', 'just', 'ask', 'yourself', 'if', 'its', 'true', 'and', 'learning', 'to', 'kill', 'the', 'ants', 'the', 'automatic', 'negative', 'thoughts', 'its', 'miraculous']","['webvtt', 'anxiety', 'specifically', 'people', 'make', 'sure', 'theyre', 'much', 'victim', 'feeling', 'overwhelming', 'anxiety', 'creep', 'every', 'single', 'day', 'simple', 'things', 'never', 'leave', 'situation', 'youre', 'anxious', 'anxiety', 'control', 'breathe', 'minutes', 'x', 'day', 'save', 'like', 'thousands', 'dollars', 'therapy', 'second', 'breath', 'minutes', 'thats', 'breaths', 'seconds', 'hold', 'second', 'seconds', 'double', 'exhale', 'inhale', 'hold', 'second', 'thats', 'seconds', 'repeat', 'times', 'feels', 'like', 'took', 'valium', 'without', 'side', 'effects', 'x', 'day', 'level', 'anxiety', 'going', 'go', 'way', 'whenever', 'feel', 'sad', 'mad', 'nervous', 'control', 'write', 'youre', 'thinking', 'ask', 'true', 'learning', 'kill', 'ants', 'automatic', 'negative', 'thoughts', 'miraculous']","['webvtt', 'anxiety', 'specifically', 'people', 'make', 'sure', 'theyre', 'much', 'victim', 'feeling', 'overwhelming', 'anxiety', 'creep', 'every', 'single', 'day', 'simple', 'thing', 'never', 'leave', 'situation', 'youre', 'anxious', 'anxiety', 'control', 'breathe', 'minute', 'x', 'day', 'save', 'like', 'thousand', 'dollar', 'therapy', 'second', 'breath', 'minute', 'thats', 'breath', 'second', 'hold', 'second', 'second', 'double', 'exhale', 'inhale', 'hold', 'second', 'thats', 'second', 'repeat', 'time', 'feel', 'like', 'took', 'valium', 'without', 'side', 'effect', 'x', 'day', 'level', 'anxiety', 'going', 'go', 'way', 'whenever', 'feel', 'sad', 'mad', 'nervous', 'control', 'write', 'youre', 'thinking', 'ask', 'true', 'learning', 'kill', 'ant', 'automatic', 'negative', 'thought', 'miraculous']",webvtt anxiety specifically people make sure theyre much victim feeling overwhelming anxiety creep every single day simple thing never leave situation youre anxious anxiety control breathe minute x day save like thousand dollar therapy second breath minute thats breath second hold second second double exhale inhale hold second thats second repeat time feel like took valium without side effect x day level anxiety going go way whenever feel sad mad nervous control write youre thinking ask true learning kill ant automatic negative thought miraculous
+5,anxietyjosh,anxietyjosh,https://www.tiktok.com/@anxietyjosh,https://www.tiktok.com/@anxietyjosh/video/7460206689355074822,"WEBVTT
+
+
+00:00:00.000 --> 00:00:00.860
+Hi, I'm Josh,
+
+00:00:00.861 --> 00:00:03.341
+an anxiety therapist and previous sufferer.
+
+00:00:03.342 --> 00:00:07.261
+Here are 10 signs that you're struggling with an anxiety disorder.
+
+00:00:07.262 --> 00:00:10.261
+The first sign is an obsession with how you feel.
+
+00:00:10.262 --> 00:00:12.621
+You suddenly feel weird, different to how you used to,
+
+00:00:12.622 --> 00:00:15.261
+and you feel the sense of doom and trepidation.
+
+00:00:15.262 --> 00:00:18.641
+The second sign is you're bombarded with what if thoughts,
+
+00:00:18.660 --> 00:00:20.660
+scary what if thoughts, not the fun ones,
+
+00:00:20.661 --> 00:00:22.181
+usually about your sanity,
+
+00:00:22.182 --> 00:00:24.261
+your well being, your health.
+
+00:00:24.262 --> 00:00:27.901
+The third sign, a strange symptoms that feel magnified.
+
+00:00:27.902 --> 00:00:31.741
+Heart palpitations, maybe feel dissociated and not quite here.
+
+00:00:31.742 --> 00:00:34.781
+Maybe you feel dizzy, lightheaded and things just look strange.
+
+00:00:34.782 --> 00:00:36.761
+No. 4 is intrusive thoughts,
+
+00:00:36.860 --> 00:00:37.700
+strange taboo
+
+00:00:37.701 --> 00:00:40.581
+ones that you usually don't have or they usually don't bother you.
+
+00:00:40.582 --> 00:00:42.381
+Suddenly they now feel important.
+
+00:00:42.382 --> 00:00:44.821
+Number five is constant reassurance seeking.
+
+00:00:44.822 --> 00:00:46.581
+Maybe you've been down a Reddit hole
+
+00:00:46.582 --> 00:00:48.541
+constantly asking Doctor, Google,
+
+00:00:48.542 --> 00:00:50.261
+yet you're still there in the same place
+
+00:00:50.262 --> 00:00:52.581
+trying to find 100% assurance that you're okay.
+
+00:00:52.582 --> 00:00:55.501
+Number six is experiencing a lot of panic attacks
+
+00:00:55.502 --> 00:00:57.141
+and fearing those panic attacks.
+
+00:00:57.142 --> 00:00:58.381
+One hits you out the blue,
+
+00:00:58.382 --> 00:00:59.741
+you're not sure what's going on,
+
+00:00:59.742 --> 00:01:01.541
+so you monitor for it all day
+
+00:01:01.542 --> 00:01:04.421
+because you're afraid of having another panic attack
+
+00:01:04.422 --> 00:01:06.721
+and then you build your life around avoiding them.
+
+00:01:06.860 --> 00:01:08.720
+No.7 is threat monitoring.
+
+00:01:08.780 --> 00:01:12.700
+You're monitoring either your thoughts or sensations in your body
+
+00:01:12.701 --> 00:01:14.601
+looking for the next threat
+
+00:01:14.740 --> 00:01:17.680
+or uncomfortable experience that frightens you.
+
+00:01:17.720 --> 00:01:21.340
+No.8 is you resist and fear the emotion of anxiety.
+
+00:01:21.341 --> 00:01:24.381
+You try To get rid of it, maybe you've looked for lots of things like
+
+00:01:24.382 --> 00:01:25.501
+how do I get rid of this now?
+
+00:01:25.502 --> 00:01:27.001
+How to stop a panic attack,
+
+00:01:27.120 --> 00:01:28.580
+anything to try and get rid of it.
+
+00:01:28.581 --> 00:01:32.501
+And that urgency, No. 9 is that you avoid doing stuff that you used to,
+
+00:01:32.502 --> 00:01:34.341
+that what non anxious you would do,
+
+00:01:34.342 --> 00:01:37.341
+you've put off because you're waiting to feel better.
+
+00:01:37.342 --> 00:01:40.401
+No. 10, anxiety becomes your default thought.
+
+00:01:40.520 --> 00:01:42.460
+Whenever you're not distracted or busy,
+
+00:01:42.461 --> 00:01:45.061
+you check how you feel and it's the default thought.
+
+00:01:45.062 --> 00:01:47.981
+I must fix myself, I must work on this,
+
+00:01:47.982 --> 00:01:51.301
+I must get rid of this. And it becomes the centre of your life.
+
+00:01:51.302 --> 00:01:53.261
+I've been there. I've got through it.
+
+00:01:53.262 --> 00:01:55.281
+So inspired me to be a therapist.
+
+00:01:55.380 --> 00:01:59.560
+And if this resonates, my work in this page might help.
+",webvtt hi im josh an anxiety therapist and previous sufferer here are signs that youre struggling with an anxiety disorder the first sign is an obsession with how you feel you suddenly feel weird different to how you used to and you feel the sense of doom and trepidation the second sign is youre bombarded with what if thoughts scary what if thoughts not the fun ones usually about your sanity your well being your health the third sign a strange symptoms that feel magnified heart palpitations maybe feel dissociated and not quite here maybe you feel dizzy lightheaded and things just look strange no is intrusive thoughts strange taboo ones that you usually dont have or they usually dont bother you suddenly they now feel important number five is constant reassurance seeking maybe youve been down a reddit hole constantly asking doctor google yet youre still there in the same place trying to find assurance that youre okay number six is experiencing a lot of panic attacks and fearing those panic attacks one hits you out the blue youre not sure whats going on so you monitor for it all day because youre afraid of having another panic attack and then you build your life around avoiding them no is threat monitoring youre monitoring either your thoughts or sensations in your body looking for the next threat or uncomfortable experience that frightens you no is you resist and fear the emotion of anxiety you try to get rid of it maybe youve looked for lots of things like how do i get rid of this now how to stop a panic attack anything to try and get rid of it and that urgency no is that you avoid doing stuff that you used to that what non anxious you would do youve put off because youre waiting to feel better no anxiety becomes your default thought whenever youre not distracted or busy you check how you feel and its the default thought i must fix myself i must work on this i must get rid of this and it becomes the centre of your life ive been there ive got through it so inspired me to be a therapist and if this resonates my work in this page might help,"['webvtt', 'hi', 'im', 'josh', 'an', 'anxiety', 'therapist', 'and', 'previous', 'sufferer', 'here', 'are', 'signs', 'that', 'youre', 'struggling', 'with', 'an', 'anxiety', 'disorder', 'the', 'first', 'sign', 'is', 'an', 'obsession', 'with', 'how', 'you', 'feel', 'you', 'suddenly', 'feel', 'weird', 'different', 'to', 'how', 'you', 'used', 'to', 'and', 'you', 'feel', 'the', 'sense', 'of', 'doom', 'and', 'trepidation', 'the', 'second', 'sign', 'is', 'youre', 'bombarded', 'with', 'what', 'if', 'thoughts', 'scary', 'what', 'if', 'thoughts', 'not', 'the', 'fun', 'ones', 'usually', 'about', 'your', 'sanity', 'your', 'well', 'being', 'your', 'health', 'the', 'third', 'sign', 'a', 'strange', 'symptoms', 'that', 'feel', 'magnified', 'heart', 'palpitations', 'maybe', 'feel', 'dissociated', 'and', 'not', 'quite', 'here', 'maybe', 'you', 'feel', 'dizzy', 'lightheaded', 'and', 'things', 'just', 'look', 'strange', 'no', 'is', 'intrusive', 'thoughts', 'strange', 'taboo', 'ones', 'that', 'you', 'usually', 'dont', 'have', 'or', 'they', 'usually', 'dont', 'bother', 'you', 'suddenly', 'they', 'now', 'feel', 'important', 'number', 'five', 'is', 'constant', 'reassurance', 'seeking', 'maybe', 'youve', 'been', 'down', 'a', 'reddit', 'hole', 'constantly', 'asking', 'doctor', 'google', 'yet', 'youre', 'still', 'there', 'in', 'the', 'same', 'place', 'trying', 'to', 'find', 'assurance', 'that', 'youre', 'okay', 'number', 'six', 'is', 'experiencing', 'a', 'lot', 'of', 'panic', 'attacks', 'and', 'fearing', 'those', 'panic', 'attacks', 'one', 'hits', 'you', 'out', 'the', 'blue', 'youre', 'not', 'sure', 'whats', 'going', 'on', 'so', 'you', 'monitor', 'for', 'it', 'all', 'day', 'because', 'youre', 'afraid', 'of', 'having', 'another', 'panic', 'attack', 'and', 'then', 'you', 'build', 'your', 'life', 'around', 'avoiding', 'them', 'no', 'is', 'threat', 'monitoring', 'youre', 'monitoring', 'either', 'your', 'thoughts', 'or', 'sensations', 'in', 'your', 'body', 'looking', 'for', 'the', 'next', 'threat', 'or', 'uncomfortable', 'experience', 'that', 'frightens', 'you', 'no', 'is', 'you', 'resist', 'and', 'fear', 'the', 'emotion', 'of', 'anxiety', 'you', 'try', 'to', 'get', 'rid', 'of', 'it', 'maybe', 'youve', 'looked', 'for', 'lots', 'of', 'things', 'like', 'how', 'do', 'i', 'get', 'rid', 'of', 'this', 'now', 'how', 'to', 'stop', 'a', 'panic', 'attack', 'anything', 'to', 'try', 'and', 'get', 'rid', 'of', 'it', 'and', 'that', 'urgency', 'no', 'is', 'that', 'you', 'avoid', 'doing', 'stuff', 'that', 'you', 'used', 'to', 'that', 'what', 'non', 'anxious', 'you', 'would', 'do', 'youve', 'put', 'off', 'because', 'youre', 'waiting', 'to', 'feel', 'better', 'no', 'anxiety', 'becomes', 'your', 'default', 'thought', 'whenever', 'youre', 'not', 'distracted', 'or', 'busy', 'you', 'check', 'how', 'you', 'feel', 'and', 'its', 'the', 'default', 'thought', 'i', 'must', 'fix', 'myself', 'i', 'must', 'work', 'on', 'this', 'i', 'must', 'get', 'rid', 'of', 'this', 'and', 'it', 'becomes', 'the', 'centre', 'of', 'your', 'life', 'ive', 'been', 'there', 'ive', 'got', 'through', 'it', 'so', 'inspired', 'me', 'to', 'be', 'a', 'therapist', 'and', 'if', 'this', 'resonates', 'my', 'work', 'in', 'this', 'page', 'might', 'help']","['webvtt', 'hi', 'im', 'josh', 'anxiety', 'therapist', 'previous', 'sufferer', 'signs', 'youre', 'struggling', 'anxiety', 'disorder', 'first', 'sign', 'obsession', 'feel', 'suddenly', 'feel', 'weird', 'different', 'used', 'feel', 'sense', 'doom', 'trepidation', 'second', 'sign', 'youre', 'bombarded', 'thoughts', 'scary', 'thoughts', 'fun', 'ones', 'usually', 'sanity', 'well', 'health', 'third', 'sign', 'strange', 'symptoms', 'feel', 'magnified', 'heart', 'palpitations', 'maybe', 'feel', 'dissociated', 'quite', 'maybe', 'feel', 'dizzy', 'lightheaded', 'things', 'look', 'strange', 'intrusive', 'thoughts', 'strange', 'taboo', 'ones', 'usually', 'dont', 'usually', 'dont', 'bother', 'suddenly', 'feel', 'important', 'number', 'five', 'constant', 'reassurance', 'seeking', 'maybe', 'youve', 'reddit', 'hole', 'constantly', 'asking', 'doctor', 'google', 'yet', 'youre', 'still', 'place', 'trying', 'find', 'assurance', 'youre', 'okay', 'number', 'six', 'experiencing', 'lot', 'panic', 'attacks', 'fearing', 'panic', 'attacks', 'one', 'hits', 'blue', 'youre', 'sure', 'whats', 'going', 'monitor', 'day', 'youre', 'afraid', 'another', 'panic', 'attack', 'build', 'life', 'around', 'avoiding', 'threat', 'monitoring', 'youre', 'monitoring', 'either', 'thoughts', 'sensations', 'body', 'looking', 'next', 'threat', 'uncomfortable', 'experience', 'frightens', 'resist', 'fear', 'emotion', 'anxiety', 'try', 'get', 'rid', 'maybe', 'youve', 'looked', 'lots', 'things', 'like', 'get', 'rid', 'stop', 'panic', 'attack', 'anything', 'try', 'get', 'rid', 'urgency', 'avoid', 'stuff', 'used', 'non', 'anxious', 'would', 'youve', 'put', 'youre', 'waiting', 'feel', 'better', 'anxiety', 'becomes', 'default', 'thought', 'whenever', 'youre', 'distracted', 'busy', 'check', 'feel', 'default', 'thought', 'must', 'fix', 'must', 'work', 'must', 'get', 'rid', 'becomes', 'centre', 'life', 'ive', 'ive', 'got', 'inspired', 'therapist', 'resonates', 'work', 'page', 'might', 'help']","['webvtt', 'hi', 'im', 'josh', 'anxiety', 'therapist', 'previous', 'sufferer', 'sign', 'youre', 'struggling', 'anxiety', 'disorder', 'first', 'sign', 'obsession', 'feel', 'suddenly', 'feel', 'weird', 'different', 'used', 'feel', 'sense', 'doom', 'trepidation', 'second', 'sign', 'youre', 'bombarded', 'thought', 'scary', 'thought', 'fun', 'one', 'usually', 'sanity', 'well', 'health', 'third', 'sign', 'strange', 'symptom', 'feel', 'magnified', 'heart', 'palpitation', 'maybe', 'feel', 'dissociated', 'quite', 'maybe', 'feel', 'dizzy', 'lightheaded', 'thing', 'look', 'strange', 'intrusive', 'thought', 'strange', 'taboo', 'one', 'usually', 'dont', 'usually', 'dont', 'bother', 'suddenly', 'feel', 'important', 'number', 'five', 'constant', 'reassurance', 'seeking', 'maybe', 'youve', 'reddit', 'hole', 'constantly', 'asking', 'doctor', 'google', 'yet', 'youre', 'still', 'place', 'trying', 'find', 'assurance', 'youre', 'okay', 'number', 'six', 'experiencing', 'lot', 'panic', 'attack', 'fearing', 'panic', 'attack', 'one', 'hit', 'blue', 'youre', 'sure', 'whats', 'going', 'monitor', 'day', 'youre', 'afraid', 'another', 'panic', 'attack', 'build', 'life', 'around', 'avoiding', 'threat', 'monitoring', 'youre', 'monitoring', 'either', 'thought', 'sensation', 'body', 'looking', 'next', 'threat', 'uncomfortable', 'experience', 'frightens', 'resist', 'fear', 'emotion', 'anxiety', 'try', 'get', 'rid', 'maybe', 'youve', 'looked', 'lot', 'thing', 'like', 'get', 'rid', 'stop', 'panic', 'attack', 'anything', 'try', 'get', 'rid', 'urgency', 'avoid', 'stuff', 'used', 'non', 'anxious', 'would', 'youve', 'put', 'youre', 'waiting', 'feel', 'better', 'anxiety', 'becomes', 'default', 'thought', 'whenever', 'youre', 'distracted', 'busy', 'check', 'feel', 'default', 'thought', 'must', 'fix', 'must', 'work', 'must', 'get', 'rid', 'becomes', 'centre', 'life', 'ive', 'ive', 'got', 'inspired', 'therapist', 'resonates', 'work', 'page', 'might', 'help']",webvtt hi im josh anxiety therapist previous sufferer sign youre struggling anxiety disorder first sign obsession feel suddenly feel weird different used feel sense doom trepidation second sign youre bombarded thought scary thought fun one usually sanity well health third sign strange symptom feel magnified heart palpitation maybe feel dissociated quite maybe feel dizzy lightheaded thing look strange intrusive thought strange taboo one usually dont usually dont bother suddenly feel important number five constant reassurance seeking maybe youve reddit hole constantly asking doctor google yet youre still place trying find assurance youre okay number six experiencing lot panic attack fearing panic attack one hit blue youre sure whats going monitor day youre afraid another panic attack build life around avoiding threat monitoring youre monitoring either thought sensation body looking next threat uncomfortable experience frightens resist fear emotion anxiety try get rid maybe youve looked lot thing like get rid stop panic attack anything try get rid urgency avoid stuff used non anxious would youve put youre waiting feel better anxiety becomes default thought whenever youre distracted busy check feel default thought must fix must work must get rid becomes centre life ive ive got inspired therapist resonates work page might help
+6,garybrecka.shorts,Gary Brecka Shorts,https://www.tiktok.com/@garybrecka.shorts,https://www.tiktok.com/@garybrecka.shorts/video/7229931081275919659,"WEBVTT
+
+
+00:00:00.000 --> 00:00:02.031
+If you actually have ever suffered from
+
+00:00:02.032 --> 00:00:04.027
+or know somebody who suffered from anxiety,
+
+00:00:04.352 --> 00:00:06.151
+if you ask them 3 questions,
+
+00:00:06.152 --> 00:00:09.191
+you can find out very quickly that their anxiety
+
+00:00:09.192 --> 00:00:11.187
+is not coming from a cluster of symptoms.
+
+00:00:11.312 --> 00:00:13.227
+It's not coming from their outside environment.
+
+00:00:13.272 --> 00:00:14.747
+It is coming from within them.
+
+00:00:14.792 --> 00:00:16.267
+It's coming from their physiology.
+
+00:00:16.966 --> 00:00:19.565
+I mean, if you know someone who's suffering from anxiety
+
+00:00:19.566 --> 00:00:19.952
+and you say,
+
+00:00:19.953 --> 00:00:20.773
+well, have you
+
+00:00:21.126 --> 00:00:23.573
+had anxiety on and off throughout your lifetime,
+
+00:00:24.046 --> 00:00:25.733
+the most of the time they'll say yes.
+
+00:00:26.246 --> 00:00:26.885
+And then if you say,
+
+00:00:26.886 --> 00:00:29.333
+can you point to the specific trigger that causes it?
+
+00:00:30.006 --> 00:00:31.373
+Very often they'll say, no.
+
+00:00:32.126 --> 00:00:33.965
+I mean, yes, I know some of my triggers,
+
+00:00:33.966 --> 00:00:36.245
+but I could be sitting in a podcast just like this
+
+00:00:36.246 --> 00:00:37.312
+in a very calm environment,
+
+00:00:37.313 --> 00:00:38.245
+there's no threats around,
+
+00:00:38.246 --> 00:00:40.333
+and all of a sudden I get overwhelmed by anxiety.
+
+00:00:40.640 --> 00:00:41.758
+I can be driving home from work
+
+00:00:41.759 --> 00:00:43.420
+on an otherwise innocuous day,
+
+00:00:43.439 --> 00:00:45.220
+and I can be overwhelmed by anxiety.
+
+00:00:45.359 --> 00:00:47.558
+Well, that is not coming from your outside environment,
+
+00:00:47.559 --> 00:00:49.958
+right? This is coming from a process called methylation.
+
+00:00:49.959 --> 00:00:51.598
+So the body is entering this mild
+
+00:00:51.599 --> 00:00:55.300
+fighter flight response without the presence of a fear.
+",webvtt if you actually have ever suffered from or know somebody who suffered from anxiety if you ask them questions you can find out very quickly that their anxiety is not coming from a cluster of symptoms its not coming from their outside environment it is coming from within them its coming from their physiology i mean if you know someone whos suffering from anxiety and you say well have you had anxiety on and off throughout your lifetime the most of the time theyll say yes and then if you say can you point to the specific trigger that causes it very often theyll say no i mean yes i know some of my triggers but i could be sitting in a podcast just like this in a very calm environment theres no threats around and all of a sudden i get overwhelmed by anxiety i can be driving home from work on an otherwise innocuous day and i can be overwhelmed by anxiety well that is not coming from your outside environment right this is coming from a process called methylation so the body is entering this mild fighter flight response without the presence of a fear,"['webvtt', 'if', 'you', 'actually', 'have', 'ever', 'suffered', 'from', 'or', 'know', 'somebody', 'who', 'suffered', 'from', 'anxiety', 'if', 'you', 'ask', 'them', 'questions', 'you', 'can', 'find', 'out', 'very', 'quickly', 'that', 'their', 'anxiety', 'is', 'not', 'coming', 'from', 'a', 'cluster', 'of', 'symptoms', 'its', 'not', 'coming', 'from', 'their', 'outside', 'environment', 'it', 'is', 'coming', 'from', 'within', 'them', 'its', 'coming', 'from', 'their', 'physiology', 'i', 'mean', 'if', 'you', 'know', 'someone', 'whos', 'suffering', 'from', 'anxiety', 'and', 'you', 'say', 'well', 'have', 'you', 'had', 'anxiety', 'on', 'and', 'off', 'throughout', 'your', 'lifetime', 'the', 'most', 'of', 'the', 'time', 'theyll', 'say', 'yes', 'and', 'then', 'if', 'you', 'say', 'can', 'you', 'point', 'to', 'the', 'specific', 'trigger', 'that', 'causes', 'it', 'very', 'often', 'theyll', 'say', 'no', 'i', 'mean', 'yes', 'i', 'know', 'some', 'of', 'my', 'triggers', 'but', 'i', 'could', 'be', 'sitting', 'in', 'a', 'podcast', 'just', 'like', 'this', 'in', 'a', 'very', 'calm', 'environment', 'theres', 'no', 'threats', 'around', 'and', 'all', 'of', 'a', 'sudden', 'i', 'get', 'overwhelmed', 'by', 'anxiety', 'i', 'can', 'be', 'driving', 'home', 'from', 'work', 'on', 'an', 'otherwise', 'innocuous', 'day', 'and', 'i', 'can', 'be', 'overwhelmed', 'by', 'anxiety', 'well', 'that', 'is', 'not', 'coming', 'from', 'your', 'outside', 'environment', 'right', 'this', 'is', 'coming', 'from', 'a', 'process', 'called', 'methylation', 'so', 'the', 'body', 'is', 'entering', 'this', 'mild', 'fighter', 'flight', 'response', 'without', 'the', 'presence', 'of', 'a', 'fear']","['webvtt', 'actually', 'ever', 'suffered', 'know', 'somebody', 'suffered', 'anxiety', 'ask', 'questions', 'find', 'quickly', 'anxiety', 'coming', 'cluster', 'symptoms', 'coming', 'outside', 'environment', 'coming', 'within', 'coming', 'physiology', 'mean', 'know', 'someone', 'whos', 'suffering', 'anxiety', 'say', 'well', 'anxiety', 'throughout', 'lifetime', 'time', 'theyll', 'say', 'yes', 'say', 'point', 'specific', 'trigger', 'causes', 'often', 'theyll', 'say', 'mean', 'yes', 'know', 'triggers', 'could', 'sitting', 'podcast', 'like', 'calm', 'environment', 'theres', 'threats', 'around', 'sudden', 'get', 'overwhelmed', 'anxiety', 'driving', 'home', 'work', 'otherwise', 'innocuous', 'day', 'overwhelmed', 'anxiety', 'well', 'coming', 'outside', 'environment', 'right', 'coming', 'process', 'called', 'methylation', 'body', 'entering', 'mild', 'fighter', 'flight', 'response', 'without', 'presence', 'fear']","['webvtt', 'actually', 'ever', 'suffered', 'know', 'somebody', 'suffered', 'anxiety', 'ask', 'question', 'find', 'quickly', 'anxiety', 'coming', 'cluster', 'symptom', 'coming', 'outside', 'environment', 'coming', 'within', 'coming', 'physiology', 'mean', 'know', 'someone', 'who', 'suffering', 'anxiety', 'say', 'well', 'anxiety', 'throughout', 'lifetime', 'time', 'theyll', 'say', 'yes', 'say', 'point', 'specific', 'trigger', 'cause', 'often', 'theyll', 'say', 'mean', 'yes', 'know', 'trigger', 'could', 'sitting', 'podcast', 'like', 'calm', 'environment', 'there', 'threat', 'around', 'sudden', 'get', 'overwhelmed', 'anxiety', 'driving', 'home', 'work', 'otherwise', 'innocuous', 'day', 'overwhelmed', 'anxiety', 'well', 'coming', 'outside', 'environment', 'right', 'coming', 'process', 'called', 'methylation', 'body', 'entering', 'mild', 'fighter', 'flight', 'response', 'without', 'presence', 'fear']",webvtt actually ever suffered know somebody suffered anxiety ask question find quickly anxiety coming cluster symptom coming outside environment coming within coming physiology mean know someone who suffering anxiety say well anxiety throughout lifetime time theyll say yes say point specific trigger cause often theyll say mean yes know trigger could sitting podcast like calm environment there threat around sudden get overwhelmed anxiety driving home work otherwise innocuous day overwhelmed anxiety well coming outside environment right coming process called methylation body entering mild fighter flight response without presence fear
+7,drbergofficial,Dr. Eric Berg,https://www.tiktok.com/@drbergofficial,https://www.tiktok.com/@drbergofficial/video/7140682349284543745,"WEBVTT
+
+
+00:00:00.000 --> 00:00:03.300
+What is the most common cause for panic attacks?
+
+00:00:03.320 --> 00:00:04.740
+That's, um,
+
+00:00:04.760 --> 00:00:07.700
+adrenal overload. Most,
+
+00:00:07.960 --> 00:00:09.720
+most of the time, nutritionally speaking,
+
+00:00:09.721 --> 00:00:12.741
+it's a low vitamin B1. So,
+
+00:00:12.880 --> 00:00:14.760
+I mean, I think you should do an experiment
+
+00:00:14.761 --> 00:00:16.481
+and this would be a great experiment.
+
+00:00:16.482 --> 00:00:18.221
+If you're in a panic attack,
+
+00:00:18.280 --> 00:00:20.680
+just take some be one and just watch what happens.
+
+00:00:20.681 --> 00:00:21.721
+Within about three minutes,
+
+00:00:21.722 --> 00:00:23.441
+it's like, oh,
+
+00:00:23.442 --> 00:00:24.241
+I can, I can breathe.
+
+00:00:24.242 --> 00:00:27.961
+I feel calmer. But then the breathing is key too.
+
+00:00:27.962 --> 00:00:30.601
+You don't wanna hyperventilate when you have a panic attack.
+
+00:00:30.602 --> 00:00:32.261
+You wanna slow the breathing down
+
+00:00:32.759 --> 00:00:35.840
+in for about four seconds and out for four seconds.
+
+00:00:35.841 --> 00:00:38.861
+And that will pull yourself out of a panic attack.
+
+00:00:38.960 --> 00:00:41.620
+Believe it or not, the more you breathe,
+
+00:00:41.840 --> 00:00:43.600
+you're thinking you're getting more oxygen,
+
+00:00:43.601 --> 00:00:46.661
+but it's locking, it's locking up, um,
+
+00:00:46.920 --> 00:00:48.360
+your oxygen. So
+
+00:00:48.361 --> 00:00:52.741
+you need a certain amount of CO2 to allow the oxygen to be exchanged.
+",webvtt what is the most common cause for panic attacks thats um adrenal overload most most of the time nutritionally speaking its a low vitamin b so i mean i think you should do an experiment and this would be a great experiment if youre in a panic attack just take some be one and just watch what happens within about three minutes its like oh i can i can breathe i feel calmer but then the breathing is key too you dont wanna hyperventilate when you have a panic attack you wanna slow the breathing down in for about four seconds and out for four seconds and that will pull yourself out of a panic attack believe it or not the more you breathe youre thinking youre getting more oxygen but its locking its locking up um your oxygen so you need a certain amount of co to allow the oxygen to be exchanged,"['webvtt', 'what', 'is', 'the', 'most', 'common', 'cause', 'for', 'panic', 'attacks', 'thats', 'um', 'adrenal', 'overload', 'most', 'most', 'of', 'the', 'time', 'nutritionally', 'speaking', 'its', 'a', 'low', 'vitamin', 'b', 'so', 'i', 'mean', 'i', 'think', 'you', 'should', 'do', 'an', 'experiment', 'and', 'this', 'would', 'be', 'a', 'great', 'experiment', 'if', 'youre', 'in', 'a', 'panic', 'attack', 'just', 'take', 'some', 'be', 'one', 'and', 'just', 'watch', 'what', 'happens', 'within', 'about', 'three', 'minutes', 'its', 'like', 'oh', 'i', 'can', 'i', 'can', 'breathe', 'i', 'feel', 'calmer', 'but', 'then', 'the', 'breathing', 'is', 'key', 'too', 'you', 'dont', 'wan', 'na', 'hyperventilate', 'when', 'you', 'have', 'a', 'panic', 'attack', 'you', 'wan', 'na', 'slow', 'the', 'breathing', 'down', 'in', 'for', 'about', 'four', 'seconds', 'and', 'out', 'for', 'four', 'seconds', 'and', 'that', 'will', 'pull', 'yourself', 'out', 'of', 'a', 'panic', 'attack', 'believe', 'it', 'or', 'not', 'the', 'more', 'you', 'breathe', 'youre', 'thinking', 'youre', 'getting', 'more', 'oxygen', 'but', 'its', 'locking', 'its', 'locking', 'up', 'um', 'your', 'oxygen', 'so', 'you', 'need', 'a', 'certain', 'amount', 'of', 'co', 'to', 'allow', 'the', 'oxygen', 'to', 'be', 'exchanged']","['webvtt', 'common', 'cause', 'panic', 'attacks', 'thats', 'um', 'adrenal', 'overload', 'time', 'nutritionally', 'speaking', 'low', 'vitamin', 'b', 'mean', 'think', 'experiment', 'would', 'great', 'experiment', 'youre', 'panic', 'attack', 'take', 'one', 'watch', 'happens', 'within', 'three', 'minutes', 'like', 'oh', 'breathe', 'feel', 'calmer', 'breathing', 'key', 'dont', 'wan', 'na', 'hyperventilate', 'panic', 'attack', 'wan', 'na', 'slow', 'breathing', 'four', 'seconds', 'four', 'seconds', 'pull', 'panic', 'attack', 'believe', 'breathe', 'youre', 'thinking', 'youre', 'getting', 'oxygen', 'locking', 'locking', 'um', 'oxygen', 'need', 'certain', 'amount', 'co', 'allow', 'oxygen', 'exchanged']","['webvtt', 'common', 'cause', 'panic', 'attack', 'thats', 'um', 'adrenal', 'overload', 'time', 'nutritionally', 'speaking', 'low', 'vitamin', 'b', 'mean', 'think', 'experiment', 'would', 'great', 'experiment', 'youre', 'panic', 'attack', 'take', 'one', 'watch', 'happens', 'within', 'three', 'minute', 'like', 'oh', 'breathe', 'feel', 'calmer', 'breathing', 'key', 'dont', 'wan', 'na', 'hyperventilate', 'panic', 'attack', 'wan', 'na', 'slow', 'breathing', 'four', 'second', 'four', 'second', 'pull', 'panic', 'attack', 'believe', 'breathe', 'youre', 'thinking', 'youre', 'getting', 'oxygen', 'locking', 'locking', 'um', 'oxygen', 'need', 'certain', 'amount', 'co', 'allow', 'oxygen', 'exchanged']",webvtt common cause panic attack thats um adrenal overload time nutritionally speaking low vitamin b mean think experiment would great experiment youre panic attack take one watch happens within three minute like oh breathe feel calmer breathing key dont wan na hyperventilate panic attack wan na slow breathing four second four second pull panic attack believe breathe youre thinking youre getting oxygen locking locking um oxygen need certain amount co allow oxygen exchanged
+8,drtraceymarks,Dr. Tracey Marks,https://www.tiktok.com/@drtraceymarks,https://www.tiktok.com/@drtraceymarks/video/7104998717333376302,"WEBVTT
+
+
+00:00:00.000 --> 00:00:02.004
+Depression can become so severe
+
+00:00:02.005 --> 00:00:03.964
+that you lose touch with reality
+
+00:00:03.965 --> 00:00:05.844
+and develop psychotic symptoms.
+
+00:00:05.845 --> 00:00:07.284
+These psychotic symptoms
+
+00:00:07.285 --> 00:00:09.284
+are delusions and hallucinations.
+
+00:00:09.285 --> 00:00:11.924
+However, delusions tend to be more common
+
+00:00:11.925 --> 00:00:13.244
+than the hallucinations.
+
+00:00:13.245 --> 00:00:15.724
+The delusions can take on a persecutory
+
+00:00:15.725 --> 00:00:17.335
+or nihilistic tone.
+
+00:00:17.480 --> 00:00:20.258
+Persecutory is when you feel attacked in some way.
+
+00:00:20.259 --> 00:00:22.818
+You may feel like people are talking about you
+
+00:00:22.819 --> 00:00:24.058
+or trying to harm you.
+
+00:00:24.059 --> 00:00:25.378
+And on several occasions,
+
+00:00:25.379 --> 00:00:28.098
+I've seen people who were delusionally depressed
+
+00:00:28.099 --> 00:00:30.578
+and felt that people were coming into their home.
+
+00:00:30.579 --> 00:00:33.058
+Nihilistic delusions are when you feel
+
+00:00:33.059 --> 00:00:34.618
+that things are senseless
+
+00:00:34.619 --> 00:00:36.160
+and they've lost their value.
+
+00:00:36.520 --> 00:00:38.147
+Like, what's the point in life?
+
+00:00:38.148 --> 00:00:39.347
+Nothing matters.
+
+00:00:39.348 --> 00:00:41.387
+And this can be some of the thought behind
+
+00:00:41.388 --> 00:00:43.067
+a person not wanting to live
+
+00:00:43.068 --> 00:00:44.872
+in making a suicide attempt.
+
+00:00:45.040 --> 00:00:47.422
+Sometimes suicide attempts are impulsive,
+
+00:00:47.423 --> 00:00:48.215
+but sometimes
+
+00:00:48.216 --> 00:00:51.102
+they're born out of these nihilistic delusions
+
+00:00:51.103 --> 00:00:52.462
+that nothing matters.
+
+00:00:52.463 --> 00:00:54.902
+So why does even anyone exist?
+
+00:00:54.903 --> 00:00:57.356
+Even existence is senseless.
+",webvtt depression can become so severe that you lose touch with reality and develop psychotic symptoms these psychotic symptoms are delusions and hallucinations however delusions tend to be more common than the hallucinations the delusions can take on a persecutory or nihilistic tone persecutory is when you feel attacked in some way you may feel like people are talking about you or trying to harm you and on several occasions ive seen people who were delusionally depressed and felt that people were coming into their home nihilistic delusions are when you feel that things are senseless and theyve lost their value like whats the point in life nothing matters and this can be some of the thought behind a person not wanting to live in making a suicide attempt sometimes suicide attempts are impulsive but sometimes theyre born out of these nihilistic delusions that nothing matters so why does even anyone exist even existence is senseless,"['webvtt', 'depression', 'can', 'become', 'so', 'severe', 'that', 'you', 'lose', 'touch', 'with', 'reality', 'and', 'develop', 'psychotic', 'symptoms', 'these', 'psychotic', 'symptoms', 'are', 'delusions', 'and', 'hallucinations', 'however', 'delusions', 'tend', 'to', 'be', 'more', 'common', 'than', 'the', 'hallucinations', 'the', 'delusions', 'can', 'take', 'on', 'a', 'persecutory', 'or', 'nihilistic', 'tone', 'persecutory', 'is', 'when', 'you', 'feel', 'attacked', 'in', 'some', 'way', 'you', 'may', 'feel', 'like', 'people', 'are', 'talking', 'about', 'you', 'or', 'trying', 'to', 'harm', 'you', 'and', 'on', 'several', 'occasions', 'ive', 'seen', 'people', 'who', 'were', 'delusionally', 'depressed', 'and', 'felt', 'that', 'people', 'were', 'coming', 'into', 'their', 'home', 'nihilistic', 'delusions', 'are', 'when', 'you', 'feel', 'that', 'things', 'are', 'senseless', 'and', 'theyve', 'lost', 'their', 'value', 'like', 'whats', 'the', 'point', 'in', 'life', 'nothing', 'matters', 'and', 'this', 'can', 'be', 'some', 'of', 'the', 'thought', 'behind', 'a', 'person', 'not', 'wanting', 'to', 'live', 'in', 'making', 'a', 'suicide', 'attempt', 'sometimes', 'suicide', 'attempts', 'are', 'impulsive', 'but', 'sometimes', 'theyre', 'born', 'out', 'of', 'these', 'nihilistic', 'delusions', 'that', 'nothing', 'matters', 'so', 'why', 'does', 'even', 'anyone', 'exist', 'even', 'existence', 'is', 'senseless']","['webvtt', 'depression', 'become', 'severe', 'lose', 'touch', 'reality', 'develop', 'psychotic', 'symptoms', 'psychotic', 'symptoms', 'delusions', 'hallucinations', 'however', 'delusions', 'tend', 'common', 'hallucinations', 'delusions', 'take', 'persecutory', 'nihilistic', 'tone', 'persecutory', 'feel', 'attacked', 'way', 'may', 'feel', 'like', 'people', 'talking', 'trying', 'harm', 'several', 'occasions', 'ive', 'seen', 'people', 'delusionally', 'depressed', 'felt', 'people', 'coming', 'home', 'nihilistic', 'delusions', 'feel', 'things', 'senseless', 'theyve', 'lost', 'value', 'like', 'whats', 'point', 'life', 'nothing', 'matters', 'thought', 'behind', 'person', 'wanting', 'live', 'making', 'suicide', 'attempt', 'sometimes', 'suicide', 'attempts', 'impulsive', 'sometimes', 'theyre', 'born', 'nihilistic', 'delusions', 'nothing', 'matters', 'even', 'anyone', 'exist', 'even', 'existence', 'senseless']","['webvtt', 'depression', 'become', 'severe', 'lose', 'touch', 'reality', 'develop', 'psychotic', 'symptom', 'psychotic', 'symptom', 'delusion', 'hallucination', 'however', 'delusion', 'tend', 'common', 'hallucination', 'delusion', 'take', 'persecutory', 'nihilistic', 'tone', 'persecutory', 'feel', 'attacked', 'way', 'may', 'feel', 'like', 'people', 'talking', 'trying', 'harm', 'several', 'occasion', 'ive', 'seen', 'people', 'delusionally', 'depressed', 'felt', 'people', 'coming', 'home', 'nihilistic', 'delusion', 'feel', 'thing', 'senseless', 'theyve', 'lost', 'value', 'like', 'whats', 'point', 'life', 'nothing', 'matter', 'thought', 'behind', 'person', 'wanting', 'live', 'making', 'suicide', 'attempt', 'sometimes', 'suicide', 'attempt', 'impulsive', 'sometimes', 'theyre', 'born', 'nihilistic', 'delusion', 'nothing', 'matter', 'even', 'anyone', 'exist', 'even', 'existence', 'senseless']",webvtt depression become severe lose touch reality develop psychotic symptom psychotic symptom delusion hallucination however delusion tend common hallucination delusion take persecutory nihilistic tone persecutory feel attacked way may feel like people talking trying harm several occasion ive seen people delusionally depressed felt people coming home nihilistic delusion feel thing senseless theyve lost value like whats point life nothing matter thought behind person wanting live making suicide attempt sometimes suicide attempt impulsive sometimes theyre born nihilistic delusion nothing matter even anyone exist even existence senseless
+9,drjulie,Dr Julie | Psychologist,https://www.tiktok.com/@drjulie,https://www.tiktok.com/@drjulie/video/7044565779953536261,"WEBVTT
+
+
+00:00:00.000 --> 00:00:02.545
+I'm psychologist and here's something i want to share with you. 
+
+00:00:02.790 --> 00:00:03.933
+When you feel 
+
+00:00:03.933 --> 00:00:08.107
+down, it's not because your malfunctioning or your brain is faulty in any way. 
+
+00:00:08.610 --> 00:00:09.532
+It's information. 
+
+00:00:09.626 --> 00:00:13.571
+It's your brain telling you that you have some needs that aren't being met. 
+
+00:00:14.146 --> 00:00:18.411
+Your job is to work out what they are and start meeting them.
+",webvtt im psychologist and heres something i want to share with you when you feel down its not because your malfunctioning or your brain is faulty in any way its information its your brain telling you that you have some needs that arent being met your job is to work out what they are and start meeting them,"['webvtt', 'im', 'psychologist', 'and', 'heres', 'something', 'i', 'want', 'to', 'share', 'with', 'you', 'when', 'you', 'feel', 'down', 'its', 'not', 'because', 'your', 'malfunctioning', 'or', 'your', 'brain', 'is', 'faulty', 'in', 'any', 'way', 'its', 'information', 'its', 'your', 'brain', 'telling', 'you', 'that', 'you', 'have', 'some', 'needs', 'that', 'arent', 'being', 'met', 'your', 'job', 'is', 'to', 'work', 'out', 'what', 'they', 'are', 'and', 'start', 'meeting', 'them']","['webvtt', 'im', 'psychologist', 'heres', 'something', 'want', 'share', 'feel', 'malfunctioning', 'brain', 'faulty', 'way', 'information', 'brain', 'telling', 'needs', 'arent', 'met', 'job', 'work', 'start', 'meeting']","['webvtt', 'im', 'psychologist', 'here', 'something', 'want', 'share', 'feel', 'malfunctioning', 'brain', 'faulty', 'way', 'information', 'brain', 'telling', 'need', 'arent', 'met', 'job', 'work', 'start', 'meeting']",webvtt im psychologist here something want share feel malfunctioning brain faulty way information brain telling need arent met job work start meeting
