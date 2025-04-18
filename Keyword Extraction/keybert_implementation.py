@@ -12,22 +12,22 @@ import emoji  # Import the emoji library
 
 # Download NLTK resources (Consider doing this once outside the main script execution if possible)
 # Ensure NLTK data path is correctly set up if needed
-try:
-    nltk.data.find('tokenizers/punkt')
-except nltk.downloader.DownloadError:
-    nltk.download('punkt', quiet=True)
-try:
-    nltk.data.find('corpora/stopwords')
-except nltk.downloader.DownloadError:
-    nltk.download('stopwords', quiet=True)
-try:
-    nltk.data.find('corpora/wordnet')
-except nltk.downloader.DownloadError:
-    nltk.download('wordnet', quiet=True)
-try:
-    nltk.data.find('corpora/omw-1.4')
-except nltk.downloader.DownloadError:
-    nltk.download('omw-1.4', quiet=True)
+# try:
+#     nltk.data.find('tokenizers/punkt')
+# except nltk.downloader.DownloadError:
+#     nltk.download('punkt', quiet=True)
+# try:
+#     nltk.data.find('corpora/stopwords')
+# except nltk.downloader.DownloadError:
+#     nltk.download('stopwords', quiet=True)
+# try:
+#     nltk.data.find('corpora/wordnet')
+# except nltk.downloader.DownloadError:
+#     nltk.download('wordnet', quiet=True)
+# try:
+#     nltk.data.find('corpora/omw-1.4')
+# except nltk.downloader.DownloadError:
+#     nltk.download('omw-1.4', quiet=True)
 
 
 class KeywordExtractionApp:
@@ -385,27 +385,27 @@ if __name__ == "__main__":
     import emoji  # Import emoji
 
     # Download nltk resources
-    try:
-        nltk.data.find('tokenizers/punkt')
-    except nltk.downloader.DownloadError:
-        nltk.download('punkt', quiet=True)
-    try:
-        nltk.data.find('corpora/stopwords')
-    except nltk.downloader.DownloadError:
-        nltk.download('stopwords', quiet=True)
-    try:
-        nltk.data.find('corpora/wordnet')
-    except nltk.downloader.DownloadError:
-        nltk.download('wordnet', quiet=True)
-    try:
-        nltk.data.find('corpora/omw-1.4')
-    except nltk.downloader.DownloadError:
-        nltk.download('omw-1.4', quiet=True)
+    # try:
+    #     nltk.data.find('tokenizers/punkt')
+    # except nltk.downloader.DownloadError:
+    #     nltk.download('punkt', quiet=True)
+    # try:
+    #     nltk.data.find('corpora/stopwords')
+    # except nltk.downloader.DownloadError:
+    #     nltk.download('stopwords', quiet=True)
+    # try:
+    #     nltk.data.find('corpora/wordnet')
+    # except nltk.downloader.DownloadError:
+    #     nltk.download('wordnet', quiet=True)
+    # try:
+    #     nltk.data.find('corpora/omw-1.4')
+    # except nltk.downloader.DownloadError:
+    #     nltk.download('omw-1.4', quiet=True)
 
     # Use the specified file paths directly
-    comments_file_path = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Outpus\Clean Standardized Comment.csv"
-    videos_file_path = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Outpus\Clean Video with Transcription.csv"
-    output_dir = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Scraps\Testing Files\Outpus"  # Corrected
+    comments_file_path = r"/Users/bakri/Development/fyp_supervision/FYP-Akmal/Data Preprocessing and Cleaning/Clean Standardized Comment.csv"
+    videos_file_path = r"/Users/bakri/Development/fyp_supervision/FYP-Akmal/Data Preprocessing and Cleaning/Clean Video with Transcription.csv"
+    output_dir = r"/Users/bakri/Development/fyp_supervision/FYP-Akmal/Keyword Extraction"  # Corrected
 
     app = KeywordExtractionApp()  # Create instance of the class
 
