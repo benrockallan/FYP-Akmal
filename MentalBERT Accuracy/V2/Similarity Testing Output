@@ -1,0 +1,189 @@
+--- Step 6: Initializing (Timestamp Video + Full-Text Comment Similarity w/ Comment Text) ---
+Will display Top 10 results (hardcoded).
+Using device: cuda
+Loading MentalBERT model and tokenizer...
+Some weights of BertModel were not initialized from the model checkpoint at mental/mental-bert-base-uncased and are newly initialized: ['pooler.dense.bias', 'pooler.dense.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Model and tokenizer loaded successfully.
+
+--- Loading Preprocessed Data ---
+Video columns -> ['Vid', 'Name', 'NickName', 'TikTok_Link', 'TikTok_Transcription']
+Video data loaded successfully from G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Preprocessed\Clean Video with Transcription.csv.
+Comment columns -> ['Vid', 'Cid', 'RepliesToId', 'Comments', 'uniqueId']
+Comment data loaded successfully from G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Preprocessed\Clean Standardized Comment.csv.
+
+--- Preparing Data for Ranking ---
+Videos prepared: 52 remaining after dropping rows with missing/empty 'VTT_Content'.
+Comments prepared: 242 remaining after dropping rows with missing/empty 'final_text'.
+
+User Query for Ranking: "I am very anxious everyday, how do I solve this anxiety in my head?"
+
+Ranking videos based on highest segment similarity in 'VTT_Content'...
+Processing 52 videos for ranking...
+Analyzing video segments: 100%|████████████████████████████████████████████████████████| 52/52 [00:01<00:00, 38.62it/s]
+
+Ranking comments based on full text similarity in 'final_text'...
+Processing 242 comments for ranking...
+Calculating comment embeddings/similarities in 8 batches...
+Processing comment batches: 100%|████████████████████████████████████████████████████████| 8/8 [00:00<00:00, 34.19it/s]
+
+==================================================
+                 Top 10 Recommendations
+==================================================
+
+--- Top 10 Video Recommendations (Detailed) ---
+--- Rank: 1 ---
+  Vid: 7.44132e+18
+  Creator Nickname: Dr. Don Wood, PhD
+  Similarity Score: 0.8091
+  Timestamp: 00:00:09.242
+  Best Segment: What is actually happening when you're dealing with anxiety
+  Link: https://www.tiktok.com/@drdonwood/video/7441320309573324078
+------------------------------
+--- Rank: 2 ---
+  Vid: 7.36716e+18
+  Creator Nickname: Dr.âMikeâMah | Psychiatrist
+  Similarity Score: 0.8021
+  Timestamp: 00:00:00.040
+  Best Segment: Doctor Mike, can I smoke pot while on my antidepressant?
+  Link: https://www.tiktok.com/@drmikemah/video/7367155124168330542
+------------------------------
+--- Rank: 3 ---
+  Vid: 7.4733e+18
+  Creator Nickname: Gary Brecka Shorts
+  Similarity Score: 0.7941
+  Timestamp: 00:00:58.380
+  Best Segment: that most people in this room are suffering from right now.
+  Link: https://www.tiktok.com/@garybrecka.shorts/video/7473300097627950382
+------------------------------
+--- Rank: 4 ---
+  Vid: 6.98756e+18
+  Creator Nickname: Lindsay Fleming, lcpc
+  Similarity Score: 0.7937
+  Timestamp: 00:00:04.164
+  Best Segment: so then I don't brush my teeth even though all day I tell myself to do it
+  Link: https://www.tiktok.com/@lindsay.fleminglpc/video/6987557734245747974
+------------------------------
+--- Rank: 5 ---
+  Vid: 7.2506e+18
+  Creator Nickname: Julie The Therapist
+  Similarity Score: 0.7933
+  Timestamp: 00:00:36.516
+  Best Segment: Well, I can talk to my partner about this
+  Link: https://www.tiktok.com/@juliethe_therapist/video/7250598589766962474
+------------------------------
+--- Rank: 6 ---
+  Vid: 7.49361e+18
+  Creator Nickname: Dr. Melissa Shepard
+  Similarity Score: 0.7907
+  Timestamp: 00:00:25.220
+  Best Segment: This person asked, is this a common thing that happens?
+  Link: https://www.tiktok.com/@doctorshepard_md/video/7493611886424935711
+------------------------------
+--- Rank: 7 ---
+  Vid: 7.49073e+18
+  Creator Nickname: Dr. Courtney | ð§  Therapist
+  Similarity Score: 0.7863
+  Timestamp: 00:00:24.902
+  Best Segment: and the need to control when the emotions feel so out of control.
+  Link: https://www.tiktok.com/@the.truth.doctor/video/7490732774832311595
+------------------------------
+--- Rank: 8 ---
+  Vid: 7.19818e+18
+  Creator Nickname: Dr. Scott Says What
+  Similarity Score: 0.7825
+  Timestamp: 00:00:30.840
+  Best Segment: that seem to be related to being stressed
+  Link: https://www.tiktok.com/@psychologyworks/video/7198183753049541931
+------------------------------
+--- Rank: 9 ---
+  Vid: 7.49399e+18
+  Creator Nickname: Dr. Melissa Shepard
+  Similarity Score: 0.7821
+  Timestamp: 00:00:13.020
+  Best Segment: Um, I calculated out how long it's gonna take me to get out of, um,
+  Link: https://www.tiktok.com/@doctorshepard_md/video/7493991398551620895
+------------------------------
+--- Rank: 10 ---
+  Vid: 7.02793e+18
+  Creator Nickname: Dr. Tracey Marks
+  Similarity Score: 0.7804
+  Timestamp: 00:00:16.177
+  Best Segment: like not sleeping well or being energized,
+  Link: https://www.tiktok.com/@drtraceymarks/video/7027934048580357423
+------------------------------
+
+==================================================
+
+--- Merging top 10 comment results with original data ---
+Comment merge complete.
+
+--- Top 10 Comment Recommendations ---
+--- Rank: 1 ---
+  Cid: 7494472412799042350
+  Comment: Dr Shepard can you please explain why it is important to accept mental illness. I really need an expert opinion to help our community.
+  Replies To Id: -
+  Similarity Score: 0.7640
+------------------------------
+--- Rank: 2 ---
+  Cid: 7283313206171386630
+  Comment: I've been dealing with this since i was 15. can it be deadly? sometimes it feels like I'm about to have a heart attack
+  Replies To Id: -
+  Similarity Score: 0.7460
+------------------------------
+--- Rank: 3 ---
+  Cid: 7450254464952566533
+  Comment: my anxiety is so bad when i start to panic, it feels like my hands are going to lock up and i can’t breath and everything hurts and my head pounds and any little sound scares me and i feel like im
+  Replies To Id: -
+  Similarity Score: 0.7374
+------------------------------
+--- Rank: 4 ---
+  Cid: 7028377742245004037
+  Comment: Wait I have a question - I started taking antidepressants and I had a situation where my brain new I was having panic attack but my body wasn't (1)
+  Replies To Id: -
+  Similarity Score: 0.7331
+------------------------------
+--- Rank: 5 ---
+  Cid: 7272811335312769824
+  Comment: it's great to hear a psychiatrist say this, I'm tired of professionals acting like I'm refusing help when I just dont want to be a guinea pig
+  Replies To Id: -
+  Similarity Score: 0.7317
+------------------------------
+--- Rank: 6 ---
+  Cid: 7455203738179027758
+  Comment: We need a video on blushing and face flushing! Literally every time someone talks to me or asks me a question, I flush! I’m not embarrassed about anything in that moment. It’s insane!
+  Replies To Id: -
+  Similarity Score: 0.7275
+------------------------------
+--- Rank: 7 ---
+  Cid: 6980072626970936070
+  Comment: i dont want to go to a therapist because im worried about the opposite happening
+  Replies To Id: -
+  Similarity Score: 0.7273
+------------------------------
+--- Rank: 8 ---
+  Cid: 7256508060027437870
+  Comment: I’ve gained this though my toxic relationships through out my previous years. I’m trying to change my thinking habits but some days it’s just to hard.
+  Replies To Id: -
+  Similarity Score: 0.7265
+------------------------------
+--- Rank: 9 ---
+  Cid: 7482207594837263150
+  Comment: Does it help with health anxiety? Every day I suffer so much in this cycle of torture thinking I have the c-word somewhere. Its miserable
+  Replies To Id: -
+  Similarity Score: 0.7240
+------------------------------
+--- Rank: 10 ---
+  Cid: 7449188260625335071
+  Comment: Mine is mostly health anxiety I have symptoms all day everyday
+  Replies To Id: -
+  Similarity Score: 0.7210
+------------------------------
+
+==================================================
+
+--- Saving Full Ranked Lists ---
+Full ranked video data saved to: G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Preprocessed\Final Output\ranked_videos_timestamp_text.csv
+Full ranked comment data saved to: G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Preprocessed\Final Output\ranked_comment_items_cosineST.csv
+
+--- Step 6 Complete ---
