@@ -1,0 +1,76 @@
+--- TikTok Data Extraction from Profile List ---
+Output directory set to: G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output
+Apify client initialized.
+Reading profile URLs/Usernames from: G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Lists of Psychiatrist.txt
+   Found 55 unique profile usernames.
+
+▶️ Starting TikTok scrape using Actor OtzYfK1ndEGdwWFKQ for 55 profile(s)
+✅ Scraper actor run initiated. Actor ID: OtzYfK1ndEGdwWFKQ, Run ID: adtx8PZeYGdCvpPcR
+💾 Dataset ID: IlUcOFgQaAzw9KsDM
+   Check full status/log: https://console.apify.com/actors/runs/adtx8PZeYGdCvpPcR
+   Waiting for Actor OtzYfK1ndEGdwWFKQ run (adtx8PZeYGdCvpPcR) to complete...
+Error displaying widget
+   [23:19:50] Run status: SUCCEEDED               
+                                                  
+✅ Run (adtx8PZeYGdCvpPcR) finished successfully.
+   Fetching results from dataset IlUcOFgQaAzw9KsDM...
+   Expected item count: 108
+Error displaying widget
+
+   Found 108 raw items.
+
+⚙️ Processing 108 raw items (filtering for videos)...
+Error displaying widget
+
+   Finished processing. Extracted 106 video items.
+Keywords extracted for filtering: ['anxious', 'solve', 'anxiety', 'head']
+
+🔍 Filtering 106 videos based on description/bio for keywords: ['anxious', 'solve', 'anxiety', 'head']...
+Error displaying widget
+
+   Found 27 videos matching query keywords in description/bio.
+
+Extracted 27 unique video URLs from potentially filtered data for comment scraping.
+
+Attempting comment scraping (may fail due to usage limits)...
+
+💬 Starting TikTok comment scrape for 27 videos (limit: 10/post)
+✅ Comment scraper actor run initiated. Actor ID: clockworks/tiktok-comments-scraper, Run ID: LIhKUxhblEU6igwVH
+💾 Comment dataset ID: cscJMgTbjmObeoU2f
+   Check full status/log: https://console.apify.com/actors/runs/LIhKUxhblEU6igwVH
+   Waiting for Actor clockworks/tiktok-comments-scraper run (LIhKUxhblEU6igwVH) to complete...
+Error displaying widget
+   [23:21:56] Run status: SUCCEEDED               
+                                                  
+✅ Run (LIhKUxhblEU6igwVH) finished successfully.
+   Fetching comment results from dataset cscJMgTbjmObeoU2f...
+   Expected item count: 254
+Error displaying widget
+
+   Found 254 raw comment items in total.
+
+⚙️ Processing 254 raw comment items...
+Error displaying widget
+
+   Finished processing comment items.
+
+--- Final Summary ---
+Profiles Scraped (Attempted): 55
+Raw Items Found by Video Actor: 108
+Processed Videos Extracted (Before Filter): 106
+Query Used for Filtering: 'I am very anxious everyday, how do I solve this anxiety in my head?'
+Keywords Used for Filtering: ['anxious', 'solve', 'anxiety', 'head']
+Videos After Filtering (Description/Bio): 27
+Raw Comments Found by Comment Actor: 254
+Processed Comments: 254
+
+💾 Saving ALL PROCESSED video results to CSV...
+   All processed video results saved to: G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\tiktok_videos_processed_all.csv
+
+💾 Saving PROCESSED comment results to CSV...
+   Processed comment results saved to: G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\tiktok_comments_processed.csv
+
+--- Program Finished ---
+
+--- Analyzing Saved Video Data for Missing Transcriptions ---
+Successfully re-read: G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\tiktok_videos_processed_all.csv
