@@ -1,0 +1,124 @@
+#STEPS 1
+
+import pandas as pd
+import re
+import requests
+from tqdm import tqdm
+import os # Import os module
+
+# Define the paths to your CSV files
+input_csv = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\tiktok_videos_processed_all.csv"
+
+# --- CORRECTED OUTPUT PATH ---
+# Define the DIRECTORY where you want to save the file
+output_dir = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed"
+# Define the FILENAME for the output CSV
+output_filename = "Video with Transcription.csv" # Choose a filename
+# Combine directory and filename
+output_csv = os.path.join(output_dir, output_filename)
+# --- END CORRECTION ---
+
+# Read the CSV file into a DataFrame
+# Add error handling for file reading
+try:
+    # Use utf-8-sig encoding as it was likely saved that way
+    df = pd.read_csv(input_csv, encoding='utf-8-sig')
+except FileNotFoundError:
+    print(f"Error: Input CSV not found at {input_csv}")
+    exit() # Or handle error appropriately
+except Exception as e:
+    print(f"Error reading CSV: {e}")
+    exit() # Or handle error appropriately
+
+
+# Display the original DataFrame (optional)
+print("Original DataFrame:")
+print(df.head())
+
+# --- Use columns already present in 'tiktok_videos_processed_all.csv' ---
+# Define columns expected in the input CSV
+expected_input_columns = ['Vid', 'Name', 'NickName', 'ProfileUrl', 'TikTok_Transcription', 'TikTok_Link', 'Author Bio', 'Video Description']
+
+# Check if essential columns exist
+essential_cols = ['TikTok_Link', 'TikTok_Transcription'] # Need link for video context, transcription link for fetching
+missing_essential = [col for col in essential_cols if col not in df.columns]
+if missing_essential:
+    print(f"Error: Missing essential columns in input CSV: {missing_essential}")
+    print(f"Columns found: {list(df.columns)}")
+    exit() # Cannot proceed without these
+
+# Keep relevant columns (adjust if needed) plus Vid for potential merging later
+relevant_cols = essential_cols + ['Vid', 'Name', 'NickName']
+df_filtered = df[[col for col in relevant_cols if col in df.columns]].copy()
+
+
+# Function to fetch and return subtitle text
+def fetch_subtitle_text(url):
+    # Check if URL is not NaN and is a string starting with http
+    if pd.isna(url) or not isinstance(url, str) or not url.startswith('http'):
+        # print(f"Invalid or missing URL: {url}") # Optional debug
+        return None
+    try:
+        response = requests.get(url, timeout=15) # Increased timeout slightly
+        response.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
+        # Basic check for VTT format hint
+        if "WEBVTT" not in response.text[:100]: # Check beginning of text
+             # print(f"Warning: 'WEBVTT' not found in beginning of content for {url}")
+             # Decide if you want to return None or the text anyway
+             # return None
+             pass # Let's return the text for now, filter later
+        return response.text
+    except requests.exceptions.RequestException as e:
+        # More specific error catching for network issues
+        # print(f"Failed to fetch subtitle from {url}: {e}") # Optional debug
+        return None
+    except Exception as e: # Catch other potential errors
+        # print(f"An unexpected error occurred fetching {url}: {e}") # Optional debug
+        return None
+
+# Fetch subtitle transcription text using the link column
+# Rename the column containing the fetched text for clarity
+tqdm.pandas(desc="Fetching subtitle text")
+# Apply the function to the column containing the URLs
+df_filtered["VTT_Content"] = df_filtered['TikTok_Transcription'].progress_apply(fetch_subtitle_text)
+
+# Ensure the 'VTT_Content' column is string type before using .str accessor
+# Fill None values (fetch failures) with empty strings
+df_filtered["VTT_Content"] = df_filtered["VTT_Content"].fillna('').astype(str)
+
+# Filter rows: Keep only those where fetched content contains "WEBVTT"
+# This confirms we likely got a valid VTT file content
+original_rows = len(df_filtered)
+df_filtered = df_filtered[df_filtered["VTT_Content"].str.contains("WEBVTT", na=False)].copy() # Use copy to avoid SettingWithCopyWarning
+print(f"Kept {len(df_filtered)} rows out of {original_rows} after filtering for 'WEBVTT' content.")
+
+
+# --- Optional: Clean up columns ---
+# Decide which columns you want in the final output CSV for this step
+# Keep Vid, Name, NickName, Link, Original Transcription Link, and VTT Content
+columns_to_keep = ['Vid', 'Name', 'NickName', 'TikTok_Link', 'TikTok_Transcription', 'VTT_Content']
+# Ensure columns exist before selecting
+df_final = df_filtered[[col for col in columns_to_keep if col in df_filtered.columns]].copy()
+
+
+# Display the final DataFrame to be saved (optional)
+print("\nFinal DataFrame with Fetched VTT Content (First 5 Rows):")
+print(df_final.head())
+
+# --- Ensure Output Directory Exists ---
+try:
+    os.makedirs(output_dir, exist_ok=True) # Create the directory if it doesn't exist
+    print(f"Output directory '{output_dir}' ensured.")
+except OSError as e:
+    print(f"Error creating output directory {output_dir}: {e}")
+    # Handle error, maybe exit or try saving locally
+    exit()
+# --- End Directory Check ---
+
+
+# Write the resulting DataFrame to the corrected CSV file path
+try:
+    df_final.to_csv(output_csv, index=False, encoding='utf-8-sig')
+    print(f"\nFiltered data with VTT text content has been saved to {output_csv}")
+except Exception as e:
+    print(f"\nError writing final CSV to {output_csv}: {e}")
