@@ -1,0 +1,185 @@
+# STEPS 3: Data Preprocessing And Cleaning
+
+import re
+import pandas as pd
+from nltk.tokenize import word_tokenize
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+import os # Added for creating directory
+
+# Download necessary NLTK data (if not already downloaded)
+try:
+    nltk.data.find('tokenizers/punkt')
+except nltk.downloader.DownloadError:
+    nltk.download('punkt')
+
+try:
+    nltk.data.find('corpora/stopwords')
+except nltk.downloader.DownloadError:
+    nltk.download('stopwords')
+
+try:
+    nltk.data.find('corpora/wordnet')
+except nltk.downloader.DownloadError:
+    nltk.download('wordnet')
+
+# Define file paths
+comment_file_path = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Standardized Comment.csv"
+video_file_path = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Video with Transcription.csv"
+output_dir = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Preprocessed"
+cleaned_comment_file = os.path.join(output_dir, 'Clean Standardized Comment.csv')
+cleaned_video_file = os.path.join(output_dir, 'Clean Video with Transcription.csv')
+
+# Create output directory if it doesn't exist
+os.makedirs(output_dir, exist_ok=True)
+
+print(f"Loading comment data from: {comment_file_path}")
+# Use 'latin1' encoding for reading to avoid UnicodeDecodeError
+comments_df = pd.read_csv(comment_file_path, encoding='utf-8-sig')
+print("Comment data loaded successfully.")
+
+print(f"Loading video data from: {video_file_path}")
+# Use 'latin1' encoding for reading to avoid UnicodeDecodeError
+videos_df = pd.read_csv(video_file_path, encoding='latin1')
+print("Video data loaded successfully.")
+
+# --- Inspecting Data (Optional: Display first few rows) ---
+print("\n--- Initial Data Inspection ---")
+print("Comments DataFrame Head:")
+print(comments_df.head())
+print("\nVideos DataFrame Head:")
+print(videos_df.head())
+
+# --- Step 2: Handling Missing Values ---
+print("\n--- Handling Missing Values ---")
+print("Missing values in comments before handling:")
+print(comments_df.isnull().sum())
+# Ensure 'Comments' column exists before attempting to drop NA
+if 'Comments' in comments_df.columns:
+    comments_df.dropna(subset=['Comments'], inplace=True)
+    print(f"Rows after dropping NA in Comments: {len(comments_df)}")
+else:
+    print("Column 'Comments' not found in comments_df.")
+
+print("\nMissing values in videos before handling:")
+print(videos_df.isnull().sum())
+# Ensure 'TikTok_Transcription' column exists before attempting to drop NA
+if 'VTT_Content' in videos_df.columns:
+    videos_df.dropna(subset=['VTT_Content'], inplace=True)
+    print(f"Rows after dropping NA in TikTok_Transcription: {len(videos_df)}")
+else:
+    print("Column 'VTT_Content' not found in videos_df.")
+
+
+# --- Step 3: Removing Duplicates ---
+print("\n--- Removing Duplicates ---")
+# Ensure required columns exist before dropping duplicates
+if 'Comments' in comments_df.columns:
+    initial_comment_rows = len(comments_df)
+    comments_df.drop_duplicates(subset=['Comments'], inplace=True)
+    print(f"Removed {initial_comment_rows - len(comments_df)} duplicate comments.")
+else:
+    print("Column 'Comments' not found for duplicate removal.")
+
+if 'VTT_Content' in videos_df.columns:
+    initial_video_rows = len(videos_df)
+    videos_df.drop_duplicates(subset=['VTT_Content'], inplace=True)
+    print(f"Removed {initial_video_rows - len(videos_df)} duplicate video transcriptions.")
+else:
+     print("Column 'VTT_Content' not found for duplicate removal.")
+
+# --- Step 4: Text Normalization & Cleaning ---
+print("\n--- Cleaning Text ---")
+def clean_text(text):
+    if pd.isna(text): # Handle potential NaN values that slipped through
+        return ""
+    text = str(text).lower()  # convert text to lowercase
+    text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE) # remove URLs
+    text = re.sub(r'[^\w\s]', '', text)  # remove punctuation
+    text = re.sub(r'\d+', '', text)  # remove numbers
+    text = re.sub(r'\s+', ' ', text).strip()  # normalize whitespace
+    return text
+
+# Apply cleaning only if columns exist
+if 'Comments' in comments_df.columns:
+    comments_df['clean_comments'] = comments_df['Comments'].apply(clean_text)
+    print("Applied text cleaning to comments.")
+if 'VTT_Content' in videos_df.columns:
+    videos_df['clean_transcriptions'] = videos_df['VTT_Content'].apply(clean_text)
+    print("Applied text cleaning to transcriptions.")
+
+# --- Step 5: Tokenization ---
+print("\n--- Tokenizing Text ---")
+# Apply tokenization only if cleaned columns exist
+if 'clean_comments' in comments_df.columns:
+    comments_df['tokens'] = comments_df['clean_comments'].apply(word_tokenize)
+    print("Tokenized comments.")
+if 'clean_transcriptions' in videos_df.columns:
+    videos_df['tokens'] = videos_df['clean_transcriptions'].apply(word_tokenize)
+    print("Tokenized transcriptions.")
+
+# --- Step 6: Stopword Removal ---
+print("\n--- Removing Stopwords ---")
+stop_words = set(stopwords.words('english'))
+
+def remove_stopwords(tokens):
+    if isinstance(tokens, list): # Ensure input is a list
+         return [word for word in tokens if word not in stop_words]
+    return [] # Return empty list if input is not as expected (e.g., float NaN)
+
+
+# Apply stopword removal only if token columns exist
+if 'tokens' in comments_df.columns:
+    comments_df['tokens_no_stopwords'] = comments_df['tokens'].apply(remove_stopwords)
+    print("Removed stopwords from comments.")
+if 'tokens' in videos_df.columns:
+    videos_df['tokens_no_stopwords'] = videos_df['tokens'].apply(remove_stopwords)
+    print("Removed stopwords from transcriptions.")
+
+# --- Step 7: Lemmatization ---
+print("\n--- Lemmatizing Tokens ---")
+lemmatizer = WordNetLemmatizer()
+
+def lemmatize_tokens(tokens):
+     if isinstance(tokens, list): # Ensure input is a list
+        return [lemmatizer.lemmatize(token) for token in tokens]
+     return [] # Return empty list if input is not as expected
+
+# Apply lemmatization only if stopword-removed columns exist
+if 'tokens_no_stopwords' in comments_df.columns:
+    comments_df['lemmatized'] = comments_df['tokens_no_stopwords'].apply(lemmatize_tokens)
+    print("Lemmatized comment tokens.")
+if 'tokens_no_stopwords' in videos_df.columns:
+    videos_df['lemmatized'] = videos_df['tokens_no_stopwords'].apply(lemmatize_tokens)
+    print("Lemmatized transcription tokens.")
+
+# --- Step 8: Preparing Final Text (Rejoining Tokens) ---
+print("\n--- Preparing Final Text Strings ---")
+# Create final text only if lemmatized columns exist
+if 'lemmatized' in comments_df.columns:
+    comments_df['final_text'] = comments_df['lemmatized'].apply(lambda x: ' '.join(x))
+    print("Created final text string for comments.")
+if 'lemmatized' in videos_df.columns:
+    videos_df['final_text'] = videos_df['lemmatized'].apply(lambda x: ' '.join(x))
+    print("Created final text string for videos.")
+
+# --- Step 9: Save Preprocessed Data ---
+print("\n--- Saving Preprocessed Data ---")
+try:
+    # Save comments
+    # Make sure this line is complete and correct, adding encoding
+    comments_df.to_csv(cleaned_comment_file, index=False, encoding='utf-8-sig') # Ensure encoding is added
+    print(f"Cleaned comments saved successfully to: {cleaned_comment_file}")
+except Exception as e:
+    print(f"Error saving comments file: {e}") # This except block must be present
+
+try:
+    # Save videos
+    # Make sure this line is complete and correct, adding encoding
+    videos_df.to_csv(cleaned_video_file, index=False, encoding='utf-8-sig') # Ensure encoding is added
+    print(f"Cleaned videos saved successfully to: {cleaned_video_file}")
+except Exception as e:
+    print(f"Error saving videos file: {e}") # This except block must be present
+
+print("\nPreprocessing complete.")
