@@ -1,0 +1,535 @@
+# ==============================================================================
+# STEPS 6 - TIMESTAMP (VIDEO) & FULL-TEXT (COMMENT) SIMILARITY - DETAILED OUTPUT V5 (Hardcoded N)
+# ==============================================================================
+
+import pandas as pd
+from transformers import AutoTokenizer, AutoModel
+import torch
+from sentence_transformers import util
+from tqdm import tqdm
+import numpy as np
+import os
+import re # Import regular expressions for parsing
+
+print("--- Step 6: Initializing (Timestamp Video + Full-Text Comment Similarity w/ Comment Text) ---")
+
+# --- Configuration ---
+hf_token = "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" # Replace if necessary
+# Verify these paths point to the output of Step 3 and Step 1/Preprocessing respectively
+video_file = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Preprocessed\Clean Video with Transcription.csv"
+comment_file = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Preprocessed\Clean Standardized Comment.csv"
+output_dir = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Preprocessed\Final Output"
+
+# --- Set the number of top results to display (Hardcoded) ---
+# Change the value below to the desired number of results
+top_n = 10
+print(f"Will display Top {top_n} results (hardcoded).")
+
+# --- Device Setup ---
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
+
+# --- Load Model and Tokenizer ---
+print("Loading MentalBERT model and tokenizer...")
+try:
+    # Using a specific revision known to work well for sentence-transformers tasks sometimes helps
+    # model_name = "mental/mental-bert-base-uncased"
+    model_name = "mental/mental-bert-base-uncased" # Sticking to original for now
+    tokenizer = AutoTokenizer.from_pretrained(model_name, token=hf_token)
+    model = AutoModel.from_pretrained(model_name, token=hf_token).to(device)
+    print("Model and tokenizer loaded successfully.")
+except Exception as e:
+    print(f"Error loading model/tokenizer: {e}")
+    raise e # Re-raise the error to stop execution if model loading fails
+
+# --- Parsing Function (For Videos) ---
+def parse_vtt_like_transcription(vtt_string):
+    """Parses VTT-like transcription strings into timed segments."""
+    if not isinstance(vtt_string, str): return []
+    segments = []
+    # Regex to capture HH:MM:SS.ms --> HH:MM:SS.ms followed by text until the next timestamp or end of string
+    # Making it slightly more robust to variations in line endings
+    pattern = re.compile(r"(\d{2}:\d{2}:\d{2}\.\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2}\.\d{3})(?:\s|.)*?\n(.*?)(?=\n\n|\n\d{2}:|\Z)", re.DOTALL | re.MULTILINE)
+    matches = pattern.finditer(vtt_string)
+    for match in matches:
+        start_time, end_time, text = match.group(1), match.group(2), match.group(3).strip().replace('\n', ' ') # Replace newlines within text block
+        if text and '-->' not in text: # Basic check to avoid parsing timestamp lines as text
+            segments.append({'start': start_time, 'end': end_time, 'text': text})
+    return segments
+
+# --- Embedding Functions ---
+def get_embedding_tensor(text):
+    """Generates a single embedding tensor for a given text."""
+    text = str(text) # Ensure input is string
+    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512).to(device)
+    with torch.no_grad():
+        outputs = model(**inputs)
+    # Use mean pooling of the last hidden state
+    embeddings = outputs.last_hidden_state.mean(dim=1)
+    return embeddings
+
+def get_batch_embeddings_tensor(texts):
+    """Generates embedding tensors for a batch of texts."""
+    texts = [str(text) for text in texts] # Ensure all inputs are strings
+    try:
+        inputs = tokenizer(texts, return_tensors="pt", truncation=True, padding=True, max_length=512).to(device)
+        with torch.no_grad():
+            outputs = model(**inputs)
+        # Use mean pooling of the last hidden state
+        embeddings = outputs.last_hidden_state.mean(dim=1)
+        return embeddings
+    except Exception as e:
+        print(f"\nError during batch tokenization/embedding: {e}")
+        # Handle error, maybe return None or empty tensor of expected shape
+        # Returning None might cause issues later, maybe return zero tensor?
+        # For simplicity, re-raise for now, or return empty list and handle later
+        raise e
+
+
+# --- Ranking Function (Segment-Based for Videos) ---
+def rank_segments_and_get_timestamps(df, id_column, transcription_column, user_input):
+    """Ranks videos based on the highest cosine similarity between user input and any video segment."""
+    # Check columns right at the start
+    if id_column not in df.columns:
+        print(f"Error: ID column '{id_column}' not found in video DataFrame for ranking.")
+        return []
+    if transcription_column not in df.columns:
+         print(f"Error: Transcription column '{transcription_column}' not found in video DataFrame for ranking.")
+         return []
+
+    print(f"\nRanking videos based on highest segment similarity in '{transcription_column}'...")
+    user_embedding_tensor = get_embedding_tensor(user_input)
+
+    # Ensure columns exist before trying to drop NA or copy
+    cols_to_use = [id_column, transcription_column]
+    if not all(col in df.columns for col in cols_to_use):
+         print("Error: One or more required columns missing before filtering.")
+         return []
+
+    # Filter out rows where the transcription column is NaN/Null/Empty string BEFORE parsing
+    df_filtered = df[cols_to_use].dropna(subset=[transcription_column]).copy()
+    df_filtered = df_filtered[df_filtered[transcription_column].astype(str).str.strip() != ''] # Ensure not empty string
+
+    print(f"Processing {len(df_filtered)} videos for ranking...")
+    if df_filtered.empty:
+        print("No valid videos with transcriptions to rank after filtering.")
+        return []
+
+    rankings = []
+    # Iterate through each video with progress bar
+    for index, row in tqdm(df_filtered.iterrows(), total=len(df_filtered), desc=f"Analyzing video segments"):
+        item_id = row[id_column]
+        transcription_text = row[transcription_column]
+
+        # 1. Parse the transcription into segments
+        timed_segments = parse_vtt_like_transcription(transcription_text)
+
+        # Check if parsing returned any segments before proceeding
+        if not timed_segments:
+            # print(f"Video {item_id}: No valid segments found in transcription.") # Optional: Debug message
+            continue # Skip to the next video
+
+        # 2. Get text of all segments for this video
+        segment_texts = [seg['text'] for seg in timed_segments if seg.get('text')] # Ensure text exists
+
+        # Check if segments had text
+        if not segment_texts:
+            # print(f"Video {item_id}: Segments parsed but contained no text.") # Optional: Debug message
+            continue # Skip to the next video
+
+        try:
+            # 3. Get embeddings for all segments in the current video
+            segment_embeddings_tensor = get_batch_embeddings_tensor(segment_texts)
+            if segment_embeddings_tensor is None or segment_embeddings_tensor.nelement() == 0: # Check if empty
+                 print(f"\nWarning: Could not get embeddings for segments in video {item_id}. Skipping.")
+                 continue
+
+            # 4. Calculate cosine similarity between user input and all segments
+            # Ensure user_embedding is compatible shape (e.g., [1, embedding_dim])
+            # Ensure segment_embeddings is compatible shape (e.g., [num_segments, embedding_dim])
+            cosine_scores_tensor = util.pytorch_cos_sim(user_embedding_tensor, segment_embeddings_tensor)
+
+            # Check if scores tensor is valid
+            if cosine_scores_tensor is None or cosine_scores_tensor.nelement() == 0:
+                 print(f"\nWarning: Could not calculate similarity scores for video {item_id}. Skipping.")
+                 continue
+
+            cosine_scores_tensor = cosine_scores_tensor[0] # Get the actual scores vector
+
+            # 5. Find the highest similarity score and its index for this video
+            if cosine_scores_tensor.numel() > 0: # Check if tensor has elements
+                best_score_tensor, best_index_tensor = torch.max(cosine_scores_tensor, dim=0)
+                max_similarity_score = best_score_tensor.item() # Convert tensor to float
+                best_segment_index = best_index_tensor.item() # Convert tensor to int
+
+                # Ensure index is valid
+                if best_segment_index < len(timed_segments):
+                    # 6. Get the details of the best matching segment
+                    best_segment_start_time = timed_segments[best_segment_index]['start']
+                    best_segment_text = timed_segments[best_segment_index]['text']
+
+                    # 7. Store the video ID, max score, timestamp, and segment text
+                    rankings.append((item_id, max_similarity_score, best_segment_start_time, best_segment_text))
+                else:
+                     print(f"\nWarning: Invalid segment index {best_segment_index} for video {item_id}. Skipping.")
+            else:
+                 print(f"\nWarning: Empty similarity score tensor for video {item_id}. Skipping.")
+
+
+        except Exception as e:
+            print(f"\nError processing segments for video {item_id}: {str(e)}")
+            # Consider logging the specific segment_texts that caused the error
+            # print(f"Problematic segments: {segment_texts}")
+            continue # Skip to the next video on error
+
+    # Sort all videos by their highest segment similarity score in descending order
+    return sorted(rankings, key=lambda x: x[1], reverse=True)
+
+# --- Ranking Function (Full-Text Based for Comments) ---
+def rank_fulltext_batch_cosine_st(df, id_column, text_column, user_input, batch_size=32):
+    """Ranks comments based on full-text cosine similarity using batch processing."""
+    # Check columns right at the start
+    if id_column not in df.columns:
+        print(f"Error: ID column '{id_column}' not found in comment DataFrame for ranking.")
+        return []
+    if text_column not in df.columns:
+         print(f"Error: Text column '{text_column}' not found in comment DataFrame for ranking.")
+         return []
+
+    print(f"\nRanking comments based on full text similarity in '{text_column}'...")
+    user_embedding_tensor = get_embedding_tensor(user_input)
+
+    # Ensure columns exist before trying to drop NA or copy
+    cols_to_use = [id_column, text_column]
+    if not all(col in df.columns for col in cols_to_use):
+         print("Error: One or more required columns missing before filtering comments.")
+         return []
+
+    # Filter out rows where the text column is NaN/Null/Empty string
+    df_filtered = df[cols_to_use].dropna(subset=[text_column]).copy()
+    df_filtered = df_filtered[df_filtered[text_column].astype(str).str.strip() != '']
+
+    print(f"Processing {len(df_filtered)} comments for ranking...")
+    if df_filtered.empty:
+        print("No valid comments with text to rank after filtering.")
+        return []
+
+    rankings = []
+    num_batches = (len(df_filtered) + batch_size - 1) // batch_size
+    print(f"Calculating comment embeddings/similarities in {num_batches} batches...")
+
+    # Process comments in batches for efficiency
+    for i in tqdm(range(0, len(df_filtered), batch_size), desc=f"Processing comment batches"):
+        batch_df = df_filtered.iloc[i:i+batch_size]
+
+        # Check if the batch is empty before proceeding
+        if batch_df.empty:
+            continue # Skip to the next batch
+
+        texts_batch = batch_df[text_column].tolist()
+        ids_batch = batch_df[id_column].tolist()
+
+        try:
+            # 1. Get embeddings for the current batch of comments
+            item_embeddings_tensor = get_batch_embeddings_tensor(texts_batch)
+            if item_embeddings_tensor is None or item_embeddings_tensor.nelement() == 0:
+                 print(f"\nWarning: Could not get embeddings for comment batch starting at index {i}. Skipping batch.")
+                 continue
+
+            # 2. Calculate cosine similarity between user input and batch embeddings
+            cosine_scores_tensor = util.pytorch_cos_sim(user_embedding_tensor, item_embeddings_tensor)
+            if cosine_scores_tensor is None or cosine_scores_tensor.nelement() == 0:
+                 print(f"\nWarning: Could not calculate similarity scores for comment batch starting at index {i}. Skipping batch.")
+                 continue
+
+            cosine_scores_tensor = cosine_scores_tensor[0] # Get the actual scores vector
+
+            # 3. Convert scores to a list and store with IDs
+            if cosine_scores_tensor.numel() > 0: # Check if scores exist
+                similarity_scores = cosine_scores_tensor.cpu().tolist() # Move scores to CPU before converting to list
+                for item_id, score in zip(ids_batch, similarity_scores):
+                    rankings.append((item_id, score))
+            else:
+                 print(f"\nWarning: Empty similarity score tensor for comment batch starting at index {i}. Skipping batch.")
+
+
+        except Exception as e:
+            print(f"\nError processing comment batch starting at index {i}: {str(e)}")
+            # Consider logging the specific texts_batch that caused the error
+            # print(f"Problematic batch texts: {texts_batch}")
+            continue # Skip to the next batch on error
+
+    # Sort all comments by similarity score in descending order
+    return sorted(rankings, key=lambda x: x[1], reverse=True)
+
+# --- Load Data ---
+print("\n--- Loading Preprocessed Data ---")
+try:
+    videos_df = pd.read_csv(video_file, encoding='utf-8-sig')
+    clean_headers(videos_df)              # ← **call it immediately**
+    print("Video columns ->", list(videos_df.columns)[:5])  # optional check
+    def clean_headers(df):
+        df.columns = [
+            col.lstrip('\ufeff')      # genuine BOM char
+                 .lstrip('ï»¿')      # textual “ï»¿” from a double‑encoded BOM
+                 .strip()            # stray spaces, tabs, \r\n …
+            for col in df.columns
+        ]
+    print(f"Video data loaded successfully from {video_file}.")
+
+    # --- FIX: Check for and rename BOM in Vid column ---
+    if not videos_df.empty and videos_df.columns[0].startswith('\ufeff'):
+        print(f"Detected BOM in first column name: '{videos_df.columns[0]}'. Renaming to 'Vid'.")
+        videos_df.rename(columns={videos_df.columns[0]: 'Vid'}, inplace=True)
+    # --- End FIX ---
+
+except FileNotFoundError:
+    print(f"Error: Video file not found at {video_file}")
+    videos_df = pd.DataFrame() # Create empty DataFrame to avoid errors later
+except Exception as e:
+    print(f"Error loading video file: {e}")
+    videos_df = pd.DataFrame()
+
+try:
+    comments_df = pd.read_csv(comment_file, encoding='utf-8-sig')
+    clean_headers(comments_df)            # ← **call it immediately**
+    print("Comment columns ->", list(comments_df.columns)[:5])  # optional check
+    def clean_headers(df):
+        df.columns = [
+            col.lstrip('\ufeff')      # genuine BOM char
+                 .lstrip('ï»¿')      # textual “ï»¿” from a double‑encoded BOM
+                 .strip()            # stray spaces, tabs, \r\n …
+            for col in df.columns
+        ]
+    print(f"Comment data loaded successfully from {comment_file}.")
+
+     # --- FIX: Check for and rename BOM in Cid column (or first column) ---
+     # Assuming 'Cid' might be the first column if 'Vid' wasn't, or just check first col
+    if not comments_df.empty and comments_df.columns[0].startswith('\ufeff'):
+        expected_first_col = 'Vid' # Or 'Cid' depending on your comment CSV structure
+        actual_first_col = comments_df.columns[0]
+        # Rename if BOM detected, assuming it should be 'Vid' or 'Cid' or similar standard name
+        clean_col_name = actual_first_col.replace('\ufeff', '')
+        print(f"Detected BOM in first column name: '{actual_first_col}'. Renaming to '{clean_col_name}'.")
+        comments_df.rename(columns={actual_first_col: clean_col_name}, inplace=True)
+    # --- End FIX ---
+
+except FileNotFoundError:
+    print(f"Error: Comment file not found at {comment_file}")
+    comments_df = pd.DataFrame() # Create empty DataFrame
+except Exception as e:
+    print(f"Error loading comment file: {e}")
+    comments_df = pd.DataFrame()
+
+# --- Data Cleaning & Preparation ---
+print("\n--- Preparing Data for Ranking ---")
+
+# Video Data Preparation
+video_transcription_col = 'VTT_Content' # Use the column with fetched VTT text
+if not videos_df.empty:
+    if video_transcription_col not in videos_df.columns:
+         # Try the original link column if VTT_Content wasn't created properly in Step 1
+         if 'TikTok_Transcription' in videos_df.columns:
+              print(f"Warning: '{video_transcription_col}' not found, attempting to use 'TikTok_Transcription' (link) instead. Ranking might be less accurate.")
+              video_transcription_col = 'TikTok_Transcription' # Fallback, but ranking won't work well
+         else:
+              print(f"Warning: Neither '{video_transcription_col}' nor 'TikTok_Transcription' found. Video ranking will be skipped.")
+              videos_df = pd.DataFrame() # Disable video ranking
+
+    if not videos_df.empty: # Check again if disabled
+        # Drop rows where the chosen transcription column is NaN/Null/Empty
+        videos_df.dropna(subset=[video_transcription_col], inplace=True)
+        videos_df = videos_df[videos_df[video_transcription_col].astype(str).str.strip() != '']
+        print(f"Videos prepared: {len(videos_df)} remaining after dropping rows with missing/empty '{video_transcription_col}'.")
+
+        # Check for 'Vid' column *after* potential rename
+        if 'Vid' in videos_df.columns:
+            videos_df['Vid'] = videos_df['Vid'].astype(str)
+        else:
+            print("Warning: 'Vid' column not found in Video DataFrame AFTER potential rename. Video ranking will fail.")
+            videos_df = pd.DataFrame() # Disable video ranking if Vid is definitely missing
+else:
+    print("Video DataFrame is empty. Skipping video preparation.")
+
+
+# Comment Data Preparation
+comment_text_col_original = 'Comments' # Column with original comment text for display
+comment_text_col_processed = 'final_text' # Column with preprocessed text for ranking
+comment_id_col = 'Cid' # Column with comment ID
+replies_col_name = 'RepliesToId' # Column with reply ID
+
+if not comments_df.empty:
+    # Check for processed text column
+    if comment_text_col_processed not in comments_df.columns:
+        print(f"Warning: Processed comment text column '{comment_text_col_processed}' not found. Comment ranking will be skipped.")
+        comments_df = pd.DataFrame() # Disable comment ranking
+
+    if not comments_df.empty: # Check again if disabled
+        # Drop rows where the processed text column is NaN/Null/Empty
+        comments_df.dropna(subset=[comment_text_col_processed], inplace=True)
+        comments_df = comments_df[comments_df[comment_text_col_processed].astype(str).str.strip() != '']
+        print(f"Comments prepared: {len(comments_df)} remaining after dropping rows with missing/empty '{comment_text_col_processed}'.")
+
+        # Check for essential columns for ranking and display
+        if comment_id_col not in comments_df.columns:
+             print(f"Warning: Comment ID column '{comment_id_col}' not found. Comment ranking/merging might fail.")
+             # Decide if disabling is needed: comments_df = pd.DataFrame()
+        else:
+             comments_df[comment_id_col] = comments_df[comment_id_col].astype(str)
+
+        if comment_text_col_original not in comments_df.columns:
+            print(f"Warning: Original comment text column '{comment_text_col_original}' not found. Output will not show original comments.")
+
+        if replies_col_name in comments_df.columns:
+            comments_df[replies_col_name] = comments_df[replies_col_name].fillna('').astype(str) # Fill NaN and convert to string
+        else:
+            print(f"Warning: Column '{replies_col_name}' not found in comments_df. Reply info will not be available.")
+else:
+    print("Comment DataFrame is empty. Skipping comment preparation.")
+
+
+# --- User Input for Query ---
+user_input_query = "I am very anxious everyday, how do I solve this anxiety in my head?"
+print(f"\nUser Query for Ranking: \"{user_input_query}\"")
+
+# --- Rank Items (Videos and Comments) ---
+video_ranks_segments = []
+comment_ranks = []
+
+# Attempt ranking only if DataFrames and required columns are valid
+if not videos_df.empty and video_transcription_col in videos_df.columns and 'Vid' in videos_df.columns:
+    # Use the VTT_Content column (or fallback) for ranking
+    video_ranks_segments = rank_segments_and_get_timestamps(videos_df, 'Vid', video_transcription_col, user_input_query)
+else:
+    print("Skipping video ranking due to missing data or columns.")
+
+if not comments_df.empty and comment_text_col_processed in comments_df.columns and comment_id_col in comments_df.columns:
+    comment_ranks = rank_fulltext_batch_cosine_st(comments_df, comment_id_col, comment_text_col_processed, user_input_query)
+else:
+    print("Skipping comment ranking due to missing data or columns.")
+
+# --- Process and Display Top N Results ---
+print("\n" + "="*50);
+print(f"                 Top {top_n} Recommendations"); # Uses the hardcoded top_n
+print("="*50 + "\n")
+
+# --- Video Results ---
+video_segment_results_detailed = pd.DataFrame(video_ranks_segments, columns=["Vid", "Max Segment Score", "Best Segment Start Time", "Best Segment Text"])
+top_n_display_data_videos = pd.DataFrame() # Initialize empty
+
+if not video_segment_results_detailed.empty and not videos_df.empty:
+    # Ensure 'Vid' column exists in videos_df before merging
+    if 'Vid' in videos_df.columns:
+        required_cols = ['Vid', 'NickName', 'TikTok_Link'] # Columns needed for display
+        # Check which required columns actually exist in videos_df
+        found_cols = [col for col in required_cols if col in videos_df.columns]
+        extra_info_df = videos_df[found_cols] # Get only available columns
+
+        # Merge top N results with the available extra info
+        top_n_display_data_videos = pd.merge(video_segment_results_detailed.head(top_n), extra_info_df, on='Vid', how='left')
+    else:
+        # If 'Vid' somehow missing despite checks, just show ranked data
+        top_n_display_data_videos = video_segment_results_detailed.head(top_n)
+
+elif not video_segment_results_detailed.empty:
+    # If videos_df was empty but ranking happened (unlikely), show ranked data
+    top_n_display_data_videos = video_segment_results_detailed.head(top_n)
+
+print(f"--- Top {top_n} Video Recommendations (Detailed) ---")
+if not top_n_display_data_videos.empty:
+    for index, row in top_n_display_data_videos.iterrows():
+        print(f"--- Rank: {index + 1} ---")
+        print(f"  Vid: {row.get('Vid', 'N/A')}") # Use .get for safety
+        print(f"  Creator Nickname: {row.get('NickName', 'N/A')}")
+        print(f"  Similarity Score: {row.get('Max Segment Score', float('nan')):.4f}") # Use .get
+        print(f"  Timestamp: {row.get('Best Segment Start Time', 'N/A')}")
+        print(f"  Best Segment: {row.get('Best Segment Text', 'N/A')}")
+        print(f"  Link: {row.get('TikTok_Link', 'N/A')}")
+        print("-" * 30)
+else:
+    print("No detailed video ranking results to display.")
+
+# --- Comment Results ---
+print("\n" + "="*50)
+comment_results = pd.DataFrame(comment_ranks, columns=[comment_id_col, "Similarity Score"]) # Use dynamic ID col
+top_n_display_data_comments = pd.DataFrame() # Initialize empty
+
+print(f"\n--- Merging top {top_n} comment results with original data ---")
+if not comment_results.empty and not comments_df.empty:
+     # Define columns needed from original comments_df
+     comment_cols_to_merge = [comment_id_col] # Start with ID column
+     if replies_col_name in comments_df.columns:
+         comment_cols_to_merge.append(replies_col_name)
+     if comment_text_col_original in comments_df.columns:
+         comment_cols_to_merge.append(comment_text_col_original)
+
+     # Check if ID column exists for merging
+     if comment_id_col in comments_df.columns:
+         extra_info_comments_df = comments_df[comment_cols_to_merge].drop_duplicates(subset=[comment_id_col]) # Avoid duplicate IDs if any
+         top_n_display_data_comments = pd.merge(comment_results.head(top_n), extra_info_comments_df, on=comment_id_col, how='left')
+         print("Comment merge complete.")
+     else:
+         print(f"Warning: Cannot merge comment details because '{comment_id_col}' column is missing in comments_df.")
+         top_n_display_data_comments = comment_results.head(top_n) # Fallback
+
+elif not comment_results.empty:
+    top_n_display_data_comments = comment_results.head(top_n)
+
+print(f"\n--- Top {top_n} Comment Recommendations ---")
+if not top_n_display_data_comments.empty:
+    # Loop to include comment text if available
+    for index, row in top_n_display_data_comments.iterrows():
+        print(f"--- Rank: {index + 1} ---")
+        print(f"  {comment_id_col}: {row.get(comment_id_col, 'N/A')}") # Use dynamic ID col
+        print(f"  Comment: {row.get(comment_text_col_original, 'N/A')}")
+        reply_to = row.get(replies_col_name, '')
+        print(f"  Replies To Id: {reply_to if reply_to else '-'}")
+        print(f"  Similarity Score: {row.get('Similarity Score', float('nan')):.4f}") # Use .get
+        print("-" * 30)
+else:
+    print("No comment ranking results to display.")
+# --- End of Comment Display ---
+
+print("\n" + "="*50)
+
+# --- Save Full Results ---
+print("\n--- Saving Full Ranked Lists ---")
+
+# Create output directory if it doesn't exist
+if output_dir and not os.path.exists(output_dir):
+    try:
+        os.makedirs(output_dir)
+        print(f"Created output directory: {output_dir}")
+    except OSError as e:
+        print(f"Error creating directory {output_dir}: {e}")
+        output_dir = None # Disable saving
+
+if output_dir:
+    # Save Video Results
+    video_output_file_seg_detailed = os.path.join(output_dir, "ranked_videos_timestamp_text.csv")
+    if not video_segment_results_detailed.empty:
+        try:
+            # Save only the ranked results (ID, Score, Timestamp, Text)
+            video_segment_results_detailed.to_csv(video_output_file_seg_detailed, index=False, encoding='utf-8-sig')
+            print(f"Full ranked video data saved to: {video_output_file_seg_detailed}")
+        except Exception as e:
+            print(f"Error saving ranked video data: {e}")
+    else:
+        print("Skipping saving empty video results.")
+
+    # Save Comment Results
+    comment_output_file = os.path.join(output_dir, "ranked_comment_items_cosineST.csv")
+    if not comment_results.empty:
+        try:
+            # Save only the ranked results (ID, Score)
+            comment_results.to_csv(comment_output_file, index=False, encoding='utf-8-sig')
+            print(f"Full ranked comment data saved to: {comment_output_file}")
+        except Exception as e:
+            print(f"Error saving ranked comment data: {e}")
+    else:
+        print("Skipping saving empty comment results.")
+else:
+    print("Output directory not specified or could not be created. Skipping saving results.")
+
+
+print("\n--- Step 6 Complete ---")
