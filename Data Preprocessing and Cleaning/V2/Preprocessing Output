@@ -1,0 +1,100 @@
+Loading comment data from: G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Standardized Comment.csv
+Comment data loaded successfully.
+Loading video data from: G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Video with Transcription.csv
+Video data loaded successfully.
+
+--- Initial Data Inspection ---
+Comments DataFrame Head:
+   Vid           Cid  RepliesToId  \
+0  NaN  7.388740e+18          NaN   
+1  NaN  7.280710e+18          NaN   
+2  NaN  7.283090e+18          NaN   
+3  NaN  7.280700e+18          NaN   
+4  NaN  7.311590e+18          NaN   
+
+                                            Comments  uniqueId  videoWebUrl  
+0              Can you talk more about how to fix it       NaN          NaN  
+1                           oh it's the FOR YOU page       NaN          NaN  
+2       Do you recommend some literature about this?       NaN          NaN  
+3             Sigh… I need to get back into therapy.       NaN          NaN  
+4  I have chronic shame but I also have autism so...       NaN          NaN  
+
+Videos DataFrame Head:
+         ï»¿Vid               Name                     NickName  \
+0  7.259060e+18  mind.psy.guidance  Morgan | Holistic Therapist   
+1  7.231580e+18  mind.psy.guidance  Morgan | Holistic Therapist   
+2  7.488880e+18     themedicalcity             The Medical City   
+3  7.027930e+18      drtraceymarks             Dr. Tracey Marks   
+4  7.066090e+18      drtraceymarks             Dr. Tracey Marks   
+
+                                         TikTok_Link  \
+0  https://www.tiktok.com/@mind.psy.guidance/vide...   
+1  https://www.tiktok.com/@mind.psy.guidance/vide...   
+2  https://www.tiktok.com/@themedicalcity/video/7...   
+3  https://www.tiktok.com/@drtraceymarks/video/70...   
+4  https://www.tiktok.com/@drtraceymarks/video/70...   
+
+                                TikTok_Transcription  \
+0  https://api.apify.com/v2/key-value-stores/ATwA...   
+1  https://api.apify.com/v2/key-value-stores/ATwA...   
+2  https://api.apify.com/v2/key-value-stores/ATwA...   
+3  https://api.apify.com/v2/key-value-stores/ATwA...   
+4  https://api.apify.com/v2/key-value-stores/ATwA...   
+
+                                         VTT_Content  
+0  WEBVTT\n\n\n00:00:00.282 --> 00:00:02.801\nHer...  
+1  WEBVTT\n\n\n00:00:00.242 --> 00:00:02.137\nIf ...  
+2  WEBVTT\n\n\n00:00:00.220 --> 00:00:03.760\nDOC...  
+3  WEBVTT\n\n\n00:00:00.000 --> 00:00:01.617\nWhe...  
+4  WEBVTT\n\n\n00:00:00.000 --> 00:00:02.727\nPas...  
+
+--- Handling Missing Values ---
+Missing values in comments before handling:
+Vid            254
+Cid              0
+RepliesToId    254
+Comments         0
+uniqueId       254
+videoWebUrl    254
+dtype: int64
+Rows after dropping NA in Comments: 254
+
+Missing values in videos before handling:
+ï»¿Vid                  0
+Name                    0
+NickName                0
+TikTok_Link             0
+TikTok_Transcription    0
+VTT_Content             0
+dtype: int64
+Rows after dropping NA in TikTok_Transcription: 55
+
+--- Removing Duplicates ---
+Removed 0 duplicate comments.
+Removed 3 duplicate video transcriptions.
+
+--- Cleaning Text ---
+Applied text cleaning to comments.
+Applied text cleaning to transcriptions.
+
+--- Tokenizing Text ---
+Tokenized comments.
+Tokenized transcriptions.
+
+--- Removing Stopwords ---
+Removed stopwords from comments.
+Removed stopwords from transcriptions.
+
+--- Lemmatizing Tokens ---
+Lemmatized comment tokens.
+Lemmatized transcription tokens.
+
+--- Preparing Final Text Strings ---
+Created final text string for comments.
+Created final text string for videos.
+
+--- Saving Preprocessed Data ---
+Cleaned comments saved successfully to: G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Preprocessed\Clean Standardized Comment.csv
+Cleaned videos saved successfully to: G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Preprocessed\Clean Video with Transcription.csv
+
+Preprocessing complete.
