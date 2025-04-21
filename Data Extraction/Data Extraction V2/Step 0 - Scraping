@@ -1,0 +1,653 @@
+#STEP 0
+
+!pip install apify-client
+!pip install tqdm
+!pip install openpyxl
+
+import os
+from apify_client import ApifyClient
+import re # Using regex for simple keyword extraction and URL finding
+import pandas as pd # Added for CSV saving
+import csv # Import csv module for quoting options if needed
+import time # Added for polling sleep
+from pprint import pprint # For potentially printing raw data samples
+from tqdm.auto import tqdm # Added for progress bars
+import string # For cleaning query keywords
+# Import display for showing styled DataFrame if needed outside the last line
+from IPython.display import display, clear_output # Import clear_output
+
+# --- Configuration ---
+# IMPORTANT: Replace with your actual Apify API Token
+APIFY_API_TOKEN = os.getenv('APIFY_API_TOKEN', 'apify_api_tXDT9FmlCCfs2QJSo9y2oewMAtYX4H3VqTYQ')
+
+# *** SET YOUR DESIRED OUTPUT DIRECTORY HERE ***
+OUTPUT_DIRECTORY = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output" # <-- CHANGE THIS PATH
+
+# *** SET PATH TO YOUR LIST OF PROFILES ***
+PROFILE_LIST_FILE = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Lists of Psychiatrist.txt" # <-- Path to your text file
+
+# The user's query (Used for filtering results)
+user_input_query = "I am very anxious everyday, how do I solve this anxiety in my head?"
+
+#------------------------------------------------------#
+
+# --- Scraping Parameters for Video Actor OtzYfK1ndEGdwWFKQ ---
+# Settings when scraping specific profiles
+VIDEO_ACTOR_INPUT_SETTINGS = {
+    "resultsPerPage": 2, # How many videos to attempt per profile (adjust as needed)
+    # Removed profile/hashtag specific search params, using direct profile input now
+    "shouldDownloadVideos": False,
+    "shouldDownloadCovers": False,
+    "shouldDownloadSubtitles": True, # <<< ENABLED SUBTITLES HERE
+    "shouldDownloadSlideshowImages": False,
+}
+
+# --- Scraping Parameters for Comment Actor clockworks/tiktok-comments-scraper ---
+COMMENTS_PER_POST_LIMIT = 10 # Minimal setting for comments (adjust as needed)
+MAX_REPLIES_PER_COMMENT = 5 # 0 means no replies
+
+# --- Polling Parameters ---
+POLL_INTERVAL_SECONDS = 10
+MAX_WAIT_MINUTES = 20 # Increased slightly as profile scraping might take longer
+
+# --- Desired Output Columns ---
+#Video Column Name matching
+VIDEO_COLUMNS = ['Vid', 'Name', 'NickName', 'ProfileUrl', 'TikTok_Transcription', 'TikTok_Link', 'Author Bio', 'Video Description']
+#Comment Column Name matching
+COMMENT_COLUMNS = ['Vid', 'Cid', 'RepliesToId', 'Comments', 'uniqueId', 'videoWebUrl']
+
+
+# --- MODIFIED Helper Function: Load Profile USERNAMES from File ---
+# This function now extracts usernames instead of full URLs
+def load_profile_usernames(filepath):
+    """ Reads a text file and extracts unique TikTok usernames from profile URLs or lines. """
+    usernames = set()
+    print(f"Reading profile URLs/Usernames from: {filepath}")
+    try:
+        # Attempt to read with utf-8 first, fallback to latin1 if needed
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+        except UnicodeDecodeError:
+            print("   Warning: UTF-8 decode failed, trying latin1 encoding...")
+            with open(filepath, 'r', encoding='latin1') as f:
+                lines = f.readlines()
+
+        for line in lines:
+            line = line.strip() # Remove leading/trailing whitespace
+            if not line: # Skip empty lines
+                continue
+
+            # Try to extract username from a full URL
+            match = re.search(r'https://www\.tiktok\.com/@([^/?\s]+)', line)
+            if match:
+                usernames.add(match.group(1)) # Add the username part
+            # If it's not a URL, assume it might be a username directly
+            # Add stricter validation if needed (e.g., check for invalid characters)
+            elif not line.startswith('http') and not ' ' in line and line:
+                # Basic check: not a URL, no spaces - might be a username
+                # Ensure it doesn't contain typical file path characters if needed
+                 if ':' not in line and '\\' not in line and '/' not in line:
+                    usernames.add(line)
+
+
+    except FileNotFoundError:
+        print(f"🚨 Error: Profile list file not found at '{filepath}'")
+        return []
+    except Exception as e:
+        print(f"🚨 Error reading profile list file: {e}")
+        return []
+
+    unique_usernames = list(usernames)
+    # Filter out any potential empty strings if they somehow got added
+    unique_usernames = [u for u in unique_usernames if u]
+    print(f"   Found {len(unique_usernames)} unique profile usernames.")
+    return unique_usernames
+
+# --- Helper Function: Get Keywords for Filtering ---
+def get_filter_keywords(query, min_length=3):
+    """ Extracts keywords from the user query for filtering results. """
+    # Remove punctuation and convert to lowercase
+    query_cleaned = query.lower().translate(str.maketrans('', '', string.punctuation))
+    words = query_cleaned.split()
+    # Define common English stop words (can be expanded)
+    stop_words = set(["i", "am", "very", "everyday", "how", "do", "this", "in", "my", "to", "is", "a", "the", "and", "or", "it", "for", "on", "with", "as", "be", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now"])
+    # Filter out stop words and short words
+    keywords = [word for word in words if word not in stop_words and len(word) >= min_length]
+    unique_keywords = list(dict.fromkeys(keywords)) # Keep order but unique
+    print(f"Keywords extracted for filtering: {unique_keywords}")
+    return unique_keywords
+
+# --- MODIFIED Helper Function: Wait for Actor Run to Finish (with Countdown) ---
+def wait_for_run_completion(client, run_info, actor_name, max_wait_seconds):
+    """ Polls the Apify platform until an actor run finishes or times out, shows tqdm bar and countdown. """
+    run_id = run_info.get('id')
+    if not run_id: print(f"❌ Error: Could not get run ID for {actor_name}.") ; return None
+    print(f"   Waiting for {actor_name} run ({run_id}) to complete...")
+    start_time = time.time() ; last_status = None ; final_run_info = None
+
+    # Use tqdm for overall progress visualization (based on checks)
+    with tqdm(total=max_wait_seconds // POLL_INTERVAL_SECONDS, desc=f"Waiting for {actor_name} ({run_id})", unit=" checks", leave=True) as pbar:
+        while True:
+            elapsed_seconds = time.time() - start_time
+            if elapsed_seconds >= max_wait_seconds:
+                pbar.set_description(f"TIMEOUT waiting for {actor_name} ({run_id})")
+                tqdm.write(f"\n⌛️ Warning: Run ({run_id}) did not complete within {max_wait_seconds / 60:.1f} minutes.")
+                final_run_info = None
+                break # Exit main while loop on timeout
+
+            # --- Check Apify Status ---
+            try:
+                current_run_info = client.run(run_id).get()
+                status = current_run_info.get('status')
+
+                # Print status update only if it changed
+                if status != last_status:
+                     # Clear the countdown line before printing status
+                     print(" " * 50, end='\r')
+                     tqdm.write(f"   [{time.strftime('%H:%M:%S')}] Run status: {status}")
+                     last_status = status
+                     pbar.set_description(f"Waiting for {actor_name} ({run_id}) - Status: {status}")
+
+                # Check for terminal statuses
+                if status == 'SUCCEEDED':
+                    print(" " * 50, end='\r') # Clear countdown line
+                    pbar.set_description(f"Run {run_id} SUCCEEDED")
+                    tqdm.write(f"\n✅ Run ({run_id}) finished successfully.")
+                    final_run_info = current_run_info
+                    pbar.update(pbar.total - pbar.n) # Complete the progress bar
+                    break # Exit main while loop
+                elif status in ['FAILED', 'ABORTED', 'TIMED_OUT']:
+                    print(" " * 50, end='\r') # Clear countdown line
+                    pbar.set_description(f"Run {run_id} {status}")
+                    tqdm.write(f"\n❌ Run ({run_id}) finished with status: {status}.")
+                    final_run_info = None
+                    pbar.update(pbar.total - pbar.n) # Complete the progress bar
+                    break # Exit main while loop
+
+            except Exception as e:
+                print(" " * 50, end='\r') # Clear countdown line
+                tqdm.write(f"\n❌ Error while checking run status for {run_id}: {e}")
+                # Decide if you want to break or continue polling on error
+                # For now, we continue polling
+
+            # --- Countdown between checks ---
+            # Only countdown if the run is still in a non-terminal state
+            if status not in ['SUCCEEDED', 'FAILED', 'ABORTED', 'TIMED_OUT']:
+                pbar.update(1) # Increment tqdm bar for the check completed
+                for i in range(POLL_INTERVAL_SECONDS, 0, -1):
+                    # Check elapsed time again within countdown to prevent exceeding max_wait
+                    if time.time() - start_time >= max_wait_seconds:
+                        break # Break countdown if timeout reached
+                    print(f"   Next check in {i}s...          ", end='\r') # Overwrite previous countdown line
+                    time.sleep(1)
+                # Clear the countdown message before the next status check or loop exit
+                print(" " * 50, end='\r')
+                # Check elapsed time one last time before potentially looping
+                if time.time() - start_time >= max_wait_seconds:
+                     continue # Let the main loop condition handle the timeout break
+
+            # Safety sleep in case of rapid status changes or errors, prevent tight loop
+            # time.sleep(0.1) # Short sleep if needed, but countdown handles most waiting
+
+    return final_run_info
+
+
+# --- Helper Function: Scrape Videos from Profiles (Using Video Actor) ---
+# Takes a list of USERNAMES now
+def scrape_videos_from_profiles(client, profile_usernames, actor_settings):
+    """
+    Runs the specific TikTok scraper actor (OtzYfK1ndEGdwWFKQ) for given profile USERNAMES
+    and waits for completion, showing progress.
+    """
+    if not profile_usernames:
+        print("No profile usernames provided, skipping scraping.")
+        return []
+
+    print(f"\n▶️ Starting TikTok scrape using Actor OtzYfK1ndEGdwWFKQ for {len(profile_usernames)} profile(s)")
+    actor_id = "OtzYfK1ndEGdwWFKQ" # <-- VIDEO/PROFILE ACTOR ID
+
+    # --- MODIFIED Input Formatting ---
+    # Pass the list of usernames directly to the "profiles" key
+    # Based on the screenshot analysis
+    run_input = {
+        "profiles": profile_usernames, # Pass the list of USERNAME STRINGS
+        **actor_settings # Unpack the base settings dict (VIDEO_ACTOR_INPUT_SETTINGS)
+        }
+    # --- End Input Formatting ---
+
+    try:
+        initial_run_info = client.actor(actor_id).call(run_input=run_input)
+        print(f"✅ Scraper actor run initiated. Actor ID: {actor_id}, Run ID: {initial_run_info.get('id')}")
+        print(f"💾 Dataset ID: {initial_run_info.get('defaultDatasetId')}")
+        print(f"   Check full status/log: https://console.apify.com/actors/runs/{initial_run_info.get('id')}")
+
+        # Wait for completion using the modified function with countdown
+        final_run_info = wait_for_run_completion(
+            client, initial_run_info, f"Actor {actor_id}", MAX_WAIT_MINUTES * 60
+        )
+
+        if final_run_info and final_run_info.get('status') == 'SUCCEEDED':
+            dataset_id = final_run_info.get("defaultDatasetId")
+            print(f"   Fetching results from dataset {dataset_id}...")
+            item_count = None
+            try:
+                dataset_info = client.dataset(dataset_id).get() ; item_count = dataset_info.get('itemCount')
+            except Exception as e: print(f"   Warning: Could not get item count for dataset {dataset_id}. {e}")
+
+            iterator = client.dataset(dataset_id).iterate_items()
+            desc = "Fetching results"
+            if item_count and item_count > 0: print(f"   Expected item count: {item_count}") ; desc += f" (~{item_count} items)"
+            else: print(f"   Fetching items (count unknown)...")
+
+            # Fetch items with progress bar
+            all_items = []
+            if item_count and item_count > 0:
+                all_items = list(tqdm(iterator, total=item_count, desc=desc, unit=" items", leave=False))
+            else:
+                # If count is unknown, iterate without total
+                temp_items = []
+                with tqdm(desc=desc, unit=" items", leave=False) as pbar_unknown:
+                    for item in iterator:
+                        temp_items.append(item)
+                        pbar_unknown.update(1)
+                all_items = temp_items
+
+            print(f"\n   Found {len(all_items)} raw items.")
+            return all_items
+        else:
+            print(f"   Scraper run did not succeed. Skipping result fetching.")
+            return []
+
+    except Exception as e:
+        print(f"❌ Error running/monitoring scraper actor '{actor_id}': {e}")
+        return []
+
+
+# --- Helper Function: Process Raw Video Data ---
+def process_video_results(raw_results):
+    """ Extracts specific fields from raw video results with tqdm progress and subtitle fallback. """
+    processed_data = []
+    if not raw_results: return processed_data
+    print(f"\n⚙️ Processing {len(raw_results)} raw items (filtering for videos)...")
+    # if raw_results: print("--- Sample Raw Item ---") ; pprint(raw_results[0]) ; print("---") # Optional print
+
+    video_count = 0
+    for item in tqdm(raw_results, desc="Processing video items", unit=" item", leave=False):
+        video_id = item.get('id')
+        video_link = item.get('webVideoUrl') or item.get('videoUrl') or item.get('link')
+        # Attempt to extract video ID from link if primary ID is missing
+        if not video_id and video_link:
+             try:
+                 # Extract numeric ID usually found after /video/
+                 match = re.search(r'/video/(\d+)', video_link)
+                 if match:
+                     video_id = match.group(1)
+             except Exception:
+                 video_id = None # Keep it None if extraction fails
+
+        # Skip if we still don't have a video ID or link (might be non-video item)
+        # Or if the item seems to be related to profile info rather than a video post
+        if (not video_id and not video_link) or 'followers' in item or 'following' in item:
+             continue
+
+        video_count += 1
+        author_info = item.get('author', {}) or item.get('authorMeta', {})
+        author_name = author_info.get('name') or author_info.get('nickname')
+        author_nickname = author_info.get('uniqueId') or author_info.get('nickName') # This is the username
+        profile_url_vid = None
+        if author_nickname: profile_url_vid = f"https://www.tiktok.com/@{author_nickname}"
+
+        # --- Extract Subtitle Download Link with Fallback Logic ---
+        subtitles_link = None ; first_other_link = None
+        video_meta = item.get('videoMeta', {})
+        subtitle_links = video_meta.get('subtitleLinks', []) if video_meta else [] # Ensure video_meta exists
+        if isinstance(subtitle_links, list):
+            for link_info in subtitle_links:
+                if isinstance(link_info, dict):
+                    lang = link_info.get('language') ; d_link = link_info.get('downloadLink')
+                    if lang == 'eng-US': subtitles_link = d_link ; break # Prioritize English
+                    if first_other_link is None and d_link: first_other_link = d_link # Fallback
+            if subtitles_link is None: subtitles_link = first_other_link # Use fallback if no English
+        # --- End Subtitle Extraction ---
+
+        # --- Extract Author Bio and Video Description ---
+        author_bio = author_info.get('signature')
+        video_description = item.get('text') or item.get('desc')
+        # --- End Bio/Description Extraction ---
+
+        processed_item = {
+            'Vid': video_id, # Use the extracted/found video ID
+            'Name': author_name,
+            'NickName': author_nickname, # This is the username
+            'ProfileUrl': profile_url_vid,
+            'TikTok_Transcription': subtitles_link, # This is the LINK to the subtitle file
+            'TikTok_Link': video_link,
+            'Author Bio': author_bio,
+            'Video Description': video_description
+        }
+        processed_data.append(processed_item)
+
+    print(f"\n   Finished processing. Extracted {video_count} video items.")
+    return processed_data
+
+# --- Helper Function: Run Comment Scraper ---
+def scrape_comments_for_videos(client, video_urls, comments_limit, replies_limit):
+    """ Runs the comment scraper actor (clockworks/tiktok-comments-scraper) and waits for completion. """
+    if not video_urls:
+        print("\nNo video URLs provided, skipping comment scraping.")
+        return []
+    # Removed the temporary limit on number of videos to process
+    print(f"\n💬 Starting TikTok comment scrape for {len(video_urls)} videos (limit: {comments_limit}/post)")
+    actor_id = "clockworks/tiktok-comments-scraper" # <-- COMMENT ACTOR ID
+    run_input = {
+        "postURLs": video_urls, # Use all filtered video URLs
+        "commentsPerPost": comments_limit,
+        "maxRepliesPerComment": replies_limit,
+        "resultsPerPage": 100, # Adjust if needed, max usually 1000
+        }
+    try:
+        initial_run_info = client.actor(actor_id).call(run_input=run_input)
+        print(f"✅ Comment scraper actor run initiated. Actor ID: {actor_id}, Run ID: {initial_run_info.get('id')}")
+        print(f"💾 Comment dataset ID: {initial_run_info.get('defaultDatasetId')}")
+        print(f"   Check full status/log: https://console.apify.com/actors/runs/{initial_run_info.get('id')}")
+
+        # Wait for completion using the modified function with countdown
+        final_run_info = wait_for_run_completion(
+            client, initial_run_info, f"Actor {actor_id}", MAX_WAIT_MINUTES * 60
+            )
+
+        if final_run_info and final_run_info.get('status') == 'SUCCEEDED':
+            dataset_id = final_run_info.get("defaultDatasetId")
+            print(f"   Fetching comment results from dataset {dataset_id}...")
+            item_count = None
+            try:
+                dataset_info = client.dataset(dataset_id).get()
+                item_count = dataset_info.get('itemCount')
+            except Exception as e:
+                print(f"   Warning: Could not get item count for dataset {dataset_id}. {e}")
+
+            iterator = client.dataset(dataset_id).iterate_items()
+            desc = "Fetching comments"
+            # Fetch items with progress bar
+            all_comment_items = []
+            if item_count and item_count > 0:
+                 print(f"   Expected item count: {item_count}")
+                 all_comment_items = list(tqdm(iterator, total=item_count, desc=desc, unit=" comments", leave=False))
+            else:
+                 print(f"   Fetching comments (count unknown)...")
+                 temp_items = []
+                 with tqdm(desc=desc, unit=" comments", leave=False) as pbar_unknown:
+                    for item in iterator:
+                        temp_items.append(item)
+                        pbar_unknown.update(1)
+                 all_comment_items = temp_items
+
+
+            print(f"\n   Found {len(all_comment_items)} raw comment items in total.")
+            return all_comment_items
+        else:
+            print(f"   Comment scraper run did not succeed. Skipping result fetching.")
+            return []
+    except Exception as e:
+        print(f"❌ Error running/monitoring comment scraper actor '{actor_id}': {e}")
+        return []
+
+# --- Helper Function: Process Raw Comment Data ---
+def process_comment_results(raw_results):
+    """ Extracts specific fields from raw comment results with tqdm progress. """
+    processed_data = []
+    if not raw_results: return processed_data
+    print(f"\n⚙️ Processing {len(raw_results)} raw comment items...")
+    # if raw_results: print("--- Sample Raw Comment ---"); pprint(raw_results[0]); print("---") # Optional print
+
+    # Wrap processing loop with tqdm
+    for item in tqdm(raw_results, desc="Processing comments", unit=" comment", leave=False):
+        author_info = item.get('author', {})
+        unique_id_cmt = author_info.get('uniqueId') # Username of commenter
+        vid = item.get('aweme_id') # Video ID from comment data
+        video_url_cmt = item.get('videoUrl') # URL of the video the comment belongs to
+
+        # Fallback to extract Vid from videoUrl if aweme_id is missing
+        if not vid and video_url_cmt:
+            try:
+                match = re.search(r'/video/(\d+)', video_url_cmt)
+                if match:
+                    vid = match.group(1)
+            except Exception:
+                vid = None
+
+        processed_item = {
+            'Vid': vid, # Video ID the comment belongs to
+            'Cid': item.get('cid'), # Comment ID
+            'RepliesToId': item.get('reply_id') or item.get('replyID'), # ID of comment being replied to (if any)
+            'Comments': item.get('text'), # The actual comment text
+            'uniqueId': unique_id_cmt, # Username of the person who commented
+            'videoWebUrl': video_url_cmt # Full URL of the video
+        }
+        processed_data.append(processed_item)
+    print(f"\n   Finished processing comment items.")
+    return processed_data
+
+
+# --- Main Execution ---
+if __name__ == "__main__":
+    print("--- TikTok Data Extraction from Profile List ---")
+    video_csv_path = None # Initialize path variables
+    comment_csv_path = None
+
+    # --- Setup Checks ---
+    if not APIFY_API_TOKEN or 'YOUR_API_TOKEN' in APIFY_API_TOKEN: # Improved check
+        print("🚨 Error: Apify API token is missing or placeholder.")
+        exit()
+    if not OUTPUT_DIRECTORY:
+        print("🚨 Error: Output directory is not set.")
+        exit()
+    try:
+        os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
+        print(f"Output directory set to: {OUTPUT_DIRECTORY}")
+    except OSError as e:
+        print(f"🚨 Error creating output directory '{OUTPUT_DIRECTORY}': {e}")
+        exit()
+    try:
+        apify_client = ApifyClient(APIFY_API_TOKEN)
+        print("Apify client initialized.")
+    except Exception as e:
+        print(f"🚨 Error initializing Apify client: {e}")
+        exit()
+
+    # 1. Load Profile USERNAMES from File (Using the modified function)
+    profile_usernames_to_scrape = load_profile_usernames(PROFILE_LIST_FILE)
+    if not profile_usernames_to_scrape:
+        print("🚨 No profile usernames loaded. Exiting.")
+        exit()
+
+    # <<< Optional: ADDING TEST LIMIT for profile usernames >>>
+    # test_profile_usernames = profile_usernames_to_scrape[:3] # Test with only the first 3 usernames
+    # print(f"\n🧪 TESTING: Attempting to scrape only the first {len(test_profile_usernames)} profiles.")
+    # Use 'test_profile_usernames' below instead of 'profile_usernames_to_scrape' when testing
+
+    # 2. Scrape Videos from the specified profiles (Pass the list of usernames)
+    raw_scraped_results = scrape_videos_from_profiles(
+        apify_client,
+        profile_usernames_to_scrape, # Use 'test_profile_usernames' if testing
+        VIDEO_ACTOR_INPUT_SETTINGS
+    )
+
+    # 3. Process Scraped Results
+    processed_video_data = process_video_results(raw_scraped_results)
+
+    # 4. Get Keywords for Filtering from User Query
+    filter_keywords = get_filter_keywords(user_input_query)
+
+    # 5. Filter Processed Videos based on Query Keywords (Optional - based on description/bio)
+    # Note: Filtering is less effective now as it doesn't use subtitles yet.
+    # Consider filtering *after* subtitle download and processing if needed.
+    filtered_video_data = []
+    if processed_video_data and filter_keywords:
+        print(f"\n🔍 Filtering {len(processed_video_data)} videos based on description/bio for keywords: {filter_keywords}...")
+        for video in tqdm(processed_video_data, desc="Filtering videos", unit=" video", leave=False):
+            # Search only in description and author bio for initial filtering
+            text_to_search = f"{video.get('Video Description', '')} {video.get('Author Bio', '')}".lower()
+            match_found = False
+            for keyword in filter_keywords:
+                if keyword in text_to_search:
+                    match_found = True
+                    break
+            if match_found:
+                filtered_video_data.append(video)
+        print(f"\n   Found {len(filtered_video_data)} videos matching query keywords in description/bio.")
+    elif not filter_keywords:
+         print("\n⚠️ No keywords extracted from query for filtering. Using all scraped videos for comment scraping.")
+         filtered_video_data = processed_video_data # Keep all if no keywords
+    else:
+        print("\nNo processed videos to filter.")
+
+
+    # --- Comment Scraping Steps ---
+    # 6. Extract Video URLs for Comment Scraping (from FILTERED Data)
+    video_urls_for_comments = []
+    if filtered_video_data:
+        # Extract TikTok_Link which should be the web URL
+        video_urls_for_comments = [video['TikTok_Link'] for video in filtered_video_data if video.get('TikTok_Link')]
+        video_urls_for_comments = list(dict.fromkeys(video_urls_for_comments)) # Ensure unique URLs
+        print(f"\nExtracted {len(video_urls_for_comments)} unique video URLs from potentially filtered data for comment scraping.")
+    else:
+        print("\nNo video data available (or filtering removed all videos) to extract URLs from for comment scraping.")
+
+    # 7. Scrape Comments (using the extracted video URLs)
+    raw_comment_results = []
+    # --- MODIFICATION: Check if comment scraping limit was reached ---
+    comments_limit_reached = False # Flag to track if limit was hit
+    if video_urls_for_comments:
+        # Check if Apify run failed specifically due to limits (example check, might need adjustment)
+        # This check is difficult without seeing the actual run status/output from Apify for comments
+        # For now, we assume if raw_scraped_results (videos) succeeded, comments *might* fail due to limits
+        # A more robust way would be to check the status of the comment actor run if it was stored
+        if not raw_scraped_results: # If video scraping failed, comments likely won't run
+             print("\nSkipping comment scraping as video scraping failed.")
+        # else: # Assume video scraping worked, try comments
+        #     print("\nWARNING: Comment scraping might fail due to usage limits.") # Add a warning
+        #     # Set a flag or handle potential failure later if needed
+        #     comments_limit_reached = True # Assume limit might be reached
+        #     # Decide if you still want to attempt scraping comments or skip
+        #     # raw_comment_results = scrape_comments_for_videos(...) # Keep commented out if skipping
+
+        # Let's *attempt* comment scraping but be aware it might fail
+        print("\nAttempting comment scraping (may fail due to usage limits)...")
+        raw_comment_results = scrape_comments_for_videos(
+            apify_client, video_urls_for_comments, COMMENTS_PER_POST_LIMIT, MAX_REPLIES_PER_COMMENT
+        )
+        if not raw_comment_results: # Check if comment scraping actually returned results
+             print("\nComment scraping did not return results (possibly due to limits or other errors).")
+             comments_limit_reached = True # Set flag if no results
+
+    else:
+        print("\nSkipping comment scraping as no video URLs were available.")
+
+    # 8. Process Comment Results
+    processed_comment_data = process_comment_results(raw_comment_results)
+    # --- End Comment Scraping Steps ---
+
+
+    # 9. Display Summary (Now includes comment counts)
+    print("\n--- Final Summary ---")
+    print(f"Profiles Scraped (Attempted): {len(profile_usernames_to_scrape)}") # Use count of usernames attempted
+    print(f"Raw Items Found by Video Actor: {len(raw_scraped_results)}")
+    print(f"Processed Videos Extracted (Before Filter): {len(processed_video_data)}")
+    print(f"Query Used for Filtering: '{user_input_query}'")
+    print(f"Keywords Used for Filtering: {filter_keywords}")
+    print(f"Videos After Filtering (Description/Bio): {len(filtered_video_data)}")
+    print(f"Raw Comments Found by Comment Actor: {len(raw_comment_results)}")
+    print(f"Processed Comments: {len(processed_comment_data)}")
+    if comments_limit_reached:
+         print("\n*** NOTE: Comment scraping may have been skipped or failed, potentially due to usage limits. ***")
+
+
+    # --- 10. SAVING PROCESSED DATA TO CSV ---
+
+    # Save Processed Video Results
+    if processed_video_data:
+        print("\n💾 Saving ALL PROCESSED video results to CSV...")
+        try:
+            # Define the path where the video CSV will be saved
+            video_csv_path = os.path.join(OUTPUT_DIRECTORY, 'tiktok_videos_processed_all.csv')
+
+            # Ensure all columns expected by VIDEO_COLUMNS exist, add if missing
+            temp_df_vid = pd.DataFrame(processed_video_data)
+            for col in VIDEO_COLUMNS:
+                if col not in temp_df_vid.columns:
+                     temp_df_vid[col] = None # Add missing column with None
+
+            videos_df_to_save = temp_df_vid[VIDEO_COLUMNS] # Select/order columns
+            videos_df_to_save.to_csv(video_csv_path, index=False, encoding='utf-8-sig', quoting=csv.QUOTE_MINIMAL) # Use minimal quoting
+            print(f"   All processed video results saved to: {video_csv_path}")
+        except Exception as e:
+            print(f"❌ Error saving processed video results to CSV: {e}")
+            video_csv_path = None # Ensure path is None if saving failed
+    else:
+        print("\nNo processed video results to save.")
+        video_csv_path = None
+
+    # Save Processed Comment Results
+    if processed_comment_data:
+        print("\n💾 Saving PROCESSED comment results to CSV...")
+        try:
+             # Define the path where the comment CSV will be saved
+             comment_csv_path = os.path.join(OUTPUT_DIRECTORY, 'tiktok_comments_processed.csv')
+
+             # Ensure all columns expected by COMMENT_COLUMNS exist, add if missing
+             temp_df_com = pd.DataFrame(processed_comment_data)
+             for col in COMMENT_COLUMNS:
+                 if col not in temp_df_com.columns:
+                      temp_df_com[col] = None # Add missing column
+
+             comments_df_to_save = temp_df_com[COMMENT_COLUMNS] # Select/order columns
+             comments_df_to_save.to_csv(comment_csv_path, index=False, encoding='utf-8-sig', quoting=csv.QUOTE_MINIMAL) # Use minimal quoting
+             print(f"   Processed comment results saved to: {comment_csv_path}")
+        except Exception as e:
+            print(f"❌ Error saving processed comment results to CSV: {e}")
+            comment_csv_path = None # Ensure path is None if saving failed
+    else:
+        print("\nNo processed comment results to save.")
+        comment_csv_path = None
+    # --- End Saving Comment Data ---
+
+    print("\n--- Program Finished ---")
+
+    # --- NEW: Highlight Missing Transcriptions ---
+    print("\n--- Analyzing Saved Video Data for Missing Transcriptions ---")
+    if video_csv_path and os.path.exists(video_csv_path):
+        try:
+            # Read the saved CSV back into a DataFrame
+            df_saved_videos = pd.read_csv(video_csv_path, encoding='utf-8-sig')
+            print(f"Successfully re-read: {video_csv_path}")
+
+            transcription_col_name = 'TikTok_Transcription'
+
+            if transcription_col_name in df_saved_videos.columns:
+                # Define the highlighting function
+                def highlight_missing(row):
+                    # Check if the value in the transcription column is NaN or an empty string
+                    # Use fillna('') before comparison to handle NaN correctly
+                    is_missing = pd.isna(row[transcription_col_name]) or str(row[transcription_col_name]).strip() == ''
+                    # Return yellow background for the whole row if missing, default otherwise
+                    return ['background-color: yellow' if is_missing else '' for _ in row]
+
+                # Apply the styling
+                # Using subset to only highlight based on the transcription column, but apply to whole row
+                styled_df = df_saved_videos.style.apply(highlight_missing, axis=1)
+
+                print("\nDisplaying table with missing transcription links highlighted:")
+                # Display the styled DataFrame in the notebook output
+                display(styled_df)
+            else:
+                print(f"Column '{transcription_col_name}' not found in the saved CSV '{video_csv_path}'. Cannot apply highlighting.")
+
+        except Exception as e:
+            print(f"❌ Error reading or styling the saved video CSV: {e}")
+    elif video_csv_path:
+         print(f"File not found: {video_csv_path}. Cannot analyze.")
+    else:
+        print("Video CSV was not saved successfully. Cannot analyze.")
+    # --- End Highlighting Section ---
