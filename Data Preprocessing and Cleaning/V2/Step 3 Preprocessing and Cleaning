@@ -2,184 +2,314 @@
 
 import re
 import pandas as pd
-from nltk.tokenize import word_tokenize
 import nltk
+from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import os # Added for creating directory
+import ssl # Import the ssl module
 
-# Download necessary NLTK data (if not already downloaded)
+# --- Start: Fix for potential SSL certificate issues (optional but recommended) ---
+# This part tries to disable SSL certificate verification for nltk.download().
+# This can be necessary on some systems or networks where default certificates cause issues.
 try:
-    nltk.data.find('tokenizers/punkt')
-except nltk.downloader.DownloadError:
-    nltk.download('punkt')
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass # Doesn't exist, likely Python version doesn't need/support this workaround
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+# --- End: Fix for potential SSL certificate issues ---
 
-try:
-    nltk.data.find('corpora/stopwords')
-except nltk.downloader.DownloadError:
-    nltk.download('stopwords')
+# --- Function to download NLTK data if missing ---
+def download_nltk_data(resource_id, resource_name):
+    """Checks if an NLTK resource exists and downloads it if missing."""
+    try:
+        nltk.data.find(resource_id)
+        print(f"NLTK resource '{resource_name}' found.")
+    except LookupError:
+        print(f"NLTK resource '{resource_name}' not found. Attempting download...")
+        try:
+            nltk.download(resource_name)
+            print(f"NLTK resource '{resource_name}' downloaded successfully.")
+            # Verify download
+            nltk.data.find(resource_id)
+            print(f"Verified that '{resource_name}' is now available.")
+        except Exception as e:
+            print(f"Error downloading NLTK resource '{resource_name}': {e}")
+            print("Please check your internet connection and permissions.")
+            print(f"You might need to run 'import nltk; nltk.download(\"{resource_name}\")' manually.")
+    except Exception as e:
+        print(f"An unexpected error occurred while checking for resource '{resource_name}': {e}")
 
-try:
-    nltk.data.find('corpora/wordnet')
-except nltk.downloader.DownloadError:
-    nltk.download('wordnet')
+# --- Download necessary NLTK data ---
+print("--- Checking/Downloading NLTK Resources ---")
+download_nltk_data('tokenizers/punkt', 'punkt')
+download_nltk_data('corpora/stopwords', 'stopwords')
+download_nltk_data('corpora/wordnet', 'wordnet')
+print("--- NLTK Resource Check Complete ---")
 
-# Define file paths
+
+# --- Define file paths ---
+# Using raw strings (r"...") is good practice for Windows paths
 comment_file_path = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Standardized Comment.csv"
 video_file_path = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Video with Transcription.csv"
 output_dir = r"G:\Other computers\My Laptop (1)\Pelajaran UiTM\Classes and Lectures (Semester 6)\CSP650\Developments\Simplified Data\Merged Files\Outputs\Apify Output\Apify Preprocessed\Preprocessed"
 cleaned_comment_file = os.path.join(output_dir, 'Clean Standardized Comment.csv')
 cleaned_video_file = os.path.join(output_dir, 'Clean Video with Transcription.csv')
 
-# Create output directory if it doesn't exist
+# --- Create output directory if it doesn't exist ---
+# This ensures the directory exists before trying to save files into it.
 os.makedirs(output_dir, exist_ok=True)
+print(f"Output directory '{output_dir}' ensured.")
 
-print(f"Loading comment data from: {comment_file_path}")
-# Use 'latin1' encoding for reading to avoid UnicodeDecodeError
-comments_df = pd.read_csv(comment_file_path, encoding='utf-8-sig')
-print("Comment data loaded successfully.")
+# --- Step 1: Load Data ---
+print("\n--- Loading Data ---")
+try:
+    print(f"Loading comment data from: {comment_file_path}")
+    # Specify encoding='utf-8-sig' to handle potential BOM (Byte Order Mark)
+    comments_df = pd.read_csv(comment_file_path, encoding='utf-8-sig')
+    print("Comment data loaded successfully.")
+    print("Comments DataFrame Info:")
+    comments_df.info() # Display info about columns and types
+    print("\nComments DataFrame Head:")
+    print(comments_df.head())
 
-print(f"Loading video data from: {video_file_path}")
-# Use 'latin1' encoding for reading to avoid UnicodeDecodeError
-videos_df = pd.read_csv(video_file_path, encoding='latin1')
-print("Video data loaded successfully.")
+except FileNotFoundError:
+    print(f"Error: Comment file not found at {comment_file_path}")
+    comments_df = pd.DataFrame() # Create empty DataFrame to avoid later errors
+except Exception as e:
+    print(f"Error loading comment data: {e}")
+    comments_df = pd.DataFrame()
 
-# --- Inspecting Data (Optional: Display first few rows) ---
-print("\n--- Initial Data Inspection ---")
-print("Comments DataFrame Head:")
-print(comments_df.head())
-print("\nVideos DataFrame Head:")
-print(videos_df.head())
+try:
+    print(f"\nLoading video data from: {video_file_path}")
+    # Try utf-8 first, fall back to latin1 if needed, as specified in original code
+    try:
+        videos_df = pd.read_csv(video_file_path, encoding='utf-8')
+    except UnicodeDecodeError:
+        print("UTF-8 decoding failed, trying latin1...")
+        videos_df = pd.read_csv(video_file_path, encoding='latin1')
+    print("Video data loaded successfully.")
+    print("\nVideos DataFrame Info:")
+    videos_df.info() # Display info about columns and types
+    print("\nVideos DataFrame Head:")
+    print(videos_df.head())
+
+except FileNotFoundError:
+    print(f"Error: Video file not found at {video_file_path}")
+    videos_df = pd.DataFrame() # Create empty DataFrame
+except Exception as e:
+    print(f"Error loading video data: {e}")
+    videos_df = pd.DataFrame()
+
 
 # --- Step 2: Handling Missing Values ---
 print("\n--- Handling Missing Values ---")
-print("Missing values in comments before handling:")
-print(comments_df.isnull().sum())
-# Ensure 'Comments' column exists before attempting to drop NA
-if 'Comments' in comments_df.columns:
+# Process comments only if DataFrame is not empty and column exists
+if not comments_df.empty and 'Comments' in comments_df.columns:
+    print("Missing values in comments before handling:")
+    print(comments_df['Comments'].isnull().sum())
     comments_df.dropna(subset=['Comments'], inplace=True)
     print(f"Rows after dropping NA in Comments: {len(comments_df)}")
 else:
-    print("Column 'Comments' not found in comments_df.")
+    print("Skipping missing value handling for comments (DataFrame empty or 'Comments' column missing).")
 
-print("\nMissing values in videos before handling:")
-print(videos_df.isnull().sum())
-# Ensure 'TikTok_Transcription' column exists before attempting to drop NA
-if 'VTT_Content' in videos_df.columns:
+# Process videos only if DataFrame is not empty and column exists
+if not videos_df.empty and 'VTT_Content' in videos_df.columns:
+    print("\nMissing values in videos before handling:")
+    print(videos_df['VTT_Content'].isnull().sum())
     videos_df.dropna(subset=['VTT_Content'], inplace=True)
-    print(f"Rows after dropping NA in TikTok_Transcription: {len(videos_df)}")
+    print(f"Rows after dropping NA in VTT_Content: {len(videos_df)}")
 else:
-    print("Column 'VTT_Content' not found in videos_df.")
+    print("Skipping missing value handling for videos (DataFrame empty or 'VTT_Content' column missing).")
 
 
 # --- Step 3: Removing Duplicates ---
 print("\n--- Removing Duplicates ---")
-# Ensure required columns exist before dropping duplicates
-if 'Comments' in comments_df.columns:
+if not comments_df.empty and 'Comments' in comments_df.columns:
     initial_comment_rows = len(comments_df)
     comments_df.drop_duplicates(subset=['Comments'], inplace=True)
     print(f"Removed {initial_comment_rows - len(comments_df)} duplicate comments.")
 else:
-    print("Column 'Comments' not found for duplicate removal.")
+    print("Skipping duplicate removal for comments.")
 
-if 'VTT_Content' in videos_df.columns:
+if not videos_df.empty and 'VTT_Content' in videos_df.columns:
     initial_video_rows = len(videos_df)
     videos_df.drop_duplicates(subset=['VTT_Content'], inplace=True)
     print(f"Removed {initial_video_rows - len(videos_df)} duplicate video transcriptions.")
 else:
-     print("Column 'VTT_Content' not found for duplicate removal.")
+    print("Skipping duplicate removal for videos.")
 
 # --- Step 4: Text Normalization & Cleaning ---
 print("\n--- Cleaning Text ---")
 def clean_text(text):
-    if pd.isna(text): # Handle potential NaN values that slipped through
+    """Cleans text: lowercase, remove URLs, punctuation, numbers, normalize whitespace."""
+    if pd.isna(text): # Handle potential NaN values
         return ""
-    text = str(text).lower()  # convert text to lowercase
-    text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE) # remove URLs
-    text = re.sub(r'[^\w\s]', '', text)  # remove punctuation
-    text = re.sub(r'\d+', '', text)  # remove numbers
-    text = re.sub(r'\s+', ' ', text).strip()  # normalize whitespace
+    text = str(text).lower() # Convert text to lowercase
+    text = re.sub(r'http\S+|www\S+|https\S+', '', text, flags=re.MULTILINE) # Remove URLs
+    text = re.sub(r'@\w+', '', text) # Remove mentions (@username)
+    text = re.sub(r'#\w+', '', text) # Remove hashtags (#hashtag)
+    text = re.sub(r'[^\w\s]', '', text) # Remove punctuation (keeps letters, numbers, whitespace)
+    text = re.sub(r'\d+', '', text) # Remove numbers
+    text = re.sub(r'\s+', ' ', text).strip() # Normalize whitespace (replace multiple spaces with one, strip leading/trailing)
     return text
 
-# Apply cleaning only if columns exist
-if 'Comments' in comments_df.columns:
+# Apply cleaning
+if not comments_df.empty and 'Comments' in comments_df.columns:
     comments_df['clean_comments'] = comments_df['Comments'].apply(clean_text)
     print("Applied text cleaning to comments.")
-if 'VTT_Content' in videos_df.columns:
+else:
+    print("Skipping text cleaning for comments.")
+
+if not videos_df.empty and 'VTT_Content' in videos_df.columns:
     videos_df['clean_transcriptions'] = videos_df['VTT_Content'].apply(clean_text)
     print("Applied text cleaning to transcriptions.")
+else:
+    print("Skipping text cleaning for transcriptions.")
 
 # --- Step 5: Tokenization ---
 print("\n--- Tokenizing Text ---")
 # Apply tokenization only if cleaned columns exist
-if 'clean_comments' in comments_df.columns:
-    comments_df['tokens'] = comments_df['clean_comments'].apply(word_tokenize)
-    print("Tokenized comments.")
-if 'clean_transcriptions' in videos_df.columns:
-    videos_df['tokens'] = videos_df['clean_transcriptions'].apply(word_tokenize)
-    print("Tokenized transcriptions.")
+if not comments_df.empty and 'clean_comments' in comments_df.columns:
+    # Ensure punkt is available before tokenizing
+    try:
+        nltk.data.find('tokenizers/punkt')
+        comments_df['tokens'] = comments_df['clean_comments'].apply(word_tokenize)
+        print("Tokenized comments.")
+    except LookupError:
+        print("ERROR: NLTK 'punkt' tokenizer not found. Cannot tokenize comments.")
+    except Exception as e:
+        print(f"An error occurred during comment tokenization: {e}")
+else:
+    print("Skipping tokenization for comments.")
+
+if not videos_df.empty and 'clean_transcriptions' in videos_df.columns:
+    try:
+        nltk.data.find('tokenizers/punkt')
+        videos_df['tokens'] = videos_df['clean_transcriptions'].apply(word_tokenize)
+        print("Tokenized transcriptions.")
+    except LookupError:
+        print("ERROR: NLTK 'punkt' tokenizer not found. Cannot tokenize transcriptions.")
+    except Exception as e:
+        print(f"An error occurred during transcription tokenization: {e}")
+else:
+    print("Skipping tokenization for transcriptions.")
+
 
 # --- Step 6: Stopword Removal ---
 print("\n--- Removing Stopwords ---")
-stop_words = set(stopwords.words('english'))
+try:
+    stop_words = set(stopwords.words('english'))
+    print("Stopwords loaded successfully.")
 
-def remove_stopwords(tokens):
-    if isinstance(tokens, list): # Ensure input is a list
-         return [word for word in tokens if word not in stop_words]
-    return [] # Return empty list if input is not as expected (e.g., float NaN)
+    def remove_stopwords_func(tokens):
+        """Removes stopwords from a list of tokens."""
+        if isinstance(tokens, list): # Ensure input is a list
+            return [word for word in tokens if word not in stop_words and len(word) > 1] # Also remove single-letter words
+        return [] # Return empty list if input is not as expected
 
+    # Apply stopword removal
+    if not comments_df.empty and 'tokens' in comments_df.columns:
+        comments_df['tokens_no_stopwords'] = comments_df['tokens'].apply(remove_stopwords_func)
+        print("Removed stopwords from comments.")
+    else:
+        print("Skipping stopword removal for comments.")
 
-# Apply stopword removal only if token columns exist
-if 'tokens' in comments_df.columns:
-    comments_df['tokens_no_stopwords'] = comments_df['tokens'].apply(remove_stopwords)
-    print("Removed stopwords from comments.")
-if 'tokens' in videos_df.columns:
-    videos_df['tokens_no_stopwords'] = videos_df['tokens'].apply(remove_stopwords)
-    print("Removed stopwords from transcriptions.")
+    if not videos_df.empty and 'tokens' in videos_df.columns:
+        videos_df['tokens_no_stopwords'] = videos_df['tokens'].apply(remove_stopwords_func)
+        print("Removed stopwords from transcriptions.")
+    else:
+        print("Skipping stopword removal for transcriptions.")
+
+except LookupError:
+    print("ERROR: NLTK 'stopwords' resource not found. Cannot remove stopwords.")
+except Exception as e:
+    print(f"An error occurred during stopword processing: {e}")
+
 
 # --- Step 7: Lemmatization ---
 print("\n--- Lemmatizing Tokens ---")
-lemmatizer = WordNetLemmatizer()
+try:
+    lemmatizer = WordNetLemmatizer()
+    nltk.data.find('corpora/wordnet') # Check if wordnet is available
+    print("Lemmatizer initialized and WordNet resource found.")
 
-def lemmatize_tokens(tokens):
-     if isinstance(tokens, list): # Ensure input is a list
-        return [lemmatizer.lemmatize(token) for token in tokens]
-     return [] # Return empty list if input is not as expected
+    def lemmatize_tokens_func(tokens):
+        """Lemmatizes a list of tokens."""
+        if isinstance(tokens, list): # Ensure input is a list
+            return [lemmatizer.lemmatize(token) for token in tokens]
+        return [] # Return empty list if input is not as expected
 
-# Apply lemmatization only if stopword-removed columns exist
-if 'tokens_no_stopwords' in comments_df.columns:
-    comments_df['lemmatized'] = comments_df['tokens_no_stopwords'].apply(lemmatize_tokens)
-    print("Lemmatized comment tokens.")
-if 'tokens_no_stopwords' in videos_df.columns:
-    videos_df['lemmatized'] = videos_df['tokens_no_stopwords'].apply(lemmatize_tokens)
-    print("Lemmatized transcription tokens.")
+    # Apply lemmatization
+    if not comments_df.empty and 'tokens_no_stopwords' in comments_df.columns:
+        comments_df['lemmatized'] = comments_df['tokens_no_stopwords'].apply(lemmatize_tokens_func)
+        print("Lemmatized comment tokens.")
+    else:
+        print("Skipping lemmatization for comments.")
+
+    if not videos_df.empty and 'tokens_no_stopwords' in videos_df.columns:
+        videos_df['lemmatized'] = videos_df['tokens_no_stopwords'].apply(lemmatize_tokens_func)
+        print("Lemmatized transcription tokens.")
+    else:
+        print("Skipping lemmatization for transcriptions.")
+
+except LookupError:
+    print("ERROR: NLTK 'wordnet' resource not found. Cannot lemmatize.")
+except Exception as e:
+    print(f"An error occurred during lemmatization: {e}")
+
 
 # --- Step 8: Preparing Final Text (Rejoining Tokens) ---
 print("\n--- Preparing Final Text Strings ---")
 # Create final text only if lemmatized columns exist
-if 'lemmatized' in comments_df.columns:
-    comments_df['final_text'] = comments_df['lemmatized'].apply(lambda x: ' '.join(x))
+if not comments_df.empty and 'lemmatized' in comments_df.columns:
+    comments_df['final_text'] = comments_df['lemmatized'].apply(lambda x: ' '.join(x) if isinstance(x, list) else '')
     print("Created final text string for comments.")
-if 'lemmatized' in videos_df.columns:
-    videos_df['final_text'] = videos_df['lemmatized'].apply(lambda x: ' '.join(x))
+else:
+    print("Skipping final text creation for comments.")
+
+if not videos_df.empty and 'lemmatized' in videos_df.columns:
+    videos_df['final_text'] = videos_df['lemmatized'].apply(lambda x: ' '.join(x) if isinstance(x, list) else '')
     print("Created final text string for videos.")
+else:
+    print("Skipping final text creation for videos.")
+
 
 # --- Step 9: Save Preprocessed Data ---
 print("\n--- Saving Preprocessed Data ---")
 try:
-    # Save comments
-    # Make sure this line is complete and correct, adding encoding
-    comments_df.to_csv(cleaned_comment_file, index=False, encoding='utf-8-sig') # Ensure encoding is added
-    print(f"Cleaned comments saved successfully to: {cleaned_comment_file}")
+    if not comments_df.empty:
+        # Select relevant columns to save
+        cols_to_save_comments = ['Comments', 'clean_comments', 'tokens', 'tokens_no_stopwords', 'lemmatized', 'final_text']
+        # Filter out columns that might not have been created if steps were skipped
+        cols_to_save_comments = [col for col in cols_to_save_comments if col in comments_df.columns]
+        # Add any other original columns you want to keep
+        original_comment_cols = [col for col in comments_df.columns if col not in ['clean_comments', 'tokens', 'tokens_no_stopwords', 'lemmatized', 'final_text']]
+        final_comment_cols = original_comment_cols + cols_to_save_comments
+
+        comments_df[final_comment_cols].to_csv(cleaned_comment_file, index=False, encoding='utf-8-sig')
+        print(f"Cleaned comments saved successfully to: {cleaned_comment_file}")
+    else:
+        print("Comments DataFrame is empty. Skipping save.")
 except Exception as e:
-    print(f"Error saving comments file: {e}") # This except block must be present
+    print(f"Error saving cleaned comments file: {e}")
 
 try:
-    # Save videos
-    # Make sure this line is complete and correct, adding encoding
-    videos_df.to_csv(cleaned_video_file, index=False, encoding='utf-8-sig') # Ensure encoding is added
-    print(f"Cleaned videos saved successfully to: {cleaned_video_file}")
+    if not videos_df.empty:
+        # Select relevant columns to save
+        cols_to_save_videos = ['VTT_Content', 'clean_transcriptions', 'tokens', 'tokens_no_stopwords', 'lemmatized', 'final_text']
+         # Filter out columns that might not have been created if steps were skipped
+        cols_to_save_videos = [col for col in cols_to_save_videos if col in videos_df.columns]
+       # Add any other original columns you want to keep
+        original_video_cols = [col for col in videos_df.columns if col not in ['clean_transcriptions', 'tokens', 'tokens_no_stopwords', 'lemmatized', 'final_text']]
+        final_video_cols = original_video_cols + cols_to_save_videos
+
+        videos_df[final_video_cols].to_csv(cleaned_video_file, index=False, encoding='utf-8-sig')
+        print(f"Cleaned videos saved successfully to: {cleaned_video_file}")
+    else:
+        print("Videos DataFrame is empty. Skipping save.")
 except Exception as e:
-    print(f"Error saving videos file: {e}") # This except block must be present
+    print(f"Error saving cleaned videos file: {e}")
 
 print("\nPreprocessing complete.")
